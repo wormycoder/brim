@@ -8,39 +8,21 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --blue: #378ADD; --blue-light: #E6F1FB; --blue-border: #B5D4F4;
-      --blue-dark: #185FA5; --green-light: #EAF3DE; --green-dark: #3B6D11;
-      --amber-light: #FAEEDA; --amber-dark: #854F0B;
-      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px;
-    }
+    :root { --blue: #378ADD; --blue-light: #E6F1FB; --blue-border: #B5D4F4; --blue-dark: #185FA5; --green-light: #EAF3DE; --green-dark: #3B6D11; --amber-light: #FAEEDA; --amber-dark: #854F0B; --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px; }
     body { font-family: 'DM Sans', sans-serif; background: #f5f5f3; color: #1a1a1a; }
     a { text-decoration: none; color: inherit; cursor: pointer; }
-
-    /* NAV */
     .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
     .logo { font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: -0.5px; }
     .logo em { font-style: italic; color: var(--blue); }
     .nav-links { display: flex; gap: 28px; font-size: 13px; color: #666; }
     .nav-links a:hover { color: #1a1a1a; }
     .nav-right { display: flex; align-items: center; gap: 10px; }
-    .search { display: flex; align-items: center; gap: 8px; background: #f5f5f3; border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-full); padding: 8px 16px; width: 220px; }
-    .search input { border: none; background: transparent; outline: none; font-size: 13px; color: #1a1a1a; width: 100%; font-family: 'DM Sans', sans-serif; }
-    .search input::placeholder { color: #aaa; }
-    .icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 0.5px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; background: #fff; cursor: pointer; position: relative; }
-    .cart-dot { position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); border: 1.5px solid #fff; }
     .sign-btn { font-size: 13px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-full); padding: 7px 16px; background: var(--blue-light); cursor: pointer; font-family: 'DM Sans', sans-serif; }
-
-    /* BREADCRUMB */
     .breadcrumb { padding: 14px 28px; font-size: 12px; color: #aaa; display: flex; gap: 8px; align-items: center; }
     .breadcrumb a { color: #888; }
     .breadcrumb a:hover { color: #1a1a1a; }
     .breadcrumb span { color: #ccc; }
-
-    /* PRODUCT LAYOUT */
     .product-layout { display: flex; gap: 48px; padding: 0 28px 48px; max-width: 1100px; margin: 0 auto; }
-
-    /* GALLERY */
     .gallery { flex: 1; min-width: 0; }
     .main-img { width: 100%; aspect-ratio: 1; border-radius: var(--radius-lg); overflow: hidden; background: #fff; border: 0.5px solid rgba(0,0,0,0.1); margin-bottom: 10px; }
     .main-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -48,24 +30,17 @@
     .thumb { width: 72px; height: 72px; border-radius: var(--radius-md); overflow: hidden; border: 0.5px solid rgba(0,0,0,0.1); cursor: pointer; background: #fff; flex-shrink: 0; }
     .thumb img { width: 100%; height: 100%; object-fit: cover; }
     .thumb.active { border: 1.5px solid #1a1a1a; }
-
-    /* PRODUCT INFO */
     .product-info { width: 380px; flex-shrink: 0; }
     .product-badges { display: flex; gap: 8px; margin-bottom: 14px; align-items: center; }
     .condition { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; border-radius: 4px; padding: 2px 7px; }
     .cond-new { background: var(--blue-light); color: var(--blue-dark); }
     .cond-like { background: var(--green-light); color: var(--green-dark); }
     .cond-good { background: var(--amber-light); color: var(--amber-dark); }
+    .cond-fair { background: #f0f0ee; color: #555; }
     .category-tag { font-size: 11px; color: #aaa; background: #f0f0ee; border-radius: 4px; padding: 2px 8px; }
     .product-title { font-family: 'Instrument Serif', serif; font-size: 30px; font-weight: 400; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 12px; }
-    .stars { display: flex; gap: 2px; align-items: center; margin-bottom: 16px; }
-    .star { width: 12px; height: 12px; background: #EF9F27; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
-    .star.e { background: #ddd; }
-    .rating-txt { font-size: 12px; color: #aaa; margin-left: 4px; }
     .product-price { font-size: 32px; font-weight: 500; letter-spacing: -0.5px; margin-bottom: 24px; }
     .product-desc { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 28px; border-top: 0.5px solid rgba(0,0,0,0.08); padding-top: 20px; }
-
-    /* BUTTONS */
     .btn-primary { width: 100%; background: #1a1a1a; color: #fff; border: none; border-radius: var(--radius-full); padding: 15px 28px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-bottom: 10px; transition: background 0.15s; }
     .btn-primary:hover { background: #333; }
     .btn-kofi { width: 100%; background: #FF5E5B; color: #fff; border: none; border-radius: var(--radius-full); padding: 15px 28px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.15s; }
@@ -73,55 +48,27 @@
     .btn-msg { width: 100%; background: var(--blue-light); color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-full); padding: 15px 28px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
     .btn-msg:hover { background: #d6eaf8; }
     .divider { border: none; border-top: 0.5px solid rgba(0,0,0,0.08); margin: 24px 0; }
-
-    /* SELLER CARD */
     .seller-card { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); padding: 18px; display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
     .seller-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #378ADD 0%, #185FA5 100%); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; color: #fff; flex-shrink: 0; }
     .seller-info { flex: 1; min-width: 0; }
     .seller-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
-    .seller-meta { font-size: 12px; color: #888; display: flex; gap: 10px; align-items: center; }
-    .seller-rating-stars { display: flex; gap: 2px; }
-    .seller-star { width: 9px; height: 9px; background: #EF9F27; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+    .seller-meta { font-size: 12px; color: #888; }
     .view-profile { font-size: 12px; color: var(--blue-dark); font-weight: 500; white-space: nowrap; }
-
-    /* META ROW */
     .meta-row { display: flex; gap: 24px; margin-bottom: 8px; }
     .meta-item { font-size: 12px; color: #aaa; }
     .meta-item strong { color: #555; font-weight: 500; }
-
-    /* RELATED */
-    .related { padding: 0 28px 48px; max-width: 1100px; margin: 0 auto; }
-    .sh { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
-    .sh h2 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; }
-    .sh a { font-size: 13px; color: #888; }
-    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .card { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: border-color 0.15s, transform 0.15s; display: block; }
-    .card:hover { border-color: rgba(0,0,0,0.2); transform: translateY(-2px); }
-    .card-img { width: 100%; aspect-ratio: 1; overflow: hidden; background: #f5f5f3; }
-    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-    .card:hover .card-img img { transform: scale(1.04); }
-    .card-body { padding: 12px 14px; }
-    .card-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
-    .card-price { font-size: 14px; font-weight: 500; color: #1a1a1a; }
-    .card-seller-sm { font-size: 12px; color: #aaa; }
-
-    /* FOOTER */
     .footer { padding: 20px 28px; border-top: 0.5px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; background: #fff; }
     .footer-logo { font-family: 'Instrument Serif', serif; font-size: 20px; }
     .footer-logo em { font-style: italic; color: var(--blue); }
     .footer-r { font-size: 12px; color: #aaa; }
-
-    @media (max-width: 900px) {
-      .product-layout { flex-direction: column; padding: 0 16px 36px; }
-      .product-info { width: 100%; }
-      .grid { grid-template-columns: repeat(2, 1fr); }
-      .nav-links { display: none; }
-      .related { padding: 0 16px 36px; }
-    }
+    .skeleton { background: linear-gradient(90deg, #f0f0ee 25%, #e8e8e6 50%, #f0f0ee 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 4px; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .not-found { text-align: center; padding: 80px 28px; color: #888; }
+    .not-found h2 { font-family: 'Instrument Serif', serif; font-size: 28px; margin-bottom: 12px; }
+    @media (max-width: 900px) { .product-layout { flex-direction: column; padding: 0 16px 36px; } .product-info { width: 100%; } .nav-links { display: none; } }
   </style>
 </head>
 <body>
-
   <nav class="nav">
     <a href="index.html" class="logo">brim<em>.</em></a>
     <div class="nav-links">
@@ -130,125 +77,31 @@
       <a href="#">how it works</a>
     </div>
     <div class="nav-right">
-      <div class="search">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="#aaa" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <input placeholder="search anything..." type="text">
-      </div>
-      <div class="icon-btn" title="cart">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2h1.5L5 10h7l1.5-6H5" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="13" r="1" fill="#666"/><circle cx="11" cy="13" r="1" fill="#666"/></svg>
-        <div class="cart-dot"></div>
-      </div>
-      <a href="login.html"><button class="sign-btn">sign in</button></a>
+      <a href="login.html" id="signInLink"><button class="sign-btn">sign in</button></a>
+      <a href="profile.html" id="profileLink" style="display:none;font-size:13px;color:#888;">my profile →</a>
     </div>
   </nav>
 
   <div class="breadcrumb">
-    <a href="index.html">home</a>
-    <span>›</span>
-    <a href="browse.html">browse</a>
-    <span>›</span>
-    <a href="browse.html?cat=electronics">electronics</a>
-    <span>›</span>
-    Wireless headphones
+    <a href="index.html">home</a><span>›</span>
+    <a href="browse.html">browse</a><span>›</span>
+    <span id="breadcrumbTitle">loading…</span>
   </div>
 
-  <div class="product-layout">
-    <!-- GALLERY -->
-    <div class="gallery">
-      <div class="main-img">
-        <img id="mainImg" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=800&fit=crop" alt="Wireless headphones">
+  <div id="productContent">
+    <!-- loaded dynamically -->
+    <div class="product-layout">
+      <div class="gallery">
+        <div class="main-img skeleton" style="border:none;"></div>
       </div>
-      <div class="thumb-row">
-        <div class="thumb active" onclick="switchImg(this, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop" alt="">
-        </div>
-        <div class="thumb" onclick="switchImg(this, 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&h=800&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?w=200&h=200&fit=crop" alt="">
-        </div>
-        <div class="thumb" onclick="switchImg(this, 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&h=800&fit=crop')">
-          <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&h=200&fit=crop" alt="">
-        </div>
+      <div class="product-info">
+        <div class="skeleton" style="height:14px;width:30%;margin-bottom:14px;"></div>
+        <div class="skeleton" style="height:36px;width:90%;margin-bottom:12px;"></div>
+        <div class="skeleton" style="height:36px;width:40%;margin-bottom:24px;"></div>
+        <div class="skeleton" style="height:80px;width:100%;margin-bottom:24px;border-radius:12px;"></div>
+        <div class="skeleton" style="height:50px;width:100%;margin-bottom:10px;border-radius:999px;"></div>
+        <div class="skeleton" style="height:50px;width:100%;border-radius:999px;"></div>
       </div>
-    </div>
-
-    <!-- INFO -->
-    <div class="product-info">
-      <div class="product-badges">
-        <span class="condition cond-like">like new</span>
-        <span class="category-tag">electronics</span>
-      </div>
-      <h1 class="product-title">Wireless headphones</h1>
-      <div class="stars">
-        <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div>
-        <span class="rating-txt">4.0 · seller rated by 12 buyers</span>
-      </div>
-      <div class="product-price">$48</div>
-
-      <div class="seller-card">
-        <div class="seller-avatar">M</div>
-        <div class="seller-info">
-          <div class="seller-name">marcus_w</div>
-          <div class="seller-meta">
-            <div class="seller-rating-stars">
-              <div class="seller-star"></div><div class="seller-star"></div><div class="seller-star"></div><div class="seller-star"></div>
-            </div>
-            4.0 · 12 sales
-          </div>
-        </div>
-        <a href="profile.html?user=marcus_w" class="view-profile">view profile →</a>
-      </div>
-
-      <!-- BUY BUTTONS -->
-      <a href="https://ko-fi.com" target="_blank">
-        <button class="btn-kofi">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" fill="rgba(255,255,255,0.3)"/><path d="M5 8c0-1.1.9-2 2-2h2a2 2 0 010 4H7a2 2 0 01-2-2z" fill="white"/></svg>
-          buy via Ko-fi — $48
-        </button>
-      </a>
-      <button class="btn-primary" onclick="addToCart()">add to cart</button>
-      <a href="messages.html?listing=1&seller=marcus_w">
-        <button class="btn-msg">message seller</button>
-      </a>
-
-      <hr class="divider">
-
-      <div class="meta-row">
-        <div class="meta-item"><strong>Condition</strong><br>Like new</div>
-        <div class="meta-item"><strong>Listed</strong><br>2 days ago</div>
-        <div class="meta-item"><strong>Location</strong><br>Seattle, WA</div>
-      </div>
-
-      <hr class="divider">
-
-      <p class="product-desc">
-        Barely used Sony WH-1000XM4 in excellent condition. Bought last year, only used a handful of times before I switched to earbuds. Comes with original case, USB-C cable, and aux cable. Battery life is still superb — easily 30+ hours. No scratches, no damage. Great for work-from-home or travel.
-      </p>
-    </div>
-  </div>
-
-  <!-- RELATED LISTINGS -->
-  <div class="related">
-    <div class="sh">
-      <h2>more from this seller</h2>
-      <a href="profile.html?user=marcus_w">see all →</a>
-    </div>
-    <div class="grid">
-      <a href="product.html?id=5" class="card">
-        <div class="card-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=400&fit=crop" alt=""></div>
-        <div class="card-body"><div class="card-name">Bluetooth speaker</div><div class="card-seller-sm">marcus_w</div><div class="card-price" style="margin-top:6px;">$32</div></div>
-      </a>
-      <a href="product.html?id=6" class="card">
-        <div class="card-img"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=400&fit=crop" alt=""></div>
-        <div class="card-body"><div class="card-name">Vintage camera</div><div class="card-seller-sm">marcus_w</div><div class="card-price" style="margin-top:6px;">$60</div></div>
-      </a>
-      <a href="product.html?id=7" class="card">
-        <div class="card-img"><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&h=400&fit=crop" alt=""></div>
-        <div class="card-body"><div class="card-name">Apple Watch band</div><div class="card-seller-sm">marcus_w</div><div class="card-price" style="margin-top:6px;">$15</div></div>
-      </a>
-      <a href="product.html?id=8" class="card">
-        <div class="card-img"><img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400&h=400&fit=crop" alt=""></div>
-        <div class="card-body"><div class="card-name">iPad stand</div><div class="card-seller-sm">marcus_w</div><div class="card-price" style="margin-top:6px;">$22</div></div>
-      </a>
     </div>
   </div>
 
@@ -257,21 +110,122 @@
     <div class="footer-r">full to the brim.</div>
   </footer>
 
-  <script>
-    function switchImg(thumb, src) {
-      document.getElementById('mainImg').src = src;
-      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-      thumb.classList.add('active');
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyCZmGDUuv7P4XcEJ0Sj6SFjQVKqLeeSOKQ",
+      authDomain: "brim-dfdf3.firebaseapp.com",
+      projectId: "brim-dfdf3",
+      storageBucket: "brim-dfdf3.firebasestorage.app",
+      messagingSenderId: "414714365863",
+      appId: "1:414714365863:web:90c9e68982af5559831882"
+    });
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentUser = null;
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+      if (user) {
+        document.getElementById('signInLink').style.display = 'none';
+        const pl = document.getElementById('profileLink');
+        pl.style.display = 'block';
+        pl.href = `profile.html?uid=${user.uid}`;
+      }
+    });
+
+    function condClass(c) { return c==='new'?'cond-new':c==='like new'?'cond-like':c==='good'?'cond-good':'cond-fair'; }
+    function timeAgo(ts) {
+      if (!ts) return 'recently';
+      const d = ts.toDate ? ts.toDate() : new Date(ts);
+      const diff = Date.now() - d.getTime();
+      if (diff < 60000) return 'just now';
+      if (diff < 3600000) return Math.floor(diff/60000) + 'm ago';
+      if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
+      return Math.floor(diff/86400000) + 'd ago';
     }
 
-    function addToCart() {
-      alert('Cart feature coming soon — for now, use Ko-fi to buy directly from the seller!');
+    const listingId = new URLSearchParams(window.location.search).get('id');
+
+    async function loadProduct() {
+      if (!listingId) { showNotFound(); return; }
+      try {
+        const snap = await getDoc(doc(db, 'listings', listingId));
+        if (!snap.exists()) { showNotFound(); return; }
+        const data = snap.data();
+        document.title = `${data.title} — brim.`;
+        document.getElementById('breadcrumbTitle').textContent = data.title;
+        renderProduct(listingId, data);
+      } catch (err) {
+        showNotFound();
+      }
     }
 
-    // TODO: Load real product from Firestore using URL param
-    // const params = new URLSearchParams(window.location.search);
-    // const id = params.get('id');
-    // load listing from Firestore /listings/{id}
+    function renderProduct(id, data) {
+      const photos = data.photos && data.photos.length ? data.photos : ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=800&fit=crop'];
+      const thumbsHtml = photos.map((url, i) => `
+        <div class="thumb ${i===0?'active':''}" onclick="switchImg(this,'${url}')">
+          <img src="${url.replace('/upload/','/upload/w_200,h_200,c_fill/')}" alt="">
+        </div>`).join('');
+
+      const msgHref = currentUser
+        ? `messages.html?listing=${id}&seller=${data.sellerId}`
+        : `login.html?redirect=messages.html?listing=${id}%26seller=${data.sellerId}`;
+
+      document.getElementById('productContent').innerHTML = `
+        <div class="product-layout">
+          <div class="gallery">
+            <div class="main-img"><img id="mainImg" src="${photos[0]}" alt="${data.title}"></div>
+            <div class="thumb-row">${thumbsHtml}</div>
+          </div>
+          <div class="product-info">
+            <div class="product-badges">
+              <span class="condition ${condClass(data.condition)}">${data.condition}</span>
+              <span class="category-tag">${data.category || ''}</span>
+            </div>
+            <h1 class="product-title">${data.title}</h1>
+            <div class="product-price">$${Number(data.price).toFixed(2)}</div>
+            <div class="seller-card">
+              <div class="seller-avatar">${(data.sellerName||'?')[0].toUpperCase()}</div>
+              <div class="seller-info">
+                <div class="seller-name">${data.sellerName || 'seller'}</div>
+                <div class="seller-meta">listed ${timeAgo(data.createdAt)}</div>
+              </div>
+              <a href="profile.html?uid=${data.sellerId}" class="view-profile">view profile →</a>
+            </div>
+            ${data.kofiUrl ? `<a href="${data.kofiUrl}" target="_blank"><button class="btn-kofi">☕ buy via Ko-fi — $${Number(data.price).toFixed(2)}</button></a>` : ''}
+            <a href="${msgHref}"><button class="btn-msg">message seller</button></a>
+            <hr class="divider">
+            <div class="meta-row">
+              <div class="meta-item"><strong>Condition</strong><br>${data.condition}</div>
+              <div class="meta-item"><strong>Listed</strong><br>${timeAgo(data.createdAt)}</div>
+              ${data.category ? `<div class="meta-item"><strong>Category</strong><br>${data.category}</div>` : ''}
+            </div>
+            ${data.description ? `<hr class="divider"><p class="product-desc">${data.description.replace(/\n/g,'<br>')}</p>` : ''}
+          </div>
+        </div>`;
+
+      // Thumb switching
+      window.switchImg = (thumb, src) => {
+        document.getElementById('mainImg').src = src;
+        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+      };
+    }
+
+    function showNotFound() {
+      document.getElementById('productContent').innerHTML = `
+        <div class="not-found">
+          <h2>Listing not found</h2>
+          <p>This item may have been sold or removed.</p>
+          <a href="browse.html" style="color:var(--blue-dark);font-weight:500;display:inline-block;margin-top:16px;">browse all listings →</a>
+        </div>`;
+    }
+
+    loadProduct();
   </script>
 </body>
 </html>
