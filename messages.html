@@ -8,8 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --blue: #378ADD; --blue-light: #E6F1FB; --blue-border: #B5D4F4; --blue-dark: #185FA5; --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px; }
-    body { font-family: 'DM Sans', sans-serif; background: #f5f5f3; color: #1a1a1a; height: 100vh; display: flex; flex-direction: column; }
+    :root { --blue: #378ADD; --blue-light: #E6F1FB; --blue-border: #B5D4F4; --blue-dark: #185FA5; --green: #1D9E75; --green-light: #EAF3DE; --green-dark: #3B6D11; --amber-light: #FAEEDA; --amber-dark: #854F0B; --red: #e53935; --red-light: #fdf0ef; --red-border: #f5c6c2; --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px; }
+    body { font-family: 'DM Sans', sans-serif; background: #f5f5f3; color: #1a1a1a; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
     a { text-decoration: none; color: inherit; }
     .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); flex-shrink: 0; }
     .logo { font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: -0.5px; }
@@ -17,48 +17,125 @@
     .nav-links { display: flex; gap: 28px; font-size: 13px; color: #666; }
     .nav-right { display: flex; align-items: center; gap: 10px; }
     .sign-btn { font-size: 13px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-full); padding: 7px 16px; background: var(--blue-light); cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .notif-btn { position: relative; width: 34px; height: 34px; border-radius: 50%; border: 0.5px solid rgba(0,0,0,0.12); background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .notif-dot { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--red); border: 1.5px solid #fff; display: none; }
+    .notif-dot.show { display: block; }
     .messages-wrap { flex: 1; display: flex; overflow: hidden; }
-    .convo-list { width: 300px; flex-shrink: 0; background: #fff; border-right: 0.5px solid rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; }
-    .convo-header { padding: 18px 20px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); flex-shrink: 0; }
-    .convo-header h2 { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; letter-spacing: -0.3px; margin-bottom: 12px; }
+
+    /* Convo List */
+    .convo-list { width: 310px; flex-shrink: 0; background: #fff; border-right: 0.5px solid rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; }
+    .convo-header { padding: 18px 20px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+    .convo-header h2 { font-family: 'Instrument Serif', serif; font-size: 20px; font-weight: 400; letter-spacing: -0.3px; }
+    .convo-tabs { display: flex; gap: 6px; padding: 10px 16px; border-bottom: 0.5px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+    .convo-tab { font-size: 12px; padding: 5px 12px; border-radius: var(--radius-full); border: 0.5px solid transparent; cursor: pointer; font-family: 'DM Sans', sans-serif; background: transparent; color: #888; transition: all 0.15s; }
+    .convo-tab.on { background: #1a1a1a; color: #fff; }
     .convo-scroll { flex: 1; overflow-y: auto; }
-    .convo-item { display: flex; align-items: center; gap: 12px; padding: 14px 20px; cursor: pointer; border-bottom: 0.5px solid rgba(0,0,0,0.06); transition: background 0.1s; }
-    .convo-item:hover, .convo-item.active { background: #f7f7f5; }
+    .convo-item { display: flex; align-items: center; gap: 12px; padding: 14px 18px; cursor: pointer; border-bottom: 0.5px solid rgba(0,0,0,0.06); transition: background 0.1s; position: relative; }
+    .convo-item:hover { background: #f7f7f5; }
     .convo-item.active { background: var(--blue-light); }
     .convo-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #378ADD 0%, #185FA5 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; color: #fff; flex-shrink: 0; }
     .convo-info { flex: 1; min-width: 0; }
-    .convo-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+    .convo-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
     .convo-preview { font-size: 12px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .convo-time { font-size: 11px; color: #bbb; flex-shrink: 0; }
+    .unread-badge { background: var(--blue); color: #fff; font-size: 10px; font-weight: 500; border-radius: var(--radius-full); padding: 1px 6px; min-width: 18px; text-align: center; }
+    .ended-badge { font-size: 10px; color: #aaa; background: #f0f0ee; border-radius: 4px; padding: 1px 6px; }
+
+    /* Chat Pane */
     .chat-pane { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #f5f5f3; }
-    .chat-header { background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); padding: 16px 24px; display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+    .chat-header { background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); padding: 13px 20px; display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
     .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #378ADD 0%, #185FA5 100%); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #fff; flex-shrink: 0; }
     .chat-header-info { flex: 1; }
     .chat-header-name { font-size: 14px; font-weight: 500; }
     .chat-header-sub { font-size: 12px; color: #888; }
-    .chat-scroll { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-    .msg-row { display: flex; gap: 10px; max-width: 70%; }
+    .chat-header-actions { display: flex; gap: 8px; }
+    .hdr-btn { font-size: 12px; font-weight: 500; border-radius: var(--radius-full); padding: 6px 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; border: 0.5px solid rgba(0,0,0,0.15); background: #fff; color: #555; white-space: nowrap; transition: all 0.15s; }
+    .hdr-btn:hover { background: #f5f5f3; }
+    .hdr-btn.danger { color: var(--red); border-color: var(--red-border); background: var(--red-light); }
+    .hdr-btn.confirm { color: var(--green-dark); border-color: #b8dda0; background: var(--green-light); }
+    .chat-scroll { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 2px; }
+
+    /* Messages */
+    .msg-group { margin-bottom: 14px; }
+    .msg-row { display: flex; gap: 8px; max-width: 75%; margin-bottom: 2px; position: relative; }
     .msg-row.mine { align-self: flex-end; flex-direction: row-reverse; }
-    .msg-avatar { width: 28px; height: 28px; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: #888; flex-shrink: 0; align-self: flex-end; }
+    .msg-avatar { width: 26px; height: 26px; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: #888; flex-shrink: 0; align-self: flex-end; }
     .msg-avatar.me { background: linear-gradient(135deg, #378ADD 0%, #185FA5 100%); color: #fff; }
-    .msg-bubble { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: 16px; border-bottom-left-radius: 4px; padding: 10px 14px; font-size: 14px; line-height: 1.5; color: #1a1a1a; }
-    .msg-row.mine .msg-bubble { background: #1a1a1a; color: #fff; border-color: transparent; border-bottom-left-radius: 16px; border-bottom-right-radius: 4px; }
-    .msg-time { font-size: 10px; color: #bbb; margin-top: 4px; }
+    .msg-content { display: flex; flex-direction: column; }
+    .msg-bubble { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: 16px 16px 16px 4px; padding: 9px 13px; font-size: 14px; line-height: 1.5; color: #1a1a1a; position: relative; cursor: default; }
+    .msg-row.mine .msg-bubble { background: #1a1a1a; color: #fff; border-color: transparent; border-radius: 16px 16px 4px 16px; }
+    .msg-bubble.saved { border-color: #f5c842 !important; background: #fffdf0 !important; color: #1a1a1a !important; }
+    .msg-bubble.saved::after { content: '★'; position: absolute; top: -8px; right: -4px; font-size: 12px; color: #f5c842; }
+    .msg-actions { display: none; align-items: center; gap: 4px; margin-top: 4px; }
+    .msg-row:hover .msg-actions { display: flex; }
+    .msg-action-btn { font-size: 11px; color: #aaa; background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 4px; font-family: 'DM Sans', sans-serif; }
+    .msg-action-btn:hover { background: rgba(0,0,0,0.06); color: #555; }
+    .msg-time { font-size: 10px; color: #bbb; margin-top: 3px; }
     .msg-row.mine .msg-time { text-align: right; }
-    .date-divider { text-align: center; font-size: 11px; color: #bbb; letter-spacing: 0.5px; margin: 4px 0; }
-    .chat-input { background: #fff; border-top: 0.5px solid rgba(0,0,0,0.1); padding: 14px 20px; display: flex; align-items: flex-end; gap: 10px; flex-shrink: 0; }
-    .chat-input textarea { flex: 1; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 20px; padding: 10px 16px; font-size: 14px; font-family: 'DM Sans', sans-serif; resize: none; outline: none; max-height: 120px; line-height: 1.5; color: #1a1a1a; background: #f7f7f5; }
-    .chat-input textarea:focus { border-color: rgba(0,0,0,0.2); background: #fff; }
-    .chat-input textarea::placeholder { color: #bbb; }
+    .date-divider { text-align: center; font-size: 11px; color: #bbb; letter-spacing: 0.5px; margin: 8px 0; }
+
+    /* System messages */
+    .sys-msg { text-align: center; font-size: 12px; color: #aaa; background: rgba(0,0,0,0.04); border-radius: var(--radius-full); padding: 5px 14px; margin: 8px auto; max-width: 320px; }
+    .sys-msg.alert { background: var(--amber-light); color: var(--amber-dark); }
+    .sys-msg.success { background: var(--green-light); color: var(--green-dark); }
+    .sys-msg.danger { background: var(--red-light); color: var(--red); }
+
+    /* Saved panel */
+    .saved-panel { width: 0; flex-shrink: 0; background: #fff; border-left: 0.5px solid rgba(0,0,0,0.1); overflow: hidden; transition: width 0.25s ease; display: flex; flex-direction: column; }
+    .saved-panel.open { width: 260px; }
+    .saved-panel-header { padding: 16px 18px; border-bottom: 0.5px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .saved-panel-header h3 { font-size: 14px; font-weight: 500; }
+    .saved-close { background: none; border: none; cursor: pointer; font-size: 18px; color: #aaa; line-height: 1; }
+    .saved-scroll { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .saved-item { background: #fffdf0; border: 0.5px solid #f5c842; border-radius: var(--radius-md); padding: 10px 12px; font-size: 13px; line-height: 1.5; position: relative; }
+    .saved-item-meta { font-size: 11px; color: #aaa; margin-top: 4px; }
+    .unsave-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; cursor: pointer; font-size: 14px; color: #ccc; }
+    .unsave-btn:hover { color: var(--red); }
+
+    /* Input */
+    .chat-input-area { background: #fff; border-top: 0.5px solid rgba(0,0,0,0.1); padding: 12px 18px; display: flex; align-items: flex-end; gap: 10px; flex-shrink: 0; }
+    .chat-input-area textarea { flex: 1; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 20px; padding: 10px 16px; font-size: 14px; font-family: 'DM Sans', sans-serif; resize: none; outline: none; max-height: 120px; line-height: 1.5; color: #1a1a1a; background: #f7f7f5; }
+    .chat-input-area textarea:focus { border-color: rgba(0,0,0,0.2); background: #fff; }
+    .chat-input-area textarea::placeholder { color: #bbb; }
     .send-btn { width: 40px; height: 40px; border-radius: 50%; background: #1a1a1a; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s; }
     .send-btn:hover { background: #333; }
+    .ended-notice { text-align: center; padding: 14px; font-size: 13px; color: #aaa; background: #f7f7f5; border-top: 0.5px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+
+    /* Empty / Auth */
     .chat-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #bbb; }
     .chat-empty-icon { font-size: 36px; opacity: 0.4; }
     .auth-wall { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; padding: 40px; }
     .auth-wall h2 { font-family: 'Instrument Serif', serif; font-size: 24px; font-weight: 400; }
-    .auth-wall p { font-size: 14px; color: #888; }
     .btn-dark { background: #1a1a1a; color: #fff; border: none; border-radius: var(--radius-full); padding: 13px 28px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    @media (max-width: 700px) { .convo-list { display: none; } .nav-links { display: none; } }
+
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .modal { background: #fff; border-radius: var(--radius-lg); padding: 32px; max-width: 400px; width: 100%; }
+    .modal h3 { font-family: 'Instrument Serif', serif; font-size: 22px; margin-bottom: 10px; }
+    .modal p { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 24px; }
+    .modal-btns { display: flex; gap: 10px; }
+    .btn-cancel { flex: 1; background: #f0f0ee; color: #666; border: none; border-radius: var(--radius-full); padding: 12px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-confirm-red { flex: 1; background: var(--red); color: #fff; border: none; border-radius: var(--radius-full); padding: 12px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-confirm-green { flex: 1; background: var(--green); color: #fff; border: none; border-radius: var(--radius-full); padding: 12px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+    /* Refund timer */
+    .refund-bar { background: var(--amber-light); border-top: 0.5px solid #f0d4a0; padding: 10px 20px; display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--amber-dark); flex-shrink: 0; }
+    .refund-timer { font-weight: 500; font-variant-numeric: tabular-nums; }
+
+    /* Notification panel */
+    .notif-panel { position: absolute; right: 20px; top: 60px; width: 320px; background: #fff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-lg); box-shadow: 0 8px 32px rgba(0,0,0,0.12); z-index: 300; overflow: hidden; display: none; }
+    .notif-panel.show { display: block; }
+    .notif-panel-header { padding: 14px 18px; border-bottom: 0.5px solid rgba(0,0,0,0.08); font-size: 13px; font-weight: 500; }
+    .notif-item { padding: 12px 18px; border-bottom: 0.5px solid rgba(0,0,0,0.06); font-size: 13px; line-height: 1.5; cursor: pointer; }
+    .notif-item:hover { background: #f7f7f5; }
+    .notif-item.unread { background: var(--blue-light); }
+    .notif-item-meta { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+    @media (max-width: 700px) {
+      .convo-list { display: none; }
+      .nav-links { display: none; }
+      .saved-panel.open { width: 240px; }
+    }
   </style>
 </head>
 <body>
@@ -73,20 +150,49 @@
     </div>
   </nav>
 
+  <div style="position:relative;">
+    <div class="notif-panel" id="notifPanel">
+      <div class="notif-panel-header">notifications</div>
+      <div id="notifList"><div style="padding:20px;font-size:13px;color:#bbb;text-align:center;">no notifications yet</div></div>
+    </div>
+  </div>
+
   <div class="messages-wrap" id="messagesWrap">
-    <!-- Auth wall for logged out users -->
     <div class="auth-wall" id="authWall">
       <div class="chat-empty-icon">💬</div>
       <h2>Sign in to message sellers</h2>
-      <p>You need a brim account to send and receive messages.</p>
+      <p style="font-size:14px;color:#888;">You need a brim account to send and receive messages.</p>
       <a href="login.html?redirect=messages.html"><button class="btn-dark">sign in →</button></a>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="endConvoModal" style="display:none;" class="modal-overlay">
+    <div class="modal">
+      <h3>End conversation?</h3>
+      <p>This will clear all messages in the chat. You can choose to <strong>save important messages</strong> (like meetup addresses) before ending — those will stay in your saved panel.</p>
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="closeModal('endConvoModal')">cancel</button>
+        <button class="btn-confirm-red" onclick="confirmEndConvo()">end & clear chat</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirmReceivedModal" style="display:none;" class="modal-overlay">
+    <div class="modal">
+      <h3>Confirm you received it?</h3>
+      <p>By confirming, you let the seller know the item was delivered. If you haven't received it yet, keep this open — you'll get a full refund if 24 hours pass with no delivery.</p>
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="closeModal('confirmReceivedModal')">not yet</button>
+        <button class="btn-confirm-green" onclick="confirmReceived()">yes, I got it! ✓</button>
+      </div>
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, collection, query, where, orderBy, onSnapshot, addDoc, doc, getDoc, setDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, query, where, orderBy, onSnapshot, addDoc, doc, getDoc, setDoc, updateDoc, deleteDoc, getDocs, serverTimestamp, writeBatch, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const app = initializeApp({
       apiKey: "AIzaSyCZmGDUuv7P4XcEJ0Sj6SFjQVKqLeeSOKQ",
@@ -102,7 +208,11 @@
     const params = new URLSearchParams(window.location.search);
     let currentUser = null;
     let activeConvId = null;
+    let activeConvData = null;
     let threadUnsub = null;
+    let savedMessages = {}; // msgId -> msgData
+    let savedPanelOpen = false;
+    let activeTab = 'all'; // 'all' or 'buying' or 'selling'
 
     function timeAgo(ts) {
       if (!ts) return '';
@@ -113,32 +223,88 @@
       if (diff < 86400000) return Math.floor(diff/3600000) + 'h';
       return Math.floor(diff/86400000) + 'd';
     }
-
     function formatTime(ts) {
       if (!ts) return '';
       const d = ts.toDate ? ts.toDate() : new Date(ts);
       return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
     }
+    function formatCountdown(ms) {
+      if (ms <= 0) return '00:00:00';
+      const h = Math.floor(ms/3600000);
+      const m = Math.floor((ms%3600000)/60000);
+      const s = Math.floor((ms%60000)/1000);
+      return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
 
     onAuthStateChanged(auth, async user => {
-      if (!user) return; // auth wall shown by default
+      if (!user) return;
       currentUser = user;
       document.getElementById('authWall').style.display = 'none';
-      document.getElementById('navRight').innerHTML = `<a href="profile.html?uid=${user.uid}" style="font-size:13px;color:#888;">my profile →</a>`;
+      renderNavBar();
       renderApp();
 
-      // If coming from product page with ?listing=X&seller=Y, open/create that convo
       const listingId = params.get('listing');
       const sellerId = params.get('seller');
       if (listingId && sellerId && sellerId !== user.uid) {
-        await openOrCreateConvo(listingId, sellerId);
+        setTimeout(() => openOrCreateConvo(listingId, sellerId), 600);
       }
     });
 
-    async function renderApp() {
+    function renderNavBar() {
+      document.getElementById('navRight').innerHTML = `
+        <a href="profile.html?uid=${currentUser.uid}" style="font-size:13px;color:#888;">my profile</a>
+        <button class="notif-btn" id="notifBtn" onclick="toggleNotifPanel()">
+          🔔
+          <div class="notif-dot" id="notifDot"></div>
+        </button>`;
+      loadNotifications();
+    }
+
+    async function loadNotifications() {
+      const q = query(collection(db, 'notifications'), where('userId','==',currentUser.uid), orderBy('createdAt','desc'));
+      onSnapshot(q, snap => {
+        const unread = snap.docs.filter(d => !d.data().read);
+        const dot = document.getElementById('notifDot');
+        if (dot) dot.classList.toggle('show', unread.length > 0);
+        const list = document.getElementById('notifList');
+        if (!list) return;
+        if (snap.empty) { list.innerHTML = '<div style="padding:20px;font-size:13px;color:#bbb;text-align:center;">no notifications yet</div>'; return; }
+        list.innerHTML = snap.docs.slice(0, 20).map(d => {
+          const n = d.data();
+          return `<div class="notif-item ${!n.read ? 'unread' : ''}" onclick="handleNotifClick('${d.id}','${n.convId||''}')">
+            <div>${n.text || 'You have a new notification'}</div>
+            <div class="notif-item-meta">${timeAgo(n.createdAt)}</div>
+          </div>`;
+        }).join('');
+      });
+    }
+
+    window.handleNotifClick = async (notifId, convId) => {
+      await updateDoc(doc(db, 'notifications', notifId), { read: true });
+      document.getElementById('notifPanel').classList.remove('show');
+      if (convId) openConvo(convId);
+    };
+
+    window.toggleNotifPanel = () => {
+      document.getElementById('notifPanel').classList.toggle('show');
+    };
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#notifBtn') && !e.target.closest('#notifPanel')) {
+        document.getElementById('notifPanel')?.classList.remove('show');
+      }
+    });
+
+    function renderApp() {
       document.getElementById('messagesWrap').innerHTML = `
         <div class="convo-list">
-          <div class="convo-header"><h2>messages</h2></div>
+          <div class="convo-header">
+            <h2>messages</h2>
+          </div>
+          <div class="convo-tabs">
+            <button class="convo-tab on" id="tabAll" onclick="switchTab('all')">all</button>
+            <button class="convo-tab" id="tabBuying" onclick="switchTab('buying')">buying</button>
+            <button class="convo-tab" id="tabSelling" onclick="switchTab('selling')">selling</button>
+          </div>
           <div class="convo-scroll" id="convoScroll">
             <div style="padding:20px;font-size:13px;color:#bbb;">loading…</div>
           </div>
@@ -148,73 +314,286 @@
             <div class="chat-empty-icon">💬</div>
             <div style="font-size:14px;">select a conversation</div>
           </div>
+        </div>
+        <div class="saved-panel" id="savedPanel">
+          <div class="saved-panel-header">
+            <h3>⭐ saved messages</h3>
+            <button class="saved-close" onclick="closeSavedPanel()">×</button>
+          </div>
+          <div class="saved-scroll" id="savedScroll">
+            <div style="font-size:13px;color:#bbb;text-align:center;padding:20px;">star messages to save them here</div>
+          </div>
         </div>`;
 
-      // Listen to all conversations the user is part of
+      subscribeConvos();
+    }
+
+    window.switchTab = (tab) => {
+      activeTab = tab;
+      ['all','buying','selling'].forEach(t => {
+        document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1))?.classList.toggle('on', t===tab);
+      });
+    };
+
+    function subscribeConvos() {
       const q = query(collection(db, 'conversations'), where('participants','array-contains', currentUser.uid), orderBy('lastMessageAt','desc'));
       onSnapshot(q, snap => {
         const scroll = document.getElementById('convoScroll');
+        if (!scroll) return;
         if (snap.empty) { scroll.innerHTML = '<div style="padding:20px;font-size:13px;color:#bbb;">no conversations yet.</div>'; return; }
+        
+        // Count total unread
+        let totalUnread = 0;
         scroll.innerHTML = snap.docs.map(d => {
           const data = d.data();
           const otherId = data.participants.find(p => p !== currentUser.uid);
           const otherName = data.participantNames?.[otherId] || 'user';
           const initial = otherName[0].toUpperCase();
-          return `<div class="convo-item ${d.id===activeConvId?'active':''}" data-id="${d.id}" onclick="openConvo('${d.id}','${otherName}','${initial}')">
+          const unreadCount = data.unreadCounts?.[currentUser.uid] || 0;
+          totalUnread += unreadCount;
+          const ended = data.ended;
+          return `<div class="convo-item ${d.id===activeConvId?'active':''}" data-id="${d.id}" onclick="openConvo('${d.id}')">
             <div class="convo-avatar">${initial}</div>
             <div class="convo-info">
-              <div class="convo-name">${otherName}</div>
-              <div class="convo-preview">${data.lastMessage||''}</div>
+              <div class="convo-name">
+                ${otherName}
+                ${ended ? '<span class="ended-badge">ended</span>' : ''}
+              </div>
+              <div class="convo-preview">${data.lastMessage||'—'}</div>
             </div>
-            <div class="convo-time">${timeAgo(data.lastMessageAt)}</div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+              <div class="convo-time">${timeAgo(data.lastMessageAt)}</div>
+              ${unreadCount > 0 ? `<div class="unread-badge">${unreadCount}</div>` : ''}
+            </div>
           </div>`;
         }).join('');
       });
     }
 
-    window.openConvo = function(convId, otherName, initial) {
+    window.openConvo = async function(convId) {
       activeConvId = convId;
-      // highlight active
+      savedMessages = {};
+
       document.querySelectorAll('.convo-item').forEach(el => el.classList.toggle('active', el.dataset.id === convId));
 
+      // Mark as read
+      await updateDoc(doc(db, 'conversations', convId), {
+        [`unreadCounts.${currentUser.uid}`]: 0
+      }).catch(()=>{});
+
+      const convSnap = await getDoc(doc(db, 'conversations', convId));
+      if (!convSnap.exists()) return;
+      activeConvData = convSnap.data();
+      const otherId = activeConvData.participants.find(p => p !== currentUser.uid);
+      const otherName = activeConvData.participantNames?.[otherId] || 'user';
+      const initial = otherName[0].toUpperCase();
+      const ended = activeConvData.ended;
+      const isBuyer = activeConvData.buyerId === currentUser.uid;
+      const purchaseTimestamp = activeConvData.purchasedAt;
+
+      // Load saved messages for this convo
+      const savedSnap = await getDocs(collection(db, 'conversations', convId, 'savedMessages'));
+      savedSnap.forEach(sd => { savedMessages[sd.id] = sd.data(); });
+      renderSavedPanel();
+
       const pane = document.getElementById('chatPane');
+      
+      // Refund timer bar HTML
+      let refundBarHtml = '';
+      if (purchaseTimestamp && !activeConvData.receivedConfirmed && isBuyer) {
+        const purchasedAtMs = purchaseTimestamp.toDate ? purchaseTimestamp.toDate().getTime() : new Date(purchaseTimestamp).getTime();
+        const deadline = purchasedAtMs + 24*60*60*1000;
+        const remaining = deadline - Date.now();
+        if (remaining > 0) {
+          refundBarHtml = `<div class="refund-bar">⏱ Auto-refund if not delivered: <span class="refund-timer" id="refundTimer">${formatCountdown(remaining)}</span></div>`;
+        }
+      }
+
       pane.innerHTML = `
         <div class="chat-header">
           <div class="chat-avatar">${initial}</div>
           <div class="chat-header-info">
             <div class="chat-header-name">${otherName}</div>
-            <div class="chat-header-sub"><a href="profile.html?uid=" style="color:var(--blue-dark);">view profile →</a></div>
+            <div class="chat-header-sub"><a href="profile.html?uid=${otherId}" style="color:var(--blue-dark);">view profile →</a></div>
+          </div>
+          <div class="chat-header-actions">
+            <button class="hdr-btn" onclick="openSavedPanel()">⭐ saved (${Object.keys(savedMessages).length})</button>
+            ${isBuyer && activeConvData.purchasedAt && !activeConvData.receivedConfirmed ? `<button class="hdr-btn confirm" onclick="showModal('confirmReceivedModal')">✓ confirm received</button>` : ''}
+            ${!ended ? `<button class="hdr-btn danger" onclick="showModal('endConvoModal')">end convo</button>` : ''}
           </div>
         </div>
+        ${refundBarHtml}
         <div class="chat-scroll" id="chatScroll"></div>
-        <div class="chat-input">
-          <textarea id="msgInput" placeholder="type a message…" rows="1" oninput="autoResize(this)" onkeydown="handleKey(event)"></textarea>
-          <button class="send-btn" onclick="sendMessage()">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8L14 2L8 14L7 9L2 8Z" fill="white"/></svg>
-          </button>
-        </div>`;
+        ${ended
+          ? `<div class="ended-notice">This conversation has ended. <a href="#" onclick="restartConvo(event)" style="color:var(--blue-dark);">restart chat →</a></div>`
+          : `<div class="chat-input-area">
+              <textarea id="msgInput" placeholder="type a message…" rows="1" oninput="autoResize(this)" onkeydown="handleKey(event)"></textarea>
+              <button class="send-btn" onclick="sendMessage()">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8L14 2L8 14L7 9L2 8Z" fill="white"/></svg>
+              </button>
+             </div>`}`;
 
-      // Unsubscribe from previous thread
       if (threadUnsub) threadUnsub();
 
       const threadQ = query(collection(db, 'conversations', convId, 'thread'), orderBy('sentAt', 'asc'));
       threadUnsub = onSnapshot(threadQ, snap => {
         const scroll = document.getElementById('chatScroll');
         if (!scroll) return;
+        if (snap.empty) {
+          scroll.innerHTML = `<div class="sys-msg">Say hello! Ask about the item, agree on a meetup, or make an offer.</div>`;
+          return;
+        }
         scroll.innerHTML = snap.docs.map(d => {
           const msg = d.data();
           const isMine = msg.senderId === currentUser.uid;
-          const initial = isMine ? (currentUser.displayName||currentUser.email||'?')[0].toUpperCase() : otherName[0].toUpperCase();
-          return `<div class="msg-row ${isMine?'mine':''}">
-            <div class="msg-avatar ${isMine?'me':''}">${initial}</div>
-            <div>
-              <div class="msg-bubble">${msg.text.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</div>
+          const init = isMine ? (currentUser.displayName||currentUser.email||'?')[0].toUpperCase() : initial;
+          const isSaved = !!savedMessages[d.id];
+          
+          if (msg.type === 'system') {
+            return `<div class="sys-msg ${msg.variant||''}">${msg.text}</div>`;
+          }
+          
+          return `<div class="msg-row ${isMine?'mine':''}" id="msg-${d.id}">
+            <div class="msg-avatar ${isMine?'me':''}">${init}</div>
+            <div class="msg-content">
+              <div class="msg-bubble ${isSaved?'saved':''}">${msg.text.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</div>
+              <div class="msg-actions">
+                <button class="msg-action-btn" onclick="toggleSaveMsg('${d.id}','${msg.text.replace(/'/g,"\\'")}','${isMine?'me':otherName}')">${isSaved ? '★ unsave' : '☆ save'}</button>
+              </div>
               <div class="msg-time">${formatTime(msg.sentAt)}</div>
             </div>
           </div>`;
         }).join('');
         scroll.scrollTop = scroll.scrollHeight;
       });
+
+      // Start refund timer countdown
+      if (refundBarHtml) {
+        startRefundTimer(convId, purchaseTimestamp);
+      }
+    };
+
+    function startRefundTimer(convId, purchaseTimestamp) {
+      const purchasedAtMs = purchaseTimestamp.toDate ? purchaseTimestamp.toDate().getTime() : new Date(purchaseTimestamp).getTime();
+      const deadline = purchasedAtMs + 24*60*60*1000;
+      const interval = setInterval(() => {
+        const timerEl = document.getElementById('refundTimer');
+        if (!timerEl) { clearInterval(interval); return; }
+        const remaining = deadline - Date.now();
+        if (remaining <= 0) {
+          timerEl.textContent = 'EXPIRED — refund processing';
+          clearInterval(interval);
+          triggerAutoRefund(convId);
+        } else {
+          timerEl.textContent = formatCountdown(remaining);
+        }
+      }, 1000);
+    }
+
+    async function triggerAutoRefund(convId) {
+      await updateDoc(doc(db, 'conversations', convId), { refundTriggered: true });
+      await addDoc(collection(db, 'conversations', convId, 'thread'), {
+        senderId: 'system', type: 'system', variant: 'danger',
+        text: '⚠️ 24 hours have passed with no delivery confirmed. A full refund has been initiated.',
+        sentAt: serverTimestamp()
+      });
+    }
+
+    window.toggleSaveMsg = async (msgId, text, sender) => {
+      if (savedMessages[msgId]) {
+        delete savedMessages[msgId];
+        await deleteDoc(doc(db, 'conversations', activeConvId, 'savedMessages', msgId));
+      } else {
+        const data = { text, sender, savedAt: serverTimestamp() };
+        savedMessages[msgId] = data;
+        await setDoc(doc(db, 'conversations', activeConvId, 'savedMessages', msgId), data);
+      }
+      renderSavedPanel();
+      // Re-open convo to refresh bubble styles
+      openConvo(activeConvId);
+    };
+
+    function renderSavedPanel() {
+      const scroll = document.getElementById('savedScroll');
+      if (!scroll) return;
+      const keys = Object.keys(savedMessages);
+      if (keys.length === 0) {
+        scroll.innerHTML = '<div style="font-size:13px;color:#bbb;text-align:center;padding:20px;">star messages to save them here</div>';
+      } else {
+        scroll.innerHTML = keys.map(id => {
+          const m = savedMessages[id];
+          return `<div class="saved-item">
+            <div>${m.text?.replace(/</g,'&lt;') || ''}</div>
+            <div class="saved-item-meta">from ${m.sender || 'unknown'}</div>
+            <button class="unsave-btn" onclick="toggleSaveMsg('${id}','${(m.text||'').replace(/'/g,"\\'")}','${m.sender||''}')">×</button>
+          </div>`;
+        }).join('');
+      }
+      // Update saved count button
+      const savedBtn = document.querySelector('.hdr-btn:first-child');
+      if (savedBtn && savedBtn.textContent.includes('saved')) {
+        savedBtn.textContent = `⭐ saved (${keys.length})`;
+      }
+    }
+
+    window.openSavedPanel = () => {
+      savedPanelOpen = true;
+      document.getElementById('savedPanel').classList.add('open');
+    };
+    window.closeSavedPanel = () => {
+      savedPanelOpen = false;
+      document.getElementById('savedPanel').classList.remove('open');
+    };
+
+    window.showModal = (id) => { document.getElementById(id).style.display = 'flex'; };
+    window.closeModal = (id) => { document.getElementById(id).style.display = 'none'; };
+
+    window.confirmEndConvo = async () => {
+      if (!activeConvId) return;
+      closeModal('endConvoModal');
+      // Delete all non-saved thread messages
+      const threadSnap = await getDocs(collection(db, 'conversations', activeConvId, 'thread'));
+      const batch = writeBatch(db);
+      threadSnap.forEach(d => {
+        if (!savedMessages[d.id]) batch.delete(d.ref);
+      });
+      await batch.commit();
+      // Mark convo as ended
+      await updateDoc(doc(db, 'conversations', activeConvId), { ended: true, lastMessage: '— conversation ended —' });
+      // Add system message
+      await addDoc(collection(db, 'conversations', activeConvId, 'thread'), {
+        senderId: 'system', type: 'system',
+        text: `Conversation ended by ${currentUser.displayName || 'user'}. Saved messages are preserved.`,
+        sentAt: serverTimestamp()
+      });
+      openConvo(activeConvId);
+    };
+
+    window.restartConvo = async (e) => {
+      e.preventDefault();
+      await updateDoc(doc(db, 'conversations', activeConvId), { ended: false });
+      openConvo(activeConvId);
+    };
+
+    window.confirmReceived = async () => {
+      if (!activeConvId) return;
+      closeModal('confirmReceivedModal');
+      await updateDoc(doc(db, 'conversations', activeConvId), { receivedConfirmed: true, receivedAt: serverTimestamp() });
+      await addDoc(collection(db, 'conversations', activeConvId, 'thread'), {
+        senderId: 'system', type: 'system', variant: 'success',
+        text: '✅ Buyer confirmed they received the item! Transaction complete.',
+        sentAt: serverTimestamp()
+      });
+      // Notify seller
+      const sellerId = activeConvData?.participants?.find(p => p !== currentUser.uid);
+      if (sellerId) {
+        await addDoc(collection(db, 'notifications'), {
+          userId: sellerId, read: false, convId: activeConvId,
+          text: `✅ ${currentUser.displayName || 'A buyer'} confirmed they received your item!`,
+          createdAt: serverTimestamp()
+        });
+      }
+      openConvo(activeConvId);
     };
 
     window.sendMessage = async function() {
@@ -223,63 +602,61 @@
       const text = input.value.trim();
       if (!text) return;
       input.value = ''; input.style.height = 'auto';
-
       const myName = currentUser.displayName || currentUser.email.split('@')[0];
+
       try {
         await addDoc(collection(db, 'conversations', activeConvId, 'thread'), {
-          senderId: currentUser.uid,
-          senderName: myName,
-          text,
-          sentAt: serverTimestamp()
+          senderId: currentUser.uid, senderName: myName, text, sentAt: serverTimestamp()
         });
-        // Update last message on conversation doc
-        await setDoc(doc(db, 'conversations', activeConvId), { lastMessage: text, lastMessageAt: serverTimestamp() }, { merge: true });
-      } catch (err) {
-        console.error('Send failed:', err);
-      }
+        // Update convo meta & increment unread for the other person
+        const otherId = activeConvData?.participants?.find(p => p !== currentUser.uid);
+        await updateDoc(doc(db, 'conversations', activeConvId), {
+          lastMessage: text, lastMessageAt: serverTimestamp(),
+          [`unreadCounts.${otherId}`]: (activeConvData?.unreadCounts?.[otherId] || 0) + 1
+        });
+        // Send notification to other person
+        if (otherId) {
+          await addDoc(collection(db, 'notifications'), {
+            userId: otherId, read: false, convId: activeConvId,
+            text: `💬 New message from ${myName}: "${text.slice(0,50)}${text.length>50?'…':''}"`,
+            createdAt: serverTimestamp()
+          });
+        }
+      } catch (err) { console.error('Send failed:', err); }
     };
 
     async function openOrCreateConvo(listingId, sellerId) {
-      // Find existing conversation
       const q = query(collection(db, 'conversations'),
         where('participants','array-contains', currentUser.uid),
         where('listingId','==', listingId));
       const snap = await getDocs(q);
-      
       let convId;
       if (!snap.empty) {
         convId = snap.docs[0].id;
       } else {
-        // Get seller name
         const sellerSnap = await getDoc(doc(db, 'users', sellerId));
         const sellerName = sellerSnap.exists() ? sellerSnap.data().username : 'seller';
         const myName = currentUser.displayName || currentUser.email.split('@')[0];
-
         const convRef = await addDoc(collection(db, 'conversations'), {
           participants: [currentUser.uid, sellerId],
           participantNames: { [currentUser.uid]: myName, [sellerId]: sellerName },
-          listingId,
-          lastMessage: '',
-          lastMessageAt: serverTimestamp()
+          listingId, buyerId: currentUser.uid, sellerId,
+          lastMessage: '', lastMessageAt: serverTimestamp(),
+          ended: false, unreadCounts: {}
         });
         convId = convRef.id;
+        // Notify seller of new message thread
+        await addDoc(collection(db, 'notifications'), {
+          userId: sellerId, read: false, convId,
+          text: `🛍️ ${myName} is interested in your listing!`,
+          createdAt: serverTimestamp()
+        });
       }
-      
-      // Wait a tick for the UI to render then open
-      setTimeout(() => {
-        const sellerSnap_name = params.get('sellerName') || 'seller';
-        openConvo(convId, sellerSnap_name, sellerSnap_name[0]?.toUpperCase() || 'S');
-      }, 500);
+      openConvo(convId);
     }
 
-    window.autoResize = function(el) {
-      el.style.height = 'auto';
-      el.style.height = Math.min(el.scrollHeight, 120) + 'px';
-    };
-
-    window.handleKey = function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-    };
+    window.autoResize = function(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; };
+    window.handleKey = function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
   </script>
 </body>
 </html>
