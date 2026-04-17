@@ -12,6 +12,7 @@
       --blue: #378ADD; --blue-light: #E6F1FB; --blue-border: #B5D4F4;
       --blue-dark: #185FA5; --green-light: #EAF3DE; --green-dark: #3B6D11;
       --amber-light: #FAEEDA; --amber-dark: #854F0B;
+      --purple-light: #F0EDFB; --purple-dark: #5B2D9E; --purple-border: #C8B8F0;
       --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px;
     }
     body { font-family: 'DM Sans', sans-serif; background: #f5f5f3; color: #1a1a1a; }
@@ -23,15 +24,34 @@
     .nav-links a:hover { color: #1a1a1a; }
     .nav-right { display: flex; align-items: center; gap: 10px; }
     .sign-btn { font-size: 13px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-full); padding: 7px 16px; background: var(--blue-light); cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    .main { padding: 40px 28px 60px; max-width: 760px; margin: 0 auto; }
+    .main { padding: 40px 28px 60px; max-width: 800px; margin: 0 auto; }
     .page-title { font-family: 'Instrument Serif', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.5px; margin-bottom: 6px; }
     .page-title em { font-style: italic; color: var(--blue); }
-    .page-sub { font-size: 14px; color: #888; margin-bottom: 36px; }
+    .page-sub { font-size: 14px; color: #888; margin-bottom: 32px; }
+
+    /* Listing type toggle */
+    .type-toggle { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+    .type-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 24px; border-radius: var(--radius-lg); border: 0.5px solid rgba(0,0,0,0.15); cursor: pointer; font-family: 'DM Sans', sans-serif; background: #fff; transition: all 0.15s; flex: 1; min-width: 120px; }
+    .type-btn-icon { font-size: 24px; }
+    .type-btn-label { font-size: 13px; font-weight: 500; color: #444; }
+    .type-btn-sub { font-size: 11px; color: #aaa; text-align: center; }
+    .type-btn.on.physical { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .type-btn.on.physical .type-btn-label, .type-btn.on.physical .type-btn-sub { color: #fff; }
+    .type-btn.on.digital { background: var(--purple-light); border-color: var(--purple-border); }
+    .type-btn.on.digital .type-btn-label { color: var(--purple-dark); }
+    .type-btn.on.digital .type-btn-sub { color: var(--purple-dark); opacity: 0.7; }
+
+    /* Digital subtype */
+    .digital-subtype { display: flex; gap: 10px; margin-bottom: 20px; }
+    .subtype-btn { padding: 8px 18px; border-radius: var(--radius-full); border: 0.5px solid rgba(0,0,0,0.15); font-size: 13px; color: #666; cursor: pointer; background: #fff; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+    .subtype-btn.on { background: var(--purple-dark); color: #fff; border-color: var(--purple-dark); }
+
     .form-layout { display: flex; gap: 28px; align-items: flex-start; }
     .form-col { flex: 1; min-width: 0; }
     .preview-col { width: 240px; flex-shrink: 0; }
     .form-section { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; }
-    .form-section-title { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 20px; }
+    .form-section-title { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .section-badge { font-size: 10px; background: var(--purple-light); color: var(--purple-dark); border-radius: 4px; padding: 2px 7px; text-transform: none; letter-spacing: 0; }
     .field { margin-bottom: 18px; }
     .field:last-child { margin-bottom: 0; }
     .field label { display: block; font-size: 13px; font-weight: 500; color: #444; margin-bottom: 7px; }
@@ -78,21 +98,25 @@
     .preview-seller { font-size: 12px; color: #aaa; margin-bottom: 8px; }
     .preview-price { font-size: 16px; font-weight: 500; color: #aaa; }
     .preview-price.has-val { color: #1a1a1a; }
+    .preview-digital-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--purple-light); color: var(--purple-dark); border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 500; margin-bottom: 6px; }
     .submit-row { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
     .btn-primary { background: #1a1a1a; color: #fff; border: none; border-radius: var(--radius-full); padding: 14px 32px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
     .btn-primary:hover { background: #333; }
     .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
     .submit-note { font-size: 12px; color: #aaa; line-height: 1.5; }
-    .kofi-note { background: #FFF5F5; border: 0.5px solid #FFD4D4; border-radius: var(--radius-md); padding: 14px 16px; font-size: 13px; color: #884444; line-height: 1.6; }
-    .kofi-note strong { color: #FF5E5B; }
+    .note-box { border-radius: var(--radius-md); padding: 14px 16px; font-size: 13px; line-height: 1.6; }
+    .note-purple { background: var(--purple-light); color: var(--purple-dark); border: 0.5px solid var(--purple-border); }
+    .note-amber { background: var(--amber-light); color: var(--amber-dark); border: 0.5px solid #f0d4a0; }
     .auth-gate { background: var(--blue-light); border: 0.5px solid var(--blue-border); border-radius: var(--radius-lg); padding: 32px; text-align: center; margin-bottom: 24px; }
     .auth-gate h3 { font-family: 'Instrument Serif', serif; font-size: 22px; margin-bottom: 8px; }
     .auth-gate p { font-size: 14px; color: #555; margin-bottom: 20px; }
+    .cred-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .add-cred-btn { font-size: 13px; color: var(--purple-dark); background: var(--purple-light); border: 0.5px solid var(--purple-border); border-radius: var(--radius-full); padding: 7px 16px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     .footer { padding: 20px 28px; border-top: 0.5px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; background: #fff; }
     .footer-logo { font-family: 'Instrument Serif', serif; font-size: 20px; }
     .footer-logo em { font-style: italic; color: var(--blue); }
     .footer-r { font-size: 12px; color: #aaa; }
-    @media (max-width: 800px) { .form-layout { flex-direction: column; } .preview-col { width: 100%; } .preview-sticky { position: static; } .main { padding: 24px 16px 48px; } .nav-links { display: none; } }
+    @media (max-width: 800px) { .form-layout { flex-direction: column; } .preview-col { width: 100%; } .preview-sticky { position: static; } .main { padding: 24px 16px 48px; } .nav-links { display: none; } .type-toggle { gap: 8px; } }
   </style>
 </head>
 <body>
@@ -105,96 +129,175 @@
     </div>
     <div class="nav-right">
       <a href="login.html" id="signInLink"><button class="sign-btn">sign in</button></a>
-      <a href="profile.html" id="profileLink" style="display:none;font-size:13px;color:#888;" id="navUserLink">my profile →</a>
+      <a href="profile.html" id="profileLink" style="display:none;font-size:13px;color:#888;">my profile →</a>
     </div>
   </nav>
 
   <div class="main">
     <h1 class="page-title">list something <em>free.</em></h1>
-    <p class="page-sub">Your listing goes live instantly. Buyers message you directly — no middlemen.</p>
+    <p class="page-sub">Physical items, game accounts, Roblox items — sell anything to your community.</p>
 
-    <!-- Auth gate shown if not logged in -->
     <div class="auth-gate" id="authGate" style="display:none;">
       <h3>Sign in to list</h3>
       <p>You need a free account to publish listings on brim.</p>
       <a href="login.html?redirect=sell.html"><button class="btn-primary">sign in or create account →</button></a>
     </div>
 
-    <div class="form-layout" id="formBody">
-      <div class="form-col">
-        <!-- PHOTOS -->
-        <div class="form-section">
-          <div class="form-section-title">Photos</div>
-          <div class="photo-grid">
-            <div class="photo-slot has-photo" id="slot0"><img id="preview0" src="" alt="" style="display:none"><span class="plus" id="plus0">+</span><span class="slot-label" id="label0">main photo</span><input type="file" accept="image/*" onchange="previewPhoto(this,0)"></div>
-            <div class="photo-slot" id="slot1"><img id="preview1" src="" alt="" style="display:none"><span class="plus" id="plus1">+</span><span class="slot-label" id="label1">photo 2</span><input type="file" accept="image/*" onchange="previewPhoto(this,1)"></div>
-            <div class="photo-slot" id="slot2"><img id="preview2" src="" alt="" style="display:none"><span class="plus" id="plus2">+</span><span class="slot-label" id="label2">photo 3</span><input type="file" accept="image/*" onchange="previewPhoto(this,2)"></div>
-            <div class="photo-slot" id="slot3"><img id="preview3" src="" alt="" style="display:none"><span class="plus" id="plus3">+</span><span class="slot-label" id="label3">photo 4</span><input type="file" accept="image/*" onchange="previewPhoto(this,3)"></div>
-            <div class="photo-slot" id="slot4"><img id="preview4" src="" alt="" style="display:none"><span class="plus" id="plus4">+</span><span class="slot-label" id="label4">photo 5</span><input type="file" accept="image/*" onchange="previewPhoto(this,4)"></div>
-            <div class="photo-slot" id="slot5"><img id="preview5" src="" alt="" style="display:none"><span class="plus" id="plus5">+</span><span class="slot-label" id="label5">photo 6</span><input type="file" accept="image/*" onchange="previewPhoto(this,5)"></div>
-          </div>
-          <p class="photo-hint">Add up to 6 photos. First photo is your main listing image.</p>
-          <div id="uploadStatus" style="margin-top:10px;"></div>
-        </div>
-        <!-- DETAILS -->
-        <div class="form-section">
-          <div class="form-section-title">Item details</div>
-          <div class="field"><label>Title</label><input type="text" id="titleInput" placeholder="e.g. Sony WH-1000XM4 headphones" oninput="updatePreview()"></div>
-          <div class="field"><label>Description</label><textarea id="descInput" placeholder="Describe your item — condition, what's included, any flaws."></textarea></div>
-          <div class="field"><label>Category</label>
-            <select id="catInput">
-              <option value="" disabled selected>select a category...</option>
-              <option>electronics</option><option>clothing</option><option>home & garden</option>
-              <option>collectibles</option><option>sports</option><option>books</option><option>art</option><option>other</option>
-            </select>
-          </div>
-          <div class="field"><label>Condition</label>
-            <div class="condition-pills">
-              <button class="cond-pill" onclick="selectCond(this,'new','sel-new')">New</button>
-              <button class="cond-pill" onclick="selectCond(this,'like new','sel-like')">Like new</button>
-              <button class="cond-pill" onclick="selectCond(this,'good','sel-good')">Good</button>
-              <button class="cond-pill" onclick="selectCond(this,'fair','sel-fair')">Fair</button>
-            </div>
-          </div>
-        </div>
-        <!-- PRICING -->
-        <div class="form-section">
-          <div class="form-section-title">Pricing</div>
-          <div class="field"><label>Price</label>
-            <div class="price-wrap"><span class="price-prefix">$</span><input type="number" id="priceInput" placeholder="0.00" min="0" step="0.01" oninput="updatePreview()"></div>
-          </div>
-        </div>
-        <!-- KO-FI -->
-        <div class="form-section">
-          <div class="form-section-title">Payment</div>
-          <div class="field"><label>Your Ko-fi shop URL <span>(where buyers will pay)</span></label>
-            <input type="url" placeholder="https://ko-fi.com/yourusername" id="kofiInput">
-          </div>
-          <div class="kofi-note"><strong>Ko-fi</strong> handles all payments — free to set up, you keep more of your sale. <a href="https://ko-fi.com" target="_blank" style="color:#FF5E5B;text-decoration:underline;">Set up your Ko-fi →</a></div>
-        </div>
-        <!-- SUBMIT -->
-        <div class="submit-row">
-          <button class="btn-primary" id="submitBtn" onclick="submitListing()">publish listing →</button>
-          <p class="submit-note" id="submitNote">Free to list. Goes live instantly.</p>
+    <div id="formBody">
+      <!-- Listing type selector -->
+      <div class="type-toggle">
+        <button class="type-btn physical on" id="typeBtnPhysical" onclick="selectType('physical')">
+          <div class="type-btn-icon">📦</div>
+          <div class="type-btn-label">Physical item</div>
+          <div class="type-btn-sub">Clothes, electronics, furniture…</div>
+        </button>
+        <button class="type-btn digital" id="typeBtnDigital" onclick="selectType('digital')">
+          <div class="type-btn-icon">🎮</div>
+          <div class="type-btn-label">Digital / Game item</div>
+          <div class="type-btn-sub">Roblox, accounts, in-game items…</div>
+        </button>
+      </div>
+
+      <!-- Digital subtype (shown when digital selected) -->
+      <div id="digitalSubtypeRow" style="display:none;margin-bottom:20px;">
+        <p style="font-size:13px;font-weight:500;margin-bottom:10px;color:#444;">What are you selling?</p>
+        <div class="digital-subtype">
+          <button class="subtype-btn on" id="subtypeItem" onclick="selectSubtype('item')">🪙 Game item / currency</button>
+          <button class="subtype-btn" id="subtypeAccount" onclick="selectSubtype('account')">👤 Full account</button>
         </div>
       </div>
 
-      <!-- LIVE PREVIEW -->
-      <div class="preview-col">
-        <div class="preview-sticky">
-          <div class="preview-label">preview</div>
-          <div class="preview-card">
-            <div class="preview-img" id="previewImgWrap">
-              <div class="preview-img-placeholder" id="previewImgPlaceholder">📷</div>
-              <img id="previewMainImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
+      <div class="form-layout">
+        <div class="form-col">
+          <!-- PHOTOS (hidden for account type) -->
+          <div class="form-section" id="photoSection">
+            <div class="form-section-title">Photos</div>
+            <div class="photo-grid">
+              <div class="photo-slot has-photo" id="slot0"><img id="preview0" src="" alt="" style="display:none"><span class="plus" id="plus0">+</span><span class="slot-label" id="label0">main photo</span><input type="file" accept="image/*" onchange="previewPhoto(this,0)"></div>
+              <div class="photo-slot" id="slot1"><img id="preview1" src="" alt="" style="display:none"><span class="plus" id="plus1">+</span><span class="slot-label" id="label1">photo 2</span><input type="file" accept="image/*" onchange="previewPhoto(this,1)"></div>
+              <div class="photo-slot" id="slot2"><img id="preview2" src="" alt="" style="display:none"><span class="plus" id="plus2">+</span><span class="slot-label" id="label2">photo 3</span><input type="file" accept="image/*" onchange="previewPhoto(this,2)"></div>
+              <div class="photo-slot" id="slot3"><img id="preview3" src="" alt="" style="display:none"><span class="plus" id="plus3">+</span><span class="slot-label" id="label3">photo 4</span><input type="file" accept="image/*" onchange="previewPhoto(this,3)"></div>
+              <div class="photo-slot" id="slot4"><img id="preview4" src="" alt="" style="display:none"><span class="plus" id="plus4">+</span><span class="slot-label" id="label4">photo 5</span><input type="file" accept="image/*" onchange="previewPhoto(this,4)"></div>
+              <div class="photo-slot" id="slot5"><img id="preview5" src="" alt="" style="display:none"><span class="plus" id="plus5">+</span><span class="slot-label" id="label5">photo 6</span><input type="file" accept="image/*" onchange="previewPhoto(this,5)"></div>
             </div>
-            <div class="preview-body">
-              <div class="preview-name" id="previewName">your item title</div>
-              <div class="preview-seller">you &nbsp;·&nbsp; <span id="previewCond" style="font-size:10px;">—</span></div>
-              <div class="preview-price" id="previewPrice">$—</div>
+            <p class="photo-hint">Add up to 6 photos. First photo is your main listing image.</p>
+            <div id="uploadStatus" style="margin-top:10px;"></div>
+          </div>
+
+          <!-- ITEM DETAILS -->
+          <div class="form-section">
+            <div class="form-section-title">Item details</div>
+            <div class="field"><label>Title</label><input type="text" id="titleInput" placeholder="e.g. Roblox 1000 Robux" oninput="updatePreview()"></div>
+            <div class="field"><label>Description <span>(optional)</span></label><textarea id="descInput" placeholder="Describe the item, any details a buyer needs to know."></textarea></div>
+
+            <!-- Physical category -->
+            <div id="physicalFields">
+              <div class="field"><label>Category</label>
+                <select id="catInput">
+                  <option value="" disabled selected>select a category...</option>
+                  <option>electronics</option><option>clothing</option><option>home & garden</option>
+                  <option>collectibles</option><option>sports</option><option>books</option><option>art</option><option>other</option>
+                </select>
+              </div>
+              <div class="field"><label>Condition</label>
+                <div class="condition-pills">
+                  <button class="cond-pill" onclick="selectCond(this,'new','sel-new')">New</button>
+                  <button class="cond-pill" onclick="selectCond(this,'like new','sel-like')">Like new</button>
+                  <button class="cond-pill" onclick="selectCond(this,'good','sel-good')">Good</button>
+                  <button class="cond-pill" onclick="selectCond(this,'fair','sel-fair')">Fair</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Digital-specific fields -->
+            <div id="digitalFields" style="display:none;">
+              <div class="field"><label>Game / Platform</label>
+                <select id="gameInput">
+                  <option value="" disabled selected>select a game...</option>
+                  <option>Roblox</option><option>Minecraft</option><option>Fortnite</option>
+                  <option>Among Us</option><option>Adopt Me!</option><option>Blox Fruits</option>
+                  <option>Pet Simulator X</option><option>Counter-Strike 2</option><option>Valorant</option>
+                  <option>League of Legends</option><option>Clash of Clans</option><option>Clash Royale</option>
+                  <option>Brawl Stars</option><option>Pokémon GO</option><option>Discord</option><option>Other</option>
+                </select>
+              </div>
+              <div class="field" id="itemTypeField"><label>Item type <span>(e.g. "robux", "limited item", "gamepass")</span></label>
+                <input type="text" id="itemTypeInput" placeholder="e.g. Robux, Blox Fruits Devil Fruit, skin…">
+              </div>
+              <div class="field"><label>Delivery method</label>
+                <select id="deliveryInput">
+                  <option value="message">Seller sends via message (in-game trade / gift)</option>
+                  <option value="code">Code / link provided in messages</option>
+                  <option value="instant">Instant — no delivery needed (account)</option>
+                </select>
+              </div>
             </div>
           </div>
-          <p style="font-size:11px;color:#bbb;margin-top:10px;line-height:1.5;">This is how your listing will appear in search results.</p>
+
+          <!-- ACCOUNT CREDENTIALS (shown for account subtype) -->
+          <div class="form-section" id="credentialsSection" style="display:none;">
+            <div class="form-section-title">Account credentials <span class="section-badge">🔒 shown to buyer on purchase</span></div>
+            <div class="note-box note-amber" style="margin-bottom:16px;">Enter the username, password, and any extras (email recovery, backup codes). These are <strong>encrypted</strong> and only shown to the verified buyer after payment.</div>
+            <div id="credFields">
+              <div class="cred-input-row">
+                <input type="text" placeholder="Field name (e.g. Username)" class="cred-key" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+                <input type="text" placeholder="Value" class="cred-val-input" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+              </div>
+              <div class="cred-input-row">
+                <input type="text" placeholder="Field name (e.g. Password)" class="cred-key" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+                <input type="password" placeholder="Password" class="cred-val-input" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+              </div>
+            </div>
+            <button class="add-cred-btn" onclick="addCredRow()">+ add another field</button>
+          </div>
+
+          <!-- PRICING -->
+          <div class="form-section">
+            <div class="form-section-title">Pricing</div>
+            <div class="field"><label>Price</label>
+              <div class="price-wrap"><span class="price-prefix">$</span><input type="number" id="priceInput" placeholder="0.00" min="0" step="0.01" oninput="updatePreview()"></div>
+            </div>
+          </div>
+
+          <!-- PAYMENT / KO-FI (physical only) -->
+          <div class="form-section" id="kofiSection">
+            <div class="form-section-title">Payment</div>
+            <div class="field"><label>Your Ko-fi shop URL <span>(where buyers will pay)</span></label>
+              <input type="url" placeholder="https://ko-fi.com/yourusername" id="kofiInput">
+            </div>
+            <div class="note-box" style="background:#FFF5F5;border:0.5px solid #FFD4D4;color:#884444;"><strong style="color:#FF5E5B;">Ko-fi</strong> handles all payments — free to set up, you keep more of your sale. <a href="https://ko-fi.com" target="_blank" style="color:#FF5E5B;text-decoration:underline;">Set up your Ko-fi →</a></div>
+          </div>
+
+          <!-- Digital payment note -->
+          <div class="form-section note-purple" id="digitalPayNote" style="display:none;">
+            <div class="form-section-title" style="color:var(--purple-dark);">💳 Brim handles payment</div>
+            <p style="font-size:13px;line-height:1.6;">For digital items, buyers pay securely through brim checkout. For <strong>game items</strong>: you'll have 24 hrs to deliver once sold or the buyer gets a refund. For <strong>accounts</strong>: the buyer sees credentials immediately — make sure they're correct before listing.</p>
+          </div>
+
+          <div class="submit-row">
+            <button class="btn-primary" id="submitBtn" onclick="submitListing()">publish listing →</button>
+            <p class="submit-note" id="submitNote">Free to list. Goes live instantly.</p>
+          </div>
+        </div>
+
+        <!-- LIVE PREVIEW -->
+        <div class="preview-col">
+          <div class="preview-sticky">
+            <div class="preview-label">preview</div>
+            <div class="preview-card">
+              <div class="preview-img" id="previewImgWrap">
+                <div class="preview-img-placeholder" id="previewImgPlaceholder">📷</div>
+                <img id="previewMainImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div class="preview-body">
+                <div id="previewDigitalBadge" style="display:none;" class="preview-digital-badge">🎮 digital</div>
+                <div class="preview-name" id="previewName">your item title</div>
+                <div class="preview-seller">you &nbsp;·&nbsp; <span id="previewCond" style="font-size:10px;">—</span></div>
+                <div class="preview-price" id="previewPrice">$—</div>
+              </div>
+            </div>
+            <p style="font-size:11px;color:#bbb;margin-top:10px;line-height:1.5;">This is how your listing will appear in search results.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -225,7 +328,9 @@
     const UPLOAD_PRESET = 'brim_uploads';
 
     let currentUser = null;
-    let selectedCond = '';
+    let selectedCond = 'new';
+    let listingType = 'physical'; // 'physical' | 'digital'
+    let digitalSubtype = 'item'; // 'item' | 'account'
     const uploadedUrls = [null,null,null,null,null,null];
     const uploading = [false,false,false,false,false,false];
 
@@ -236,12 +341,60 @@
         document.getElementById('profileLink').style.display = 'block';
         document.getElementById('profileLink').href = `profile.html?uid=${user.uid}`;
         document.getElementById('authGate').style.display = 'none';
-        document.getElementById('formBody').style.display = 'flex';
+        document.getElementById('formBody').style.display = 'block';
       } else {
         document.getElementById('authGate').style.display = 'block';
         document.getElementById('formBody').style.display = 'none';
       }
     });
+
+    window.selectType = function(type) {
+      listingType = type;
+      document.getElementById('typeBtnPhysical').className = 'type-btn physical' + (type==='physical'?' on':'');
+      document.getElementById('typeBtnDigital').className = 'type-btn digital' + (type==='digital'?' on':'');
+      const isDigital = type === 'digital';
+      document.getElementById('digitalSubtypeRow').style.display = isDigital ? 'block' : 'none';
+      document.getElementById('physicalFields').style.display = isDigital ? 'none' : 'block';
+      document.getElementById('digitalFields').style.display = isDigital ? 'block' : 'none';
+      document.getElementById('kofiSection').style.display = isDigital ? 'none' : 'block';
+      document.getElementById('digitalPayNote').style.display = isDigital ? 'block' : 'none';
+      document.getElementById('previewDigitalBadge').style.display = isDigital ? 'inline-flex' : 'none';
+      if (isDigital) {
+        document.getElementById('previewImgPlaceholder').textContent = '🎮';
+        selectSubtype(digitalSubtype);
+      } else {
+        document.getElementById('previewImgPlaceholder').textContent = '📷';
+        document.getElementById('credentialsSection').style.display = 'none';
+        document.getElementById('photoSection').style.display = 'block';
+        document.getElementById('previewCond').textContent = selectedCond || '—';
+      }
+    };
+
+    window.selectSubtype = function(sub) {
+      digitalSubtype = sub;
+      document.getElementById('subtypeItem').className = 'subtype-btn' + (sub==='item'?' on':'');
+      document.getElementById('subtypeAccount').className = 'subtype-btn' + (sub==='account'?' on':'');
+      const isAccount = sub === 'account';
+      document.getElementById('credentialsSection').style.display = isAccount ? 'block' : 'none';
+      document.getElementById('photoSection').style.display = isAccount ? 'none' : 'block';
+      document.getElementById('itemTypeField').style.display = isAccount ? 'none' : 'block';
+      if (isAccount) {
+        document.getElementById('deliveryInput').value = 'instant';
+        document.getElementById('previewImgPlaceholder').textContent = '👤';
+        document.getElementById('previewCond').textContent = 'account';
+      } else {
+        document.getElementById('previewImgPlaceholder').textContent = '🎮';
+        document.getElementById('previewCond').textContent = 'digital item';
+      }
+    };
+
+    window.addCredRow = function() {
+      const div = document.createElement('div');
+      div.className = 'cred-input-row';
+      div.innerHTML = `<input type="text" placeholder="Field name" class="cred-key" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+        <input type="text" placeholder="Value" class="cred-val-input" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">`;
+      document.getElementById('credFields').appendChild(div);
+    };
 
     window.previewPhoto = function(input, idx) {
       if (!input.files || !input.files[0]) return;
@@ -312,14 +465,40 @@
       if (!currentUser) { window.location.href = 'login.html?redirect=sell.html'; return; }
       const title = document.getElementById('titleInput').value.trim();
       const price = document.getElementById('priceInput').value;
-      const kofi = document.getElementById('kofiInput').value.trim();
-      const category = document.getElementById('catInput').value;
       const description = document.getElementById('descInput').value.trim();
+      const isDigital = listingType === 'digital';
+      const isAccount = isDigital && digitalSubtype === 'account';
 
-      if (!title || !price || !selectedCond) { alert('Please fill in title, price, and condition.'); return; }
-      if (!kofi) { alert('Please add your Ko-fi URL so buyers can pay you.'); return; }
-      if (uploading.some(Boolean)) { alert('Please wait — photos are still uploading.'); return; }
-      if (uploadedUrls.some(u => u === 'ERROR')) { alert('Some photos failed to upload. Please re-select them.'); return; }
+      if (!title || !price) { alert('Please fill in title and price.'); return; }
+
+      let extraData = {};
+
+      if (isDigital) {
+        extraData.listingType = 'digital';
+        extraData.digitalSubtype = digitalSubtype;
+        extraData.game = document.getElementById('gameInput').value;
+        extraData.deliveryMethod = document.getElementById('deliveryInput').value;
+        if (!isAccount) extraData.itemType = document.getElementById('itemTypeInput').value;
+        extraData.condition = 'digital';
+        if (isAccount) {
+          // Collect credentials
+          const keys = [...document.querySelectorAll('.cred-key')].map(i => i.value.trim());
+          const vals = [...document.querySelectorAll('.cred-val-input')].map(i => i.value);
+          const creds = {};
+          keys.forEach((k, i) => { if (k && vals[i]) creds[k] = vals[i]; });
+          if (Object.keys(creds).length === 0) { alert('Please add at least username and password for the account.'); return; }
+          extraData.accountCredentials = creds;
+        }
+      } else {
+        const kofi = document.getElementById('kofiInput').value.trim();
+        if (!kofi) { alert('Please add your Ko-fi URL so buyers can pay you.'); return; }
+        if (!selectedCond) { alert('Please select a condition.'); return; }
+        if (uploading.some(Boolean)) { alert('Please wait — photos are still uploading.'); return; }
+        extraData.condition = selectedCond;
+        extraData.category = document.getElementById('catInput').value || 'other';
+        extraData.kofiUrl = kofi;
+        extraData.listingType = 'physical';
+      }
 
       const photoUrls = uploadedUrls.filter(u => u && u !== 'ERROR');
 
@@ -327,24 +506,16 @@
       btn.disabled = true; btn.textContent = 'publishing…';
 
       try {
-        // Get username from user doc
         const userSnap = await getDoc(doc(db, 'users', currentUser.uid));
         const username = userSnap.exists() ? userSnap.data().username : (currentUser.displayName || currentUser.email.split('@')[0]);
 
         const listingRef = await addDoc(collection(db, 'listings'), {
-          title,
-          price: parseFloat(price),
-          condition: selectedCond,
-          description,
-          category: category || 'other',
-          kofiUrl: kofi,
-          photos: photoUrls,
-          mainPhoto: photoUrls[0] || null,
-          sellerId: currentUser.uid,
-          sellerName: username,
+          title, price: parseFloat(price), description,
+          photos: photoUrls, mainPhoto: photoUrls[0] || null,
+          sellerId: currentUser.uid, sellerName: username,
           sellerEmail: currentUser.email,
-          sold: false,
-          createdAt: serverTimestamp()
+          sold: false, createdAt: serverTimestamp(),
+          ...extraData
         });
 
         window.location.href = `product.html?id=${listingRef.id}`;
