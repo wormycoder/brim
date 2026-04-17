@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>list an item — brim.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #378ADD; --blue-light: #E6F1FB; --blue-border: #B5D4F4;
+      --blue-dark: #185FA5; --green-light: #EAF3DE; --green-dark: #3B6D11;
+      --amber-light: #FAEEDA; --amber-dark: #854F0B;
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: #f5f5f3; color: #1a1a1a; }
+    a { text-decoration: none; color: inherit; }
+
+    /* NAV */
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+    .logo { font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: -0.5px; }
+    .logo em { font-style: italic; color: var(--blue); }
+    .nav-links { display: flex; gap: 28px; font-size: 13px; color: #666; }
+    .nav-links a:hover { color: #1a1a1a; }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .search { display: flex; align-items: center; gap: 8px; background: #f5f5f3; border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-full); padding: 8px 16px; width: 220px; }
+    .search input { border: none; background: transparent; outline: none; font-size: 13px; color: #1a1a1a; width: 100%; font-family: 'DM Sans', sans-serif; }
+    .search input::placeholder { color: #aaa; }
+    .sign-btn { font-size: 13px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-full); padding: 7px 16px; background: var(--blue-light); cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+    /* MAIN */
+    .main { padding: 40px 28px 60px; max-width: 760px; margin: 0 auto; }
+    .page-title { font-family: 'Instrument Serif', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .page-title em { font-style: italic; color: var(--blue); }
+    .page-sub { font-size: 14px; color: #888; margin-bottom: 36px; }
+
+    /* FORM LAYOUT */
+    .form-layout { display: flex; gap: 28px; align-items: flex-start; }
+    .form-col { flex: 1; min-width: 0; }
+    .preview-col { width: 240px; flex-shrink: 0; }
+
+    /* SECTION */
+    .form-section { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; }
+    .form-section-title { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 20px; }
+
+    /* FIELDS */
+    .field { margin-bottom: 18px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label { display: block; font-size: 13px; font-weight: 500; color: #444; margin-bottom: 7px; }
+    .field label span { color: #bbb; font-weight: 400; }
+    .field input, .field textarea, .field select {
+      width: 100%; border: 0.5px solid rgba(0,0,0,0.15); border-radius: var(--radius-md);
+      padding: 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif;
+      outline: none; color: #1a1a1a; background: #fff; transition: border-color 0.15s;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--blue); }
+    .field input::placeholder, .field textarea::placeholder { color: #ccc; }
+    .field textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+    .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+    .price-wrap { display: flex; align-items: center; gap: 0; }
+    .price-prefix { border: 0.5px solid rgba(0,0,0,0.15); border-right: none; border-radius: var(--radius-md) 0 0 var(--radius-md); padding: 11px 12px; font-size: 14px; color: #888; background: #f9f9f9; }
+    .price-wrap input { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+
+    /* CONDITION PILLS */
+    .condition-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cond-pill { padding: 8px 16px; border-radius: var(--radius-full); border: 0.5px solid rgba(0,0,0,0.15); font-size: 13px; color: #666; cursor: pointer; background: transparent; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+    .cond-pill.sel-new { background: var(--blue-light); color: var(--blue-dark); border-color: var(--blue-border); }
+    .cond-pill.sel-like { background: var(--green-light); color: var(--green-dark); border-color: #b8dda0; }
+    .cond-pill.sel-good { background: var(--amber-light); color: var(--amber-dark); border-color: #f0d4a0; }
+    .cond-pill.sel-fair { background: #f0f0ee; color: #555; border-color: #ddd; }
+
+    /* PHOTO UPLOAD */
+    .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .photo-slot { aspect-ratio: 1; border: 0.5px dashed rgba(0,0,0,0.2); border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; background: #fafafa; position: relative; overflow: hidden; }
+    .photo-slot:hover { background: #f0f0ee; }
+    .photo-slot.has-photo { border-style: solid; border-color: rgba(0,0,0,0.1); }
+    .photo-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .photo-slot .plus { font-size: 22px; color: #ccc; line-height: 1; }
+    .photo-slot .slot-label { font-size: 10px; color: #ccc; margin-top: 4px; }
+    .photo-slot input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .photo-hint { font-size: 11px; color: #bbb; margin-top: 8px; line-height: 1.5; }
+
+    /* PREVIEW CARD */
+    .preview-sticky { position: sticky; top: 90px; }
+    .preview-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 12px; }
+    .preview-card { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-img { width: 100%; aspect-ratio: 1; background: #f0f0ee; display: flex; align-items: center; justify-content: center; }
+    .preview-img img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-img-placeholder { font-size: 32px; opacity: 0.3; }
+    .preview-body { padding: 12px 14px; }
+    .preview-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; color: #888; }
+    .preview-name.has-val { color: #1a1a1a; }
+    .preview-seller { font-size: 12px; color: #aaa; margin-bottom: 8px; }
+    .preview-price { font-size: 16px; font-weight: 500; color: #aaa; }
+    .preview-price.has-val { color: #1a1a1a; }
+
+    /* SUBMIT */
+    .submit-row { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+    .btn-primary { background: #1a1a1a; color: #fff; border: none; border-radius: var(--radius-full); padding: 14px 32px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+    .btn-primary:hover { background: #333; }
+    .submit-note { font-size: 12px; color: #aaa; line-height: 1.5; }
+
+    /* KOFI NOTE */
+    .kofi-note { background: #FFF5F5; border: 0.5px solid #FFD4D4; border-radius: var(--radius-md); padding: 14px 16px; font-size: 13px; color: #884444; line-height: 1.6; }
+    .kofi-note strong { color: #FF5E5B; }
+
+    /* FOOTER */
+    .footer { padding: 20px 28px; border-top: 0.5px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; background: #fff; }
+    .footer-logo { font-family: 'Instrument Serif', serif; font-size: 20px; }
+    .footer-logo em { font-style: italic; color: var(--blue); }
+    .footer-r { font-size: 12px; color: #aaa; }
+
+    @media (max-width: 800px) {
+      .form-layout { flex-direction: column; }
+      .preview-col { width: 100%; }
+      .preview-sticky { position: static; }
+      .main { padding: 24px 16px 48px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">brim<em>.</em></a>
+    <div class="nav-links">
+      <a href="browse.html">browse</a>
+      <a href="sell.html" style="color:#1a1a1a;font-weight:500;">sell</a>
+      <a href="#">how it works</a>
+    </div>
+    <div class="nav-right">
+      <div class="search">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="#aaa" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input placeholder="search anything..." type="text">
+      </div>
+      <a href="login.html"><button class="sign-btn">sign in</button></a>
+    </div>
+  </nav>
+
+  <div class="main">
+    <h1 class="page-title">list something <em>free.</em></h1>
+    <p class="page-sub">Your listing goes live instantly. Buyers message you directly — no middlemen.</p>
+
+    <div class="form-layout">
+      <div class="form-col">
+
+        <!-- PHOTOS -->
+        <div class="form-section">
+          <div class="form-section-title">Photos</div>
+          <div class="photo-grid">
+            <div class="photo-slot has-photo" id="slot0">
+              <img id="preview0" src="" alt="" style="display:none">
+              <span class="plus" id="plus0">+</span>
+              <span class="slot-label" id="label0">main photo</span>
+              <input type="file" accept="image/*" onchange="previewPhoto(this,0)">
+            </div>
+            <div class="photo-slot" id="slot1">
+              <img id="preview1" src="" alt="" style="display:none">
+              <span class="plus" id="plus1">+</span>
+              <span class="slot-label" id="label1">photo 2</span>
+              <input type="file" accept="image/*" onchange="previewPhoto(this,1)">
+            </div>
+            <div class="photo-slot" id="slot2">
+              <img id="preview2" src="" alt="" style="display:none">
+              <span class="plus" id="plus2">+</span>
+              <span class="slot-label" id="label2">photo 3</span>
+              <input type="file" accept="image/*" onchange="previewPhoto(this,2)">
+            </div>
+            <div class="photo-slot" id="slot3">
+              <img id="preview3" src="" alt="" style="display:none">
+              <span class="plus" id="plus3">+</span>
+              <span class="slot-label" id="label3">photo 4</span>
+              <input type="file" accept="image/*" onchange="previewPhoto(this,3)">
+            </div>
+            <div class="photo-slot" id="slot4">
+              <img id="preview4" src="" alt="" style="display:none">
+              <span class="plus" id="plus4">+</span>
+              <span class="slot-label" id="label4">photo 5</span>
+              <input type="file" accept="image/*" onchange="previewPhoto(this,4)">
+            </div>
+            <div class="photo-slot" id="slot5">
+              <img id="preview5" src="" alt="" style="display:none">
+              <span class="plus" id="plus5">+</span>
+              <span class="slot-label" id="label5">photo 6</span>
+              <input type="file" accept="image/*" onchange="previewPhoto(this,5)">
+            </div>
+          </div>
+          <p class="photo-hint">Add up to 6 photos. First photo is your main listing image. Buyers trust listings with multiple clear photos.</p>
+        </div>
+
+        <!-- DETAILS -->
+        <div class="form-section">
+          <div class="form-section-title">Item details</div>
+          <div class="field">
+            <label>Title</label>
+            <input type="text" id="titleInput" placeholder="e.g. Sony WH-1000XM4 headphones" oninput="updatePreview()">
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <textarea id="descInput" placeholder="Describe your item — condition, what's included, any flaws. Honest descriptions build trust."></textarea>
+          </div>
+          <div class="field">
+            <label>Category</label>
+            <select id="catInput">
+              <option value="" disabled selected>select a category...</option>
+              <option>electronics</option>
+              <option>clothing</option>
+              <option>home & garden</option>
+              <option>collectibles</option>
+              <option>sports</option>
+              <option>books</option>
+              <option>art</option>
+              <option>other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Condition</label>
+            <div class="condition-pills">
+              <button class="cond-pill" onclick="selectCond(this,'new','sel-new')">New</button>
+              <button class="cond-pill" onclick="selectCond(this,'like new','sel-like')">Like new</button>
+              <button class="cond-pill" onclick="selectCond(this,'good','sel-good')">Good</button>
+              <button class="cond-pill" onclick="selectCond(this,'fair','sel-fair')">Fair</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRICING -->
+        <div class="form-section">
+          <div class="form-section-title">Pricing</div>
+          <div class="field">
+            <label>Price</label>
+            <div class="price-wrap">
+              <span class="price-prefix">$</span>
+              <input type="number" id="priceInput" placeholder="0.00" min="0" step="0.01" oninput="updatePreview()">
+            </div>
+          </div>
+        </div>
+
+        <!-- KO-FI -->
+        <div class="form-section">
+          <div class="form-section-title">Payment</div>
+          <div class="field">
+            <label>Your Ko-fi shop URL <span>(where buyers will pay)</span></label>
+            <input type="url" placeholder="https://ko-fi.com/yourusername" id="kofiInput">
+          </div>
+          <div class="kofi-note">
+            <strong>Ko-fi</strong> handles all payments — it's free to set up and you keep more of your sale. Buyers click "Buy via Ko-fi" and pay you directly. <a href="https://ko-fi.com" target="_blank" style="color:#FF5E5B;text-decoration:underline;">Set up your Ko-fi →</a>
+          </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="submit-row">
+          <button class="btn-primary" onclick="submitListing()">publish listing →</button>
+          <p class="submit-note">Free to list. Goes live<br>instantly once Firebase is set up.</p>
+        </div>
+      </div>
+
+      <!-- LIVE PREVIEW -->
+      <div class="preview-col">
+        <div class="preview-sticky">
+          <div class="preview-label">preview</div>
+          <div class="preview-card">
+            <div class="preview-img" id="previewImgWrap">
+              <div class="preview-img-placeholder" id="previewImgPlaceholder">📷</div>
+              <img id="previewMainImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div class="preview-body">
+              <div class="preview-name" id="previewName">your item title</div>
+              <div class="preview-seller">you &nbsp;·&nbsp; <span id="previewCond" style="font-size:10px;">—</span></div>
+              <div class="preview-price" id="previewPrice">$—</div>
+            </div>
+          </div>
+          <p style="font-size:11px;color:#bbb;margin-top:10px;line-height:1.5;">This is how your listing will appear in search results.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-logo">brim<em>.</em></div>
+    <div class="footer-r">full to the brim.</div>
+  </footer>
+
+  <script>
+    let selectedCond = '';
+
+    function previewPhoto(input, idx) {
+      if (!input.files || !input.files[0]) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.getElementById('preview' + idx);
+        img.src = e.target.result;
+        img.style.display = 'block';
+        document.getElementById('plus' + idx).style.display = 'none';
+        document.getElementById('label' + idx).style.display = 'none';
+        // Update preview card with first photo
+        if (idx === 0) {
+          document.getElementById('previewMainImg').src = e.target.result;
+          document.getElementById('previewMainImg').style.display = 'block';
+          document.getElementById('previewImgPlaceholder').style.display = 'none';
+        }
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+
+    function updatePreview() {
+      const title = document.getElementById('titleInput').value;
+      const price = document.getElementById('priceInput').value;
+      const nameEl = document.getElementById('previewName');
+      const priceEl = document.getElementById('previewPrice');
+      nameEl.textContent = title || 'your item title';
+      nameEl.className = 'preview-name' + (title ? ' has-val' : '');
+      priceEl.textContent = price ? '$' + parseFloat(price).toFixed(2) : '$—';
+      priceEl.className = 'preview-price' + (price ? ' has-val' : '');
+    }
+
+    function selectCond(btn, val, cls) {
+      document.querySelectorAll('.cond-pill').forEach(p => p.className = 'cond-pill');
+      btn.classList.add(cls);
+      selectedCond = val;
+      document.getElementById('previewCond').textContent = val;
+    }
+
+    function submitListing() {
+      const title = document.getElementById('titleInput').value;
+      const price = document.getElementById('priceInput').value;
+      const kofi = document.getElementById('kofiInput').value;
+      if (!title || !price || !selectedCond) {
+        alert('Please fill in the title, price, and condition.');
+        return;
+      }
+      if (!kofi) {
+        alert('Please add your Ko-fi shop URL so buyers can pay you.');
+        return;
+      }
+      // TODO: Firebase Firestore save
+      // addDoc(collection(db, 'listings'), {
+      //   title, price: parseFloat(price), condition: selectedCond,
+      //   description: document.getElementById('descInput').value,
+      //   category: document.getElementById('catInput').value,
+      //   kofiUrl: kofi,
+      //   sellerId: auth.currentUser.uid,
+      //   sellerName: ...,
+      //   sold: false,
+      //   createdAt: serverTimestamp()
+      // })
+      alert('Firebase not connected yet — add your config and this will save to Firestore and go live!');
+    }
+  </script>
+</body>
+</html>

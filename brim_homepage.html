@@ -1,0 +1,178 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--color-background-tertiary);color:var(--color-text-primary);}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);position:sticky;top:0;z-index:10;}
+.logo{font-family:'Instrument Serif',serif;font-size:26px;letter-spacing:-0.5px;color:var(--color-text-primary);}
+.logo em{font-style:italic;color:#378ADD;}
+.nav-links{display:flex;gap:28px;font-size:13px;color:var(--color-text-secondary);font-weight:400;}
+.nav-links a:hover{color:var(--color-text-primary);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.search{display:flex;align-items:center;gap:8px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:999px;padding:8px 16px;width:210px;}
+.search input{border:none;background:transparent;outline:none;font-size:13px;color:var(--color-text-primary);width:100%;font-family:'DM Sans',sans-serif;}
+.search input::placeholder{color:var(--color-text-tertiary);}
+.icon-btn{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;background:var(--color-background-primary);cursor:pointer;position:relative;}
+.cart-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#378ADD;border:1.5px solid var(--color-background-primary);}
+.sign-btn{font-size:13px;font-weight:500;color:#378ADD;border:0.5px solid #B5D4F4;border-radius:999px;padding:7px 16px;background:#E6F1FB;cursor:pointer;}
+.hero{padding:72px 28px 64px;background:var(--color-background-primary);text-align:center;border-bottom:0.5px solid var(--color-border-tertiary);}
+.hero-eyebrow{font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:18px;}
+.hero h1{font-family:'Instrument Serif',serif;font-size:54px;line-height:1.1;letter-spacing:-1px;margin-bottom:16px;font-weight:400;}
+.hero h1 em{font-style:italic;color:#378ADD;}
+.hero p{font-size:15px;color:var(--color-text-secondary);margin-bottom:32px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.6;}
+.hero-btns{display:flex;gap:10px;justify-content:center;}
+.btn-dark{background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:999px;padding:13px 28px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-outline{background:transparent;color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:999px;padding:13px 28px;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.trust-row{display:flex;gap:24px;justify-content:center;margin-top:36px;flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-tertiary);}
+.trust-dot{width:6px;height:6px;border-radius:50%;background:#1D9E75;}
+.cats{display:flex;gap:8px;padding:18px 28px;overflow-x:auto;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);}
+.cats::-webkit-scrollbar{display:none;}
+.pill{padding:8px 18px;border-radius:999px;border:0.5px solid var(--color-border-tertiary);font-size:13px;color:var(--color-text-secondary);cursor:pointer;white-space:nowrap;background:transparent;font-family:'DM Sans',sans-serif;}
+.pill.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary);}
+.section{padding:36px 28px;}
+.sh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;}
+.sh h2{font-family:'Instrument Serif',serif;font-size:22px;font-weight:400;}
+.sh a{font-size:13px;color:var(--color-text-secondary);}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;cursor:pointer;transition:border-color 0.15s;}
+.card:hover{border-color:var(--color-border-secondary);}
+.card-img{width:100%;aspect-ratio:1;overflow:hidden;background:var(--color-background-secondary);}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
+.card:hover .card-img img{transform:scale(1.04);}
+.card-body{padding:12px 14px;}
+.card-name{font-size:14px;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-seller{font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;}
+.card-foot{display:flex;align-items:center;justify-content:space-between;}
+.card-price{font-size:15px;font-weight:500;}
+.msg-btn{font-size:11px;font-weight:500;color:#185FA5;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:4px 10px;background:#E6F1FB;cursor:pointer;}
+.stars{display:flex;gap:2px;align-items:center;margin-bottom:6px;}
+.star{width:10px;height:10px;background:#EF9F27;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
+.star.e{background:var(--color-border-tertiary);}
+.rating-txt{font-size:11px;color:var(--color-text-tertiary);margin-left:4px;}
+.condition{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.8px;border-radius:4px;padding:2px 7px;}
+.cond-like{background:#EAF3DE;color:#3B6D11;}
+.cond-new{background:#E6F1FB;color:#185FA5;}
+.cond-good{background:#FAEEDA;color:#854F0B;}
+.banner{margin:0 28px 36px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:32px 36px;background:var(--color-background-primary);display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.banner-left h3{font-family:'Instrument Serif',serif;font-size:22px;font-weight:400;margin-bottom:6px;}
+.banner-left p{font-size:14px;color:var(--color-text-secondary);line-height:1.5;}
+.footer{padding:20px 28px;border-top:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;align-items:center;background:var(--color-background-primary);}
+.footer-logo{font-family:'Instrument Serif',serif;font-size:20px;}
+.footer-logo em{font-style:italic;color:#378ADD;}
+.footer-r{font-size:12px;color:var(--color-text-tertiary);}
+</style>
+
+<h2 class="sr-only">Brim marketplace homepage with navigation, hero section, category filters, product listings, and footer</h2>
+
+<div class="nav">
+  <div class="logo">brim<em>.</em></div>
+  <div class="nav-links">
+    <a>browse</a>
+    <a>sell</a>
+    <a>how it works</a>
+  </div>
+  <div class="nav-right">
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="var(--color-text-tertiary)" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="var(--color-text-tertiary)" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input placeholder="search anything...">
+    </div>
+    <div class="icon-btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2h1.5L5 10h7l1.5-6H5" stroke="var(--color-text-secondary)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="13" r="1" fill="var(--color-text-secondary)"/><circle cx="11" cy="13" r="1" fill="var(--color-text-secondary)"/></svg>
+      <div class="cart-dot"></div>
+    </div>
+    <button class="sign-btn">sign in</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">local marketplace</div>
+  <h1>Buy and sell<br>things you <em>love.</em></h1>
+  <p>Message sellers directly, make offers, and find great deals from real people in your community.</p>
+  <div class="hero-btns">
+    <button class="btn-dark">start shopping</button>
+    <button class="btn-outline">list something free</button>
+  </div>
+  <div class="trust-row">
+    <div class="trust-item"><div class="trust-dot"></div>Free to list</div>
+    <div class="trust-item"><div class="trust-dot"></div>Secure checkout via Ko-fi</div>
+    <div class="trust-item"><div class="trust-dot"></div>Message sellers directly</div>
+    <div class="trust-item"><div class="trust-dot"></div>Verified community ratings</div>
+  </div>
+</div>
+
+<div class="cats">
+  <button class="pill on">all</button>
+  <button class="pill">electronics</button>
+  <button class="pill">clothing</button>
+  <button class="pill">home & garden</button>
+  <button class="pill">collectibles</button>
+  <button class="pill">sports</button>
+  <button class="pill">books</button>
+  <button class="pill">art</button>
+</div>
+
+<div class="section">
+  <div class="sh"><h2>featured listings</h2><a>see all →</a></div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop" alt="Wireless headphones"></div>
+      <div class="card-body">
+        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><span class="rating-txt">(12)</span></div>
+        <div class="card-name">Wireless headphones</div>
+        <div class="card-seller">marcus_w · <span class="condition cond-like">like new</span></div>
+        <div class="card-foot"><div class="card-price">$48</div><div class="msg-btn">message</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop" alt="Air Max sneakers"></div>
+      <div class="card-body">
+        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><span class="rating-txt">(8)</span></div>
+        <div class="card-name">Air Max — size 10</div>
+        <div class="card-seller">sneakervault · <span class="condition cond-new">new</span></div>
+        <div class="card-foot"><div class="card-price">$110</div><div class="msg-btn">message</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img"><img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&h=400&fit=crop" alt="Monstera plant"></div>
+      <div class="card-body">
+        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><span class="rating-txt">(5)</span></div>
+        <div class="card-name">Monstera plant</div>
+        <div class="card-seller">greenthumb · <span class="condition cond-good">good</span></div>
+        <div class="card-foot"><div class="card-price">$25</div><div class="msg-btn">message</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop" alt="Film camera"></div>
+      <div class="card-body">
+        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><span class="rating-txt">(19)</span></div>
+        <div class="card-name">Film camera, 35mm</div>
+        <div class="card-seller">retro_rio · <span class="condition cond-like">like new</span></div>
+        <div class="card-foot"><div class="card-price">$85</div><div class="msg-btn">message</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="banner">
+  <div class="banner-left">
+    <h3>Got something to sell?</h3>
+    <p>List for free in under 2 minutes. Buyers come to you — no bidding, no hassle. Ko-fi handles payment securely.</p>
+  </div>
+  <button class="btn-dark">list an item →</button>
+</div>
+
+<div class="footer">
+  <div class="footer-logo">brim<em>.</em></div>
+  <div class="footer-r">full to the brim.</div>
+</div>
+
+<script>
+document.querySelectorAll('.pill').forEach(p=>{p.addEventListener('click',()=>{document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));p.classList.add('on');});});
+</script>

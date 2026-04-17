@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>browse — brim.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #378ADD; --blue-light: #E6F1FB; --blue-border: #B5D4F4;
+      --blue-dark: #185FA5; --green-light: #EAF3DE; --green-dark: #3B6D11;
+      --amber-light: #FAEEDA; --amber-dark: #854F0B;
+      --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: #f5f5f3; color: #1a1a1a; }
+    a { text-decoration: none; color: inherit; cursor: pointer; }
+
+    /* NAV */
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+    .logo { font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: -0.5px; }
+    .logo em { font-style: italic; color: var(--blue); }
+    .nav-links { display: flex; gap: 28px; font-size: 13px; color: #666; }
+    .nav-links a:hover { color: #1a1a1a; }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .search { display: flex; align-items: center; gap: 8px; background: #f5f5f3; border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-full); padding: 8px 16px; width: 220px; }
+    .search input { border: none; background: transparent; outline: none; font-size: 13px; color: #1a1a1a; width: 100%; font-family: 'DM Sans', sans-serif; }
+    .search input::placeholder { color: #aaa; }
+    .icon-btn { width: 36px; height: 36px; border-radius: 50%; border: 0.5px solid rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; background: #fff; cursor: pointer; position: relative; }
+    .cart-dot { position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); border: 1.5px solid #fff; }
+    .sign-btn { font-size: 13px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-full); padding: 7px 16px; background: var(--blue-light); cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+    /* BROWSE HEADER */
+    .browse-header { padding: 32px 28px 0; background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); }
+    .browse-header h1 { font-family: 'Instrument Serif', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .browse-header h1 em { font-style: italic; color: var(--blue); }
+    .browse-header p { font-size: 14px; color: #888; margin-bottom: 20px; }
+    .browse-search { display: flex; align-items: center; gap: 8px; background: #f5f5f3; border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-full); padding: 12px 20px; max-width: 480px; margin-bottom: 20px; }
+    .browse-search input { border: none; background: transparent; outline: none; font-size: 14px; color: #1a1a1a; width: 100%; font-family: 'DM Sans', sans-serif; }
+    .browse-search input::placeholder { color: #aaa; }
+    .cats { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 0; }
+    .cats::-webkit-scrollbar { display: none; }
+    .pill { padding: 8px 18px; border-radius: var(--radius-full); border: 0.5px solid rgba(0,0,0,0.12); font-size: 13px; color: #666; cursor: pointer; white-space: nowrap; background: transparent; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+    .pill.on, .pill:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+    /* LAYOUT */
+    .browse-layout { display: flex; gap: 24px; padding: 28px 28px; align-items: flex-start; }
+
+    /* SIDEBAR FILTERS */
+    .filters { width: 220px; flex-shrink: 0; }
+    .filter-group { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 12px; }
+    .filter-group h4 { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 14px; }
+    .filter-option { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; cursor: pointer; }
+    .filter-option label { font-size: 13px; color: #444; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .filter-option input[type="checkbox"] { accent-color: #1a1a1a; width: 13px; height: 13px; }
+    .filter-count { font-size: 11px; color: #bbb; }
+    .price-inputs { display: flex; gap: 8px; align-items: center; }
+    .price-input { flex: 1; border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-sm); padding: 7px 10px; font-size: 13px; font-family: 'DM Sans', sans-serif; background: #f5f5f3; outline: none; color: #1a1a1a; }
+    .price-sep { font-size: 12px; color: #aaa; }
+
+    /* RESULTS AREA */
+    .results { flex: 1; min-width: 0; }
+    .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .results-count { font-size: 13px; color: #888; }
+    .sort-select { border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-full); padding: 7px 14px; font-size: 13px; font-family: 'DM Sans', sans-serif; background: #fff; color: #1a1a1a; outline: none; cursor: pointer; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .card { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: border-color 0.15s, transform 0.15s; display: block; }
+    .card:hover { border-color: rgba(0,0,0,0.2); transform: translateY(-2px); }
+    .card-img { width: 100%; aspect-ratio: 1; overflow: hidden; background: #f5f5f3; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .card:hover .card-img img { transform: scale(1.04); }
+    .card-body { padding: 12px 14px; }
+    .card-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-seller { font-size: 12px; color: #888; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+    .card-price { font-size: 15px; font-weight: 500; }
+    .msg-btn { font-size: 11px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-md); padding: 4px 10px; background: var(--blue-light); }
+    .stars { display: flex; gap: 2px; align-items: center; margin-bottom: 5px; }
+    .star { width: 10px; height: 10px; background: #EF9F27; clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+    .star.e { background: #ddd; }
+    .rating-txt { font-size: 11px; color: #aaa; margin-left: 3px; }
+    .condition { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; border-radius: 4px; padding: 2px 7px; }
+    .cond-new { background: var(--blue-light); color: var(--blue-dark); }
+    .cond-like { background: var(--green-light); color: var(--green-dark); }
+    .cond-good { background: var(--amber-light); color: var(--amber-dark); }
+
+    /* FOOTER */
+    .footer { padding: 20px 28px; border-top: 0.5px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; background: #fff; margin-top: 24px; }
+    .footer-logo { font-family: 'Instrument Serif', serif; font-size: 20px; }
+    .footer-logo em { font-style: italic; color: var(--blue); }
+    .footer-r { font-size: 12px; color: #aaa; }
+
+    @media (max-width: 900px) {
+      .filters { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 500px) {
+      .browse-layout { padding: 16px; }
+      .browse-header { padding: 24px 16px 0; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">brim<em>.</em></a>
+    <div class="nav-links">
+      <a href="browse.html" style="color:#1a1a1a;font-weight:500;">browse</a>
+      <a href="sell.html">sell</a>
+      <a href="#">how it works</a>
+    </div>
+    <div class="nav-right">
+      <div class="search">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="#aaa" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input placeholder="search anything..." type="text" id="navSearch">
+      </div>
+      <div class="icon-btn" title="cart">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2h1.5L5 10h7l1.5-6H5" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="13" r="1" fill="#666"/><circle cx="11" cy="13" r="1" fill="#666"/></svg>
+        <div class="cart-dot"></div>
+      </div>
+      <a href="login.html"><button class="sign-btn">sign in</button></a>
+    </div>
+  </nav>
+
+  <div class="browse-header">
+    <h1>browse <em>everything</em></h1>
+    <p>Find unique items from real people in your community.</p>
+    <div class="browse-search">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="#aaa" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input placeholder="search listings..." type="text" id="browseSearch">
+    </div>
+    <div class="cats">
+      <button class="pill on" data-cat="all">all</button>
+      <button class="pill" data-cat="electronics">electronics</button>
+      <button class="pill" data-cat="clothing">clothing</button>
+      <button class="pill" data-cat="home">home & garden</button>
+      <button class="pill" data-cat="collectibles">collectibles</button>
+      <button class="pill" data-cat="sports">sports</button>
+      <button class="pill" data-cat="books">books</button>
+      <button class="pill" data-cat="art">art</button>
+    </div>
+  </div>
+
+  <div class="browse-layout">
+    <!-- SIDEBAR FILTERS -->
+    <aside class="filters">
+      <div class="filter-group">
+        <h4>Condition</h4>
+        <div class="filter-option">
+          <label><input type="checkbox"> New</label>
+          <span class="filter-count">14</span>
+        </div>
+        <div class="filter-option">
+          <label><input type="checkbox"> Like new</label>
+          <span class="filter-count">38</span>
+        </div>
+        <div class="filter-option">
+          <label><input type="checkbox"> Good</label>
+          <span class="filter-count">57</span>
+        </div>
+        <div class="filter-option">
+          <label><input type="checkbox"> Fair</label>
+          <span class="filter-count">21</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h4>Price range</h4>
+        <div class="price-inputs">
+          <input class="price-input" type="number" placeholder="$min">
+          <span class="price-sep">—</span>
+          <input class="price-input" type="number" placeholder="$max">
+        </div>
+      </div>
+      <div class="filter-group">
+        <h4>Seller rating</h4>
+        <div class="filter-option">
+          <label><input type="checkbox"> 4★ & up</label>
+          <span class="filter-count">89</span>
+        </div>
+        <div class="filter-option">
+          <label><input type="checkbox"> 3★ & up</label>
+          <span class="filter-count">112</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RESULTS -->
+    <div class="results">
+      <div class="results-header">
+        <span class="results-count" id="resultsCount">128 listings</span>
+        <select class="sort-select">
+          <option>newest first</option>
+          <option>price: low to high</option>
+          <option>price: high to low</option>
+          <option>top rated</option>
+        </select>
+      </div>
+      <div class="grid" id="grid">
+
+        <a href="product.html?id=1" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop" alt="Wireless headphones"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><span class="rating-txt">(12)</span></div>
+            <div class="card-name">Wireless headphones</div>
+            <div class="card-seller">marcus_w &nbsp;·&nbsp; <span class="condition cond-like">like new</span></div>
+            <div class="card-foot"><div class="card-price">$48</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+        <a href="product.html?id=2" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop" alt="Air Max"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><span class="rating-txt">(8)</span></div>
+            <div class="card-name">Air Max — size 10</div>
+            <div class="card-seller">sneakervault &nbsp;·&nbsp; <span class="condition cond-new">new</span></div>
+            <div class="card-foot"><div class="card-price">$110</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+        <a href="product.html?id=3" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&h=400&fit=crop" alt="Monstera"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><span class="rating-txt">(5)</span></div>
+            <div class="card-name">Monstera plant</div>
+            <div class="card-seller">greenthumb &nbsp;·&nbsp; <span class="condition cond-good">good</span></div>
+            <div class="card-foot"><div class="card-price">$25</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+        <a href="product.html?id=4" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop" alt="Film camera"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><span class="rating-txt">(19)</span></div>
+            <div class="card-name">Film camera, 35mm</div>
+            <div class="card-seller">retro_rio &nbsp;·&nbsp; <span class="condition cond-like">like new</span></div>
+            <div class="card-foot"><div class="card-price">$85</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+        <a href="product.html?id=5" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=400&fit=crop" alt="Polaroid camera"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><span class="rating-txt">(3)</span></div>
+            <div class="card-name">Polaroid Now camera</div>
+            <div class="card-seller">photo_ella &nbsp;·&nbsp; <span class="condition cond-good">good</span></div>
+            <div class="card-foot"><div class="card-price">$55</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+        <a href="product.html?id=6" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop" alt="Sneakers"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><span class="rating-txt">(22)</span></div>
+            <div class="card-name">White low-top sneakers</div>
+            <div class="card-seller">kicks_kev &nbsp;·&nbsp; <span class="condition cond-like">like new</span></div>
+            <div class="card-foot"><div class="card-price">$72</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+        <a href="product.html?id=7" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&h=400&fit=crop" alt="Running shoes"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><div class="star e"></div><span class="rating-txt">(4)</span></div>
+            <div class="card-name">Running shoes size 9</div>
+            <div class="card-seller">run_rachel &nbsp;·&nbsp; <span class="condition cond-good">good</span></div>
+            <div class="card-foot"><div class="card-price">$38</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+        <a href="product.html?id=8" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=400&fit=crop" alt="Perfume"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><span class="rating-txt">(7)</span></div>
+            <div class="card-name">Dior Sauvage 100ml</div>
+            <div class="card-seller">scent_soph &nbsp;·&nbsp; <span class="condition cond-new">new</span></div>
+            <div class="card-foot"><div class="card-price">$65</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+        <a href="product.html?id=9" class="card">
+          <div class="card-img"><img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=400&fit=crop" alt="Book stack"></div>
+          <div class="card-body">
+            <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><span class="rating-txt">(11)</span></div>
+            <div class="card-name">Design book bundle (5)</div>
+            <div class="card-seller">book_b &nbsp;·&nbsp; <span class="condition cond-good">good</span></div>
+            <div class="card-foot"><div class="card-price">$30</div><div class="msg-btn">message</div></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-logo">brim<em>.</em></div>
+    <div class="footer-r">full to the brim.</div>
+  </footer>
+
+  <script>
+    // Category pills
+    document.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+        pill.classList.add('on');
+        // TODO: filter by pill.dataset.cat from Firestore
+      });
+    });
+
+    // Live search filter (client-side placeholder)
+    const searchInput = document.getElementById('browseSearch');
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase();
+      document.querySelectorAll('.card').forEach(card => {
+        const name = card.querySelector('.card-name').textContent.toLowerCase();
+        card.style.display = name.includes(q) ? '' : 'none';
+      });
+      const visible = [...document.querySelectorAll('.card')].filter(c => c.style.display !== 'none').length;
+      document.getElementById('resultsCount').textContent = visible + ' listings';
+    });
+  </script>
+</body>
+</html>
