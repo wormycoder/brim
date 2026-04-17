@@ -1,178 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>brim. — buy and sell things you love</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap');
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--color-background-tertiary);color:var(--color-text-primary);}
-a{text-decoration:none;color:inherit;cursor:pointer;}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);position:sticky;top:0;z-index:10;}
-.logo{font-family:'Instrument Serif',serif;font-size:26px;letter-spacing:-0.5px;color:var(--color-text-primary);}
-.logo em{font-style:italic;color:#378ADD;}
-.nav-links{display:flex;gap:28px;font-size:13px;color:var(--color-text-secondary);font-weight:400;}
-.nav-links a:hover{color:var(--color-text-primary);}
-.nav-right{display:flex;align-items:center;gap:10px;}
-.search{display:flex;align-items:center;gap:8px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:999px;padding:8px 16px;width:210px;}
-.search input{border:none;background:transparent;outline:none;font-size:13px;color:var(--color-text-primary);width:100%;font-family:'DM Sans',sans-serif;}
-.search input::placeholder{color:var(--color-text-tertiary);}
-.icon-btn{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;background:var(--color-background-primary);cursor:pointer;position:relative;}
-.cart-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:#378ADD;border:1.5px solid var(--color-background-primary);}
-.sign-btn{font-size:13px;font-weight:500;color:#378ADD;border:0.5px solid #B5D4F4;border-radius:999px;padding:7px 16px;background:#E6F1FB;cursor:pointer;}
-.hero{padding:72px 28px 64px;background:var(--color-background-primary);text-align:center;border-bottom:0.5px solid var(--color-border-tertiary);}
-.hero-eyebrow{font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:18px;}
-.hero h1{font-family:'Instrument Serif',serif;font-size:54px;line-height:1.1;letter-spacing:-1px;margin-bottom:16px;font-weight:400;}
-.hero h1 em{font-style:italic;color:#378ADD;}
-.hero p{font-size:15px;color:var(--color-text-secondary);margin-bottom:32px;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.6;}
-.hero-btns{display:flex;gap:10px;justify-content:center;}
-.btn-dark{background:var(--color-text-primary);color:var(--color-background-primary);border:none;border-radius:999px;padding:13px 28px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
-.btn-outline{background:transparent;color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary);border-radius:999px;padding:13px 28px;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;}
-.trust-row{display:flex;gap:24px;justify-content:center;margin-top:36px;flex-wrap:wrap;}
-.trust-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-tertiary);}
-.trust-dot{width:6px;height:6px;border-radius:50%;background:#1D9E75;}
-.cats{display:flex;gap:8px;padding:18px 28px;overflow-x:auto;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);}
-.cats::-webkit-scrollbar{display:none;}
-.pill{padding:8px 18px;border-radius:999px;border:0.5px solid var(--color-border-tertiary);font-size:13px;color:var(--color-text-secondary);cursor:pointer;white-space:nowrap;background:transparent;font-family:'DM Sans',sans-serif;}
-.pill.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary);}
-.section{padding:36px 28px;}
-.sh{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;}
-.sh h2{font-family:'Instrument Serif',serif;font-size:22px;font-weight:400;}
-.sh a{font-size:13px;color:var(--color-text-secondary);}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;cursor:pointer;transition:border-color 0.15s;}
-.card:hover{border-color:var(--color-border-secondary);}
-.card-img{width:100%;aspect-ratio:1;overflow:hidden;background:var(--color-background-secondary);}
-.card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
-.card:hover .card-img img{transform:scale(1.04);}
-.card-body{padding:12px 14px;}
-.card-name{font-size:14px;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card-seller{font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;}
-.card-foot{display:flex;align-items:center;justify-content:space-between;}
-.card-price{font-size:15px;font-weight:500;}
-.msg-btn{font-size:11px;font-weight:500;color:#185FA5;border:0.5px solid #B5D4F4;border-radius:var(--border-radius-md);padding:4px 10px;background:#E6F1FB;cursor:pointer;}
-.stars{display:flex;gap:2px;align-items:center;margin-bottom:6px;}
-.star{width:10px;height:10px;background:#EF9F27;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
-.star.e{background:var(--color-border-tertiary);}
-.rating-txt{font-size:11px;color:var(--color-text-tertiary);margin-left:4px;}
-.condition{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.8px;border-radius:4px;padding:2px 7px;}
-.cond-like{background:#EAF3DE;color:#3B6D11;}
-.cond-new{background:#E6F1FB;color:#185FA5;}
-.cond-good{background:#FAEEDA;color:#854F0B;}
-.banner{margin:0 28px 36px;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:32px 36px;background:var(--color-background-primary);display:flex;align-items:center;justify-content:space-between;gap:24px;}
-.banner-left h3{font-family:'Instrument Serif',serif;font-size:22px;font-weight:400;margin-bottom:6px;}
-.banner-left p{font-size:14px;color:var(--color-text-secondary);line-height:1.5;}
-.footer{padding:20px 28px;border-top:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;align-items:center;background:var(--color-background-primary);}
-.footer-logo{font-family:'Instrument Serif',serif;font-size:20px;}
-.footer-logo em{font-style:italic;color:#378ADD;}
-.footer-r{font-size:12px;color:var(--color-text-tertiary);}
-</style>
+  <!--
+  ============================================================
+  BRIM MARKETPLACE — PROJECT PLAN & PROGRESS
+  ============================================================
+  Live URL: https://wormycoder.github.io/brim/
+  Started: April 2026
+  Built with: HTML, CSS, JavaScript, Firebase, Ko-fi
 
-<h2 class="sr-only">Brim marketplace homepage with navigation, hero section, category filters, product listings, and footer</h2>
+  WHAT IS BRIM?
+  A community marketplace where people can buy and sell
+  second-hand items. Sellers list for free, buyers message
+  them directly, and payments go through Ko-fi. Think
+  Craigslist but cleaner, safer, and with ratings.
 
-<div class="nav">
-  <div class="logo">brim<em>.</em></div>
-  <div class="nav-links">
-    <a>browse</a>
-    <a>sell</a>
-    <a>how it works</a>
-  </div>
-  <div class="nav-right">
-    <div class="search">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="var(--color-text-tertiary)" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="var(--color-text-tertiary)" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <input placeholder="search anything...">
+  ============================================================
+  PAGES — what we're building
+  ============================================================
+
+  [DONE]  index.html         — Homepage (you're looking at it)
+                               - Navigation with search + cart
+                               - Hero section
+                               - Category filter pills
+                               - Featured product grid with real photos
+                               - Ratings + condition badges on cards
+                               - Sell banner
+                               - Footer
+
+  [TODO]  product.html       — Product detail page
+                               - Big image gallery (multiple photos)
+                               - Product title, description, condition
+                               - Seller info + their rating
+                               - "Buy via Ko-fi" button (links to seller's Ko-fi)
+                               - "Add to cart" button
+                               - "Message seller" button
+                               - Related listings at the bottom
+
+  [TODO]  login.html         — Sign in / Sign up page
+                               - Email + password login
+                               - Google sign-in option
+                               - Connects to Firebase Authentication
+                               - After login → redirect back to homepage
+
+  [TODO]  profile.html       — User / Seller profile page
+                               - Profile photo + username + bio
+                               - Their active listings
+                               - Star rating average
+                               - Reviews from past buyers
+                               - "Message this seller" button
+
+  [TODO]  sell.html          — List an item page
+                               - Upload photos
+                               - Title, description, price, condition, category
+                               - Ko-fi link field (where buyers pay)
+                               - Saves listing to Firebase Firestore
+
+  [TODO]  messages.html      — Inbox + chat page
+                               - List of all your conversations
+                               - Click a conversation → open chat thread
+                               - Real-time messages via Firebase
+                               - Only visible when logged in
+
+  [TODO]  browse.html        — Full browse / search page
+                               - All listings in a grid
+                               - Filter by category, price, condition
+                               - Search bar filters results live
+
+  ============================================================
+  TECH STACK — what powers everything
+  ============================================================
+
+  FIREBASE (free Spark plan — no credit card needed)
+  ├── Authentication  — handles login/signup (email + Google)
+  ├── Firestore       — database storing all listings, users, messages
+  └── Storage         — stores product photos uploaded by sellers
+
+  KO-FI (free for sellers)
+  └── Each seller adds their Ko-fi shop link to their profile.
+      When someone clicks "Buy", it goes to that Ko-fi page.
+      Ko-fi handles the actual payment. No credit card needed
+      to set up brim — sellers handle payments themselves.
+
+  GITHUB PAGES (free hosting)
+  └── All files live in github.com/wormycoder/brim
+      URL: https://wormycoder.github.io/brim/
+
+  ============================================================
+  FIREBASE SETUP — do this before login.html works
+  ============================================================
+  1. Go to console.firebase.google.com
+  2. Create a new project called "brim"
+  3. Add a Web App — copy the config object it gives you
+  4. Replace the FIREBASE_CONFIG placeholder below with it
+  5. Enable Authentication → Email/Password + Google
+  6. Enable Firestore Database (start in test mode)
+  7. Enable Storage (start in test mode)
+
+  The config looks like this (yours will have real values):
+  const firebaseConfig = {
+    apiKey: "YOUR_KEY_HERE",
+    authDomain: "your-app.firebaseapp.com",
+    projectId: "your-app",
+    storageBucket: "your-app.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abc123"
+  };
+
+  ============================================================
+  FIRESTORE DATA STRUCTURE — how the database is organized
+  ============================================================
+
+  /users/{userId}
+    - username: "wormycoder"
+    - email: "user@email.com"
+    - bio: "selling stuff I don't need"
+    - kofiUrl: "https://ko-fi.com/username"
+    - avatarUrl: "https://..."
+    - rating: 4.7
+    - reviewCount: 12
+    - createdAt: timestamp
+
+  /listings/{listingId}
+    - title: "Wireless headphones"
+    - description: "Barely used, great sound..."
+    - price: 48
+    - condition: "like new"  (new / like new / good / fair)
+    - category: "electronics"
+    - photos: ["url1", "url2"]
+    - sellerId: "userId"
+    - sellerName: "marcus_w"
+    - kofiUrl: "https://ko-fi.com/marcus"
+    - sold: false
+    - createdAt: timestamp
+
+  /messages/{conversationId}
+    - buyerId: "userId"
+    - sellerId: "userId"
+    - listingId: "listingId"
+    - lastMessage: "Is this still available?"
+    - lastMessageAt: timestamp
+
+  /messages/{conversationId}/thread/{messageId}
+    - senderId: "userId"
+    - text: "Is this still available?"
+    - sentAt: timestamp
+
+  /reviews/{reviewId}
+    - reviewerId: "userId"
+    - reviewerName: "buyer_jane"
+    - sellerId: "userId"
+    - listingId: "listingId"
+    - rating: 5
+    - comment: "Fast shipping, great seller!"
+    - createdAt: timestamp
+
+  ============================================================
+  HANDOFF NOTES — for continuing in a new Claude session
+  ============================================================
+  When starting a new Claude chat, paste this whole comment
+  block and say "continue building brim from where we left off"
+  and Claude will have everything it needs to keep going.
+
+  Designer note: Uses DM Sans + Instrument Serif fonts.
+  Brand color: #378ADD (blue). Style is clean, minimal,
+  editorial. No gradients. Thin 0.5px borders everywhere.
+  ============================================================
+  -->
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #378ADD;
+      --blue-light: #E6F1FB;
+      --blue-border: #B5D4F4;
+      --blue-dark: #185FA5;
+      --green-light: #EAF3DE;
+      --green-dark: #3B6D11;
+      --amber-light: #FAEEDA;
+      --amber-dark: #854F0B;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-full: 999px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+    }
+
+    a { text-decoration: none; color: inherit; cursor: pointer; }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      background: #fff;
+      border-bottom: 0.5px solid rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      color: #1a1a1a;
+    }
+    .logo em { font-style: italic; color: var(--blue); }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-size: 13px;
+      color: #666;
+    }
+    .nav-links a:hover { color: #1a1a1a; }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f5f5f3;
+      border: 0.5px solid rgba(0,0,0,0.12);
+      border-radius: var(--radius-full);
+      padding: 8px 16px;
+      width: 220px;
+    }
+    .search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 13px;
+      color: #1a1a1a;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .search input::placeholder { color: #aaa; }
+    .icon-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 0.5px solid rgba(0,0,0,0.12);
+      display: flex; align-items: center; justify-content: center;
+      background: #fff;
+      cursor: pointer;
+      position: relative;
+    }
+    .cart-dot {
+      position: absolute; top: 6px; right: 6px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 1.5px solid #fff;
+    }
+    .sign-btn {
+      font-size: 13px; font-weight: 500;
+      color: var(--blue-dark);
+      border: 0.5px solid var(--blue-border);
+      border-radius: var(--radius-full);
+      padding: 7px 16px;
+      background: var(--blue-light);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .sign-btn:hover { background: #d6eaf8; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 28px 64px;
+      background: #fff;
+      text-align: center;
+      border-bottom: 0.5px solid rgba(0,0,0,0.1);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 54px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+    .hero h1 em { font-style: italic; color: var(--blue); }
+    .hero p {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 32px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .hero-btns { display: flex; gap: 10px; justify-content: center; }
+    .btn-dark {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 13px 28px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-dark:hover { background: #333; }
+    .btn-outline {
+      background: transparent;
+      color: #1a1a1a;
+      border: 0.5px solid rgba(0,0,0,0.2);
+      border-radius: var(--radius-full);
+      padding: 13px 28px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-outline:hover { background: #f5f5f3; }
+    .trust-row {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #aaa;
+    }
+    .trust-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #1D9E75;
+    }
+
+    /* ── CATEGORIES ── */
+    .cats {
+      display: flex;
+      gap: 8px;
+      padding: 18px 28px;
+      overflow-x: auto;
+      border-bottom: 0.5px solid rgba(0,0,0,0.1);
+      background: #fff;
+    }
+    .cats::-webkit-scrollbar { display: none; }
+    .pill {
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      border: 0.5px solid rgba(0,0,0,0.12);
+      font-size: 13px;
+      color: #666;
+      cursor: pointer;
+      white-space: nowrap;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+    }
+    .pill.on, .pill:hover {
+      background: #1a1a1a;
+      color: #fff;
+      border-color: #1a1a1a;
+    }
+
+    /* ── PRODUCT GRID ── */
+    .section { padding: 36px 28px; }
+    .sh {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .sh h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      font-weight: 400;
+    }
+    .sh a { font-size: 13px; color: #888; }
+    .sh a:hover { color: #1a1a1a; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: #fff;
+      border: 0.5px solid rgba(0,0,0,0.1);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .card:hover {
+      border-color: rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+    }
+    .card-img {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #f5f5f3;
+    }
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .card:hover .card-img img { transform: scale(1.04); }
+    .card-body { padding: 12px 14px; }
+    .card-name {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-seller {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+    .card-price { font-size: 15px; font-weight: 500; }
+    .msg-btn {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--blue-dark);
+      border: 0.5px solid var(--blue-border);
+      border-radius: var(--radius-md);
+      padding: 4px 10px;
+      background: var(--blue-light);
+      cursor: pointer;
+    }
+    .stars {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .star {
+      width: 10px; height: 10px;
+      background: #EF9F27;
+      clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    }
+    .star.e { background: #ddd; }
+    .rating-txt { font-size: 11px; color: #aaa; margin-left: 3px; }
+    .condition {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+    .cond-new { background: var(--blue-light); color: var(--blue-dark); }
+    .cond-like { background: var(--green-light); color: var(--green-dark); }
+    .cond-good { background: var(--amber-light); color: var(--amber-dark); }
+
+    /* ── SELL BANNER ── */
+    .banner {
+      margin: 0 28px 36px;
+      border-radius: var(--radius-lg);
+      border: 0.5px solid rgba(0,0,0,0.1);
+      padding: 32px 36px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .banner h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .banner p { font-size: 14px; color: #666; line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 20px 28px;
+      border-top: 0.5px solid rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+    }
+    .footer-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+    }
+    .footer-logo em { font-style: italic; color: var(--blue); }
+    .footer-r { font-size: 12px; color: #aaa; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero h1 { font-size: 38px; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 500px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .nav { padding: 12px 16px; }
+      .search { width: 150px; }
+      .hero { padding: 48px 16px 40px; }
+      .section { padding: 24px 16px; }
+      .banner { flex-direction: column; align-items: flex-start; margin: 0 16px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <div class="logo">brim<em>.</em></div>
+    <div class="nav-links">
+      <a href="browse.html">browse</a>
+      <a href="sell.html">sell</a>
+      <a href="#howitworks">how it works</a>
     </div>
-    <div class="icon-btn">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2h1.5L5 10h7l1.5-6H5" stroke="var(--color-text-secondary)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="13" r="1" fill="var(--color-text-secondary)"/><circle cx="11" cy="13" r="1" fill="var(--color-text-secondary)"/></svg>
-      <div class="cart-dot"></div>
-    </div>
-    <button class="sign-btn">sign in</button>
-  </div>
-</div>
-
-<div class="hero">
-  <div class="hero-eyebrow">local marketplace</div>
-  <h1>Buy and sell<br>things you <em>love.</em></h1>
-  <p>Message sellers directly, make offers, and find great deals from real people in your community.</p>
-  <div class="hero-btns">
-    <button class="btn-dark">start shopping</button>
-    <button class="btn-outline">list something free</button>
-  </div>
-  <div class="trust-row">
-    <div class="trust-item"><div class="trust-dot"></div>Free to list</div>
-    <div class="trust-item"><div class="trust-dot"></div>Secure checkout via Ko-fi</div>
-    <div class="trust-item"><div class="trust-dot"></div>Message sellers directly</div>
-    <div class="trust-item"><div class="trust-dot"></div>Verified community ratings</div>
-  </div>
-</div>
-
-<div class="cats">
-  <button class="pill on">all</button>
-  <button class="pill">electronics</button>
-  <button class="pill">clothing</button>
-  <button class="pill">home & garden</button>
-  <button class="pill">collectibles</button>
-  <button class="pill">sports</button>
-  <button class="pill">books</button>
-  <button class="pill">art</button>
-</div>
-
-<div class="section">
-  <div class="sh"><h2>featured listings</h2><a>see all →</a></div>
-  <div class="grid">
-
-    <div class="card">
-      <div class="card-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop" alt="Wireless headphones"></div>
-      <div class="card-body">
-        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><span class="rating-txt">(12)</span></div>
-        <div class="card-name">Wireless headphones</div>
-        <div class="card-seller">marcus_w · <span class="condition cond-like">like new</span></div>
-        <div class="card-foot"><div class="card-price">$48</div><div class="msg-btn">message</div></div>
+    <div class="nav-right">
+      <div class="search">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <circle cx="6.5" cy="6.5" r="5" stroke="#aaa" stroke-width="1.5"/>
+          <path d="M10.5 10.5L14 14" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input placeholder="search anything..." type="text">
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop" alt="Air Max sneakers"></div>
-      <div class="card-body">
-        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><span class="rating-txt">(8)</span></div>
-        <div class="card-name">Air Max — size 10</div>
-        <div class="card-seller">sneakervault · <span class="condition cond-new">new</span></div>
-        <div class="card-foot"><div class="card-price">$110</div><div class="msg-btn">message</div></div>
+      <div class="icon-btn" title="cart">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 2h1.5L5 10h7l1.5-6H5" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="6" cy="13" r="1" fill="#666"/>
+          <circle cx="11" cy="13" r="1" fill="#666"/>
+        </svg>
+        <div class="cart-dot"></div>
       </div>
+      <!-- TODO: When Firebase auth is set up, this button should:
+           - Show "sign in" when logged out → links to login.html
+           - Show user avatar/username when logged in → links to profile.html -->
+      <a href="login.html"><button class="sign-btn">sign in</button></a>
     </div>
+  </nav>
 
-    <div class="card">
-      <div class="card-img"><img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&h=400&fit=crop" alt="Monstera plant"></div>
-      <div class="card-body">
-        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div><span class="rating-txt">(5)</span></div>
-        <div class="card-name">Monstera plant</div>
-        <div class="card-seller">greenthumb · <span class="condition cond-good">good</span></div>
-        <div class="card-foot"><div class="card-price">$25</div><div class="msg-btn">message</div></div>
-      </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">local marketplace</div>
+    <h1>Buy and sell<br>things you <em>love.</em></h1>
+    <p>Message sellers directly, make offers, and find great deals from real people in your community.</p>
+    <div class="hero-btns">
+      <a href="browse.html"><button class="btn-dark">start shopping</button></a>
+      <a href="sell.html"><button class="btn-outline">list something free</button></a>
     </div>
-
-    <div class="card">
-      <div class="card-img"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop" alt="Film camera"></div>
-      <div class="card-body">
-        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><span class="rating-txt">(19)</span></div>
-        <div class="card-name">Film camera, 35mm</div>
-        <div class="card-seller">retro_rio · <span class="condition cond-like">like new</span></div>
-        <div class="card-foot"><div class="card-price">$85</div><div class="msg-btn">message</div></div>
-      </div>
+    <div class="trust-row">
+      <div class="trust-item"><div class="trust-dot"></div>Free to list</div>
+      <div class="trust-item"><div class="trust-dot"></div>Secure checkout via Ko-fi</div>
+      <div class="trust-item"><div class="trust-dot"></div>Message sellers directly</div>
+      <div class="trust-item"><div class="trust-dot"></div>Verified community ratings</div>
     </div>
+  </section>
 
+  <!-- CATEGORY PILLS -->
+  <!-- TODO: When Firebase is set up, clicking a pill should filter
+       listings from Firestore by category field -->
+  <div class="cats">
+    <button class="pill on" data-cat="all">all</button>
+    <button class="pill" data-cat="electronics">electronics</button>
+    <button class="pill" data-cat="clothing">clothing</button>
+    <button class="pill" data-cat="home">home & garden</button>
+    <button class="pill" data-cat="collectibles">collectibles</button>
+    <button class="pill" data-cat="sports">sports</button>
+    <button class="pill" data-cat="books">books</button>
+    <button class="pill" data-cat="art">art</button>
   </div>
-</div>
 
-<div class="banner">
-  <div class="banner-left">
-    <h3>Got something to sell?</h3>
-    <p>List for free in under 2 minutes. Buyers come to you — no bidding, no hassle. Ko-fi handles payment securely.</p>
+  <!-- FEATURED LISTINGS -->
+  <!-- TODO: Replace these placeholder cards with real listings
+       pulled from Firebase Firestore. Each card should link
+       to product.html?id=LISTING_ID -->
+  <section class="section">
+    <div class="sh">
+      <h2>featured listings</h2>
+      <a href="browse.html">see all →</a>
+    </div>
+    <div class="grid">
+
+      <a href="product.html?id=1" class="card">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop" alt="Wireless headphones">
+        </div>
+        <div class="card-body">
+          <div class="stars">
+            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div>
+            <span class="rating-txt">(12)</span>
+          </div>
+          <div class="card-name">Wireless headphones</div>
+          <div class="card-seller">
+            marcus_w &nbsp;·&nbsp; <span class="condition cond-like">like new</span>
+          </div>
+          <div class="card-foot">
+            <div class="card-price">$48</div>
+            <div class="msg-btn">message</div>
+          </div>
+        </div>
+      </a>
+
+      <a href="product.html?id=2" class="card">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop" alt="Air Max sneakers">
+        </div>
+        <div class="card-body">
+          <div class="stars">
+            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+            <span class="rating-txt">(8)</span>
+          </div>
+          <div class="card-name">Air Max — size 10</div>
+          <div class="card-seller">
+            sneakervault &nbsp;·&nbsp; <span class="condition cond-new">new</span>
+          </div>
+          <div class="card-foot">
+            <div class="card-price">$110</div>
+            <div class="msg-btn">message</div>
+          </div>
+        </div>
+      </a>
+
+      <a href="product.html?id=3" class="card">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=400&h=400&fit=crop" alt="Monstera plant">
+        </div>
+        <div class="card-body">
+          <div class="stars">
+            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star e"></div>
+            <span class="rating-txt">(5)</span>
+          </div>
+          <div class="card-name">Monstera plant</div>
+          <div class="card-seller">
+            greenthumb &nbsp;·&nbsp; <span class="condition cond-good">good</span>
+          </div>
+          <div class="card-foot">
+            <div class="card-price">$25</div>
+            <div class="msg-btn">message</div>
+          </div>
+        </div>
+      </a>
+
+      <a href="product.html?id=4" class="card">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop" alt="Film camera">
+        </div>
+        <div class="card-body">
+          <div class="stars">
+            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+            <span class="rating-txt">(19)</span>
+          </div>
+          <div class="card-name">Film camera, 35mm</div>
+          <div class="card-seller">
+            retro_rio &nbsp;·&nbsp; <span class="condition cond-like">like new</span>
+          </div>
+          <div class="card-foot">
+            <div class="card-price">$85</div>
+            <div class="msg-btn">message</div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- SELL BANNER -->
+  <div class="banner">
+    <div>
+      <h3>Got something to sell?</h3>
+      <p>List for free in under 2 minutes. Buyers come to you —<br>no bidding, no hassle. Ko-fi handles payment securely.</p>
+    </div>
+    <a href="sell.html"><button class="btn-dark">list an item →</button></a>
   </div>
-  <button class="btn-dark">list an item →</button>
-</div>
 
-<div class="footer">
-  <div class="footer-logo">brim<em>.</em></div>
-  <div class="footer-r">full to the brim.</div>
-</div>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">brim<em>.</em></div>
+    <div class="footer-r">full to the brim.</div>
+  </footer>
 
-<script>
-document.querySelectorAll('.pill').forEach(p=>{p.addEventListener('click',()=>{document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));p.classList.add('on');});});
-</script>
+  <script>
+    // Category pill switching
+    document.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+        pill.classList.add('on');
+        // TODO: When Firebase is set up, add filtering logic here:
+        // const cat = pill.dataset.cat;
+        // loadListings(cat); // fetch from Firestore filtered by category
+      });
+    });
+
+    // TODO: Firebase setup goes here once you have your config
+    // Step 1: Go to console.firebase.google.com
+    // Step 2: Create project "brim"
+    // Step 3: Add web app, copy config
+    // Step 4: Replace this comment with:
+    //
+    // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    // import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+    // import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+    //
+    // const firebaseConfig = { ...your config here... };
+    // const app = initializeApp(firebaseConfig);
+    // const auth = getAuth(app);
+    // const db = getFirestore(app);
+    //
+    // onAuthStateChanged(auth, user => {
+    //   if (user) {
+    //     document.querySelector('.sign-btn').textContent = user.displayName || 'my profile';
+    //     document.querySelector('.sign-btn').parentElement.href = 'profile.html';
+    //   }
+    // });
+  </script>
+
+</body>
+</html>
