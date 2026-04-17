@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>brim. — buy and sell things you love</title>
+  <title>list an item — brim.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -12,78 +12,111 @@
       --blue: #378ADD; --blue-light: #E6F1FB; --blue-border: #B5D4F4;
       --blue-dark: #185FA5; --green-light: #EAF3DE; --green-dark: #3B6D11;
       --amber-light: #FAEEDA; --amber-dark: #854F0B;
+      --purple-light: #F0EDFB; --purple-dark: #5B2D9E; --purple-border: #C8B8F0;
       --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 999px;
     }
     body { font-family: 'DM Sans', sans-serif; background: #f5f5f3; color: #1a1a1a; }
-    a { text-decoration: none; color: inherit; cursor: pointer; }
+    a { text-decoration: none; color: inherit; }
     .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
-    .logo { font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: -0.5px; color: #1a1a1a; }
+    .logo { font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: -0.5px; }
     .logo em { font-style: italic; color: var(--blue); }
     .nav-links { display: flex; gap: 28px; font-size: 13px; color: #666; }
     .nav-links a:hover { color: #1a1a1a; }
     .nav-right { display: flex; align-items: center; gap: 10px; }
-    .search { display: flex; align-items: center; gap: 8px; background: #f5f5f3; border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-full); padding: 8px 16px; width: 220px; }
-    .search input { border: none; background: transparent; outline: none; font-size: 13px; color: #1a1a1a; width: 100%; font-family: 'DM Sans', sans-serif; }
-    .search input::placeholder { color: #aaa; }
     .sign-btn { font-size: 13px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-full); padding: 7px 16px; background: var(--blue-light); cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    .sign-btn:hover { background: #d6eaf8; }
-    .user-btn { font-size: 13px; font-weight: 500; color: #1a1a1a; border: 0.5px solid rgba(0,0,0,0.15); border-radius: var(--radius-full); padding: 7px 16px; background: #fff; cursor: pointer; font-family: 'DM Sans', sans-serif; display: none; align-items: center; gap: 8px; }
-    .user-avatar-sm { width: 22px; height: 22px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
-    .hero { padding: 72px 28px 64px; background: #fff; text-align: center; border-bottom: 0.5px solid rgba(0,0,0,0.1); }
-    .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: #aaa; margin-bottom: 18px; }
-    .hero h1 { font-family: 'Instrument Serif', serif; font-size: 54px; line-height: 1.1; letter-spacing: -1px; margin-bottom: 16px; font-weight: 400; }
-    .hero h1 em { font-style: italic; color: var(--blue); }
-    .hero p { font-size: 15px; color: #666; margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto; line-height: 1.6; }
-    .hero-btns { display: flex; gap: 10px; justify-content: center; }
-    .btn-dark { background: #1a1a1a; color: #fff; border: none; border-radius: var(--radius-full); padding: 13px 28px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    .btn-dark:hover { background: #333; }
-    .btn-outline { background: transparent; color: #1a1a1a; border: 0.5px solid rgba(0,0,0,0.2); border-radius: var(--radius-full); padding: 13px 28px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    .btn-outline:hover { background: #f5f5f3; }
-    .trust-row { display: flex; gap: 24px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
-    .trust-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #aaa; }
-    .trust-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
-    .cats { display: flex; gap: 8px; padding: 18px 28px; overflow-x: auto; border-bottom: 0.5px solid rgba(0,0,0,0.1); background: #fff; }
-    .cats::-webkit-scrollbar { display: none; }
-    .pill { padding: 8px 18px; border-radius: var(--radius-full); border: 0.5px solid rgba(0,0,0,0.12); font-size: 13px; color: #666; cursor: pointer; white-space: nowrap; background: transparent; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
-    .pill.on, .pill:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-    .section { padding: 36px 28px; }
-    .sh { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 22px; }
-    .sh h2 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; }
-    .sh a { font-size: 13px; color: #888; }
-    .sh a:hover { color: #1a1a1a; }
-    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-    .card { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: border-color 0.15s, transform 0.15s; display: block; }
-    .card:hover { border-color: rgba(0,0,0,0.2); transform: translateY(-2px); }
-    .card-img { width: 100%; aspect-ratio: 1; overflow: hidden; background: #f5f5f3; }
-    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-    .card:hover .card-img img { transform: scale(1.04); }
-    .card-body { padding: 12px 14px; }
-    .card-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-seller { font-size: 12px; color: #888; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-    .card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
-    .card-price { font-size: 15px; font-weight: 500; }
-    .msg-btn { font-size: 11px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-md); padding: 4px 10px; background: var(--blue-light); cursor: pointer; }
-    .condition { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; border-radius: 4px; padding: 2px 7px; }
-    .cond-new { background: var(--blue-light); color: var(--blue-dark); }
-    .cond-like { background: var(--green-light); color: var(--green-dark); }
-    .cond-good { background: var(--amber-light); color: var(--amber-dark); }
-    .cond-fair { background: #f0f0ee; color: #555; }
-    .banner { margin: 0 28px 36px; border-radius: var(--radius-lg); border: 0.5px solid rgba(0,0,0,0.1); padding: 32px 36px; background: #fff; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .banner h3 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; margin-bottom: 6px; }
-    .banner p { font-size: 14px; color: #666; line-height: 1.5; }
+    .main { padding: 40px 28px 60px; max-width: 800px; margin: 0 auto; }
+    .page-title { font-family: 'Instrument Serif', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .page-title em { font-style: italic; color: var(--blue); }
+    .page-sub { font-size: 14px; color: #888; margin-bottom: 32px; }
+
+    /* Listing type toggle */
+    .type-toggle { display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap; }
+    .type-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 24px; border-radius: var(--radius-lg); border: 0.5px solid rgba(0,0,0,0.15); cursor: pointer; font-family: 'DM Sans', sans-serif; background: #fff; transition: all 0.15s; flex: 1; min-width: 120px; }
+    .type-btn-icon { font-size: 24px; }
+    .type-btn-label { font-size: 13px; font-weight: 500; color: #444; }
+    .type-btn-sub { font-size: 11px; color: #aaa; text-align: center; }
+    .type-btn.on.physical { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .type-btn.on.physical .type-btn-label, .type-btn.on.physical .type-btn-sub { color: #fff; }
+    .type-btn.on.digital { background: var(--purple-light); border-color: var(--purple-border); }
+    .type-btn.on.digital .type-btn-label { color: var(--purple-dark); }
+    .type-btn.on.digital .type-btn-sub { color: var(--purple-dark); opacity: 0.7; }
+
+    /* Digital subtype */
+    .digital-subtype { display: flex; gap: 10px; margin-bottom: 20px; }
+    .subtype-btn { padding: 8px 18px; border-radius: var(--radius-full); border: 0.5px solid rgba(0,0,0,0.15); font-size: 13px; color: #666; cursor: pointer; background: #fff; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+    .subtype-btn.on { background: var(--purple-dark); color: #fff; border-color: var(--purple-dark); }
+
+    .form-layout { display: flex; gap: 28px; align-items: flex-start; }
+    .form-col { flex: 1; min-width: 0; }
+    .preview-col { width: 240px; flex-shrink: 0; }
+    .form-section { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; }
+    .form-section-title { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .section-badge { font-size: 10px; background: var(--purple-light); color: var(--purple-dark); border-radius: 4px; padding: 2px 7px; text-transform: none; letter-spacing: 0; }
+    .field { margin-bottom: 18px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label { display: block; font-size: 13px; font-weight: 500; color: #444; margin-bottom: 7px; }
+    .field label span { color: #bbb; font-weight: 400; }
+    .field input, .field textarea, .field select { width: 100%; border: 0.5px solid rgba(0,0,0,0.15); border-radius: var(--radius-md); padding: 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; color: #1a1a1a; background: #fff; transition: border-color 0.15s; }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--blue); }
+    .field input::placeholder, .field textarea::placeholder { color: #ccc; }
+    .field textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+    .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+    .price-wrap { display: flex; align-items: center; gap: 0; }
+    .price-prefix { border: 0.5px solid rgba(0,0,0,0.15); border-right: none; border-radius: var(--radius-md) 0 0 var(--radius-md); padding: 11px 12px; font-size: 14px; color: #888; background: #f9f9f9; }
+    .price-wrap input { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+    .condition-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cond-pill { padding: 8px 16px; border-radius: var(--radius-full); border: 0.5px solid rgba(0,0,0,0.15); font-size: 13px; color: #666; cursor: pointer; background: transparent; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+    .cond-pill.sel-new { background: var(--blue-light); color: var(--blue-dark); border-color: var(--blue-border); }
+    .cond-pill.sel-like { background: var(--green-light); color: var(--green-dark); border-color: #b8dda0; }
+    .cond-pill.sel-good { background: var(--amber-light); color: var(--amber-dark); border-color: #f0d4a0; }
+    .cond-pill.sel-fair { background: #f0f0ee; color: #555; border-color: #ddd; }
+    .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .photo-slot { aspect-ratio: 1; border: 0.5px dashed rgba(0,0,0,0.2); border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; background: #fafafa; position: relative; overflow: hidden; }
+    .photo-slot:hover { background: #f0f0ee; }
+    .photo-slot.has-photo { border-style: solid; border-color: rgba(0,0,0,0.1); }
+    .photo-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .photo-slot .plus { font-size: 22px; color: #ccc; line-height: 1; }
+    .photo-slot .slot-label { font-size: 10px; color: #ccc; margin-top: 4px; }
+    .photo-slot input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .photo-hint { font-size: 11px; color: #bbb; margin-top: 8px; line-height: 1.5; }
+    .upload-status-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666; margin-bottom: 5px; }
+    .spinner { width: 12px; height: 12px; border: 1.5px solid #ddd; border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    .done-dot { width: 12px; height: 12px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .done-dot::after { content: '✓'; color: #fff; font-size: 8px; }
+    .err-dot { width: 12px; height: 12px; border-radius: 50%; background: #e55; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .err-dot::after { content: '✕'; color: #fff; font-size: 8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .preview-sticky { position: sticky; top: 90px; }
+    .preview-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 12px; }
+    .preview-card { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); overflow: hidden; }
+    .preview-img { width: 100%; aspect-ratio: 1; background: #f0f0ee; display: flex; align-items: center; justify-content: center; }
+    .preview-img img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-img-placeholder { font-size: 32px; opacity: 0.3; }
+    .preview-body { padding: 12px 14px; }
+    .preview-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; color: #888; }
+    .preview-name.has-val { color: #1a1a1a; }
+    .preview-seller { font-size: 12px; color: #aaa; margin-bottom: 8px; }
+    .preview-price { font-size: 16px; font-weight: 500; color: #aaa; }
+    .preview-price.has-val { color: #1a1a1a; }
+    .preview-digital-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--purple-light); color: var(--purple-dark); border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 500; margin-bottom: 6px; }
+    .submit-row { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+    .btn-primary { background: #1a1a1a; color: #fff; border: none; border-radius: var(--radius-full); padding: 14px 32px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+    .btn-primary:hover { background: #333; }
+    .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+    .submit-note { font-size: 12px; color: #aaa; line-height: 1.5; }
+    .note-box { border-radius: var(--radius-md); padding: 14px 16px; font-size: 13px; line-height: 1.6; }
+    .note-purple { background: var(--purple-light); color: var(--purple-dark); border: 0.5px solid var(--purple-border); }
+    .note-amber { background: var(--amber-light); color: var(--amber-dark); border: 0.5px solid #f0d4a0; }
+    .auth-gate { background: var(--blue-light); border: 0.5px solid var(--blue-border); border-radius: var(--radius-lg); padding: 32px; text-align: center; margin-bottom: 24px; }
+    .auth-gate h3 { font-family: 'Instrument Serif', serif; font-size: 22px; margin-bottom: 8px; }
+    .auth-gate p { font-size: 14px; color: #555; margin-bottom: 20px; }
+    .cred-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .add-cred-btn { font-size: 13px; color: var(--purple-dark); background: var(--purple-light); border: 0.5px solid var(--purple-border); border-radius: var(--radius-full); padding: 7px 16px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     .footer { padding: 20px 28px; border-top: 0.5px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; background: #fff; }
     .footer-logo { font-family: 'Instrument Serif', serif; font-size: 20px; }
     .footer-logo em { font-style: italic; color: var(--blue); }
     .footer-r { font-size: 12px; color: #aaa; }
-    .skeleton { background: linear-gradient(90deg, #f0f0ee 25%, #e8e8e6 50%, #f0f0ee 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: var(--radius-md); }
-    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-    .card-skeleton .card-img { background: #f0f0ee; }
-    .card-skeleton .sk-name { height: 14px; width: 80%; margin-bottom: 8px; }
-    .card-skeleton .sk-seller { height: 12px; width: 50%; margin-bottom: 8px; }
-    .card-skeleton .sk-price { height: 15px; width: 30%; }
-    .empty-state { grid-column: 1/-1; text-align: center; padding: 48px; color: #bbb; font-size: 14px; }
-    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hero h1 { font-size: 38px; } .nav-links { display: none; } }
-    @media (max-width: 500px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .nav { padding: 12px 16px; } .search { width: 150px; } .hero { padding: 48px 16px 40px; } .section { padding: 24px 16px; } .banner { flex-direction: column; align-items: flex-start; margin: 0 16px 24px; } }
+    @media (max-width: 800px) { .form-layout { flex-direction: column; } .preview-col { width: 100%; } .preview-sticky { position: static; } .main { padding: 24px 16px 48px; } .nav-links { display: none; } .type-toggle { gap: 8px; } }
   </style>
 </head>
 <body>
@@ -91,71 +124,183 @@
     <a href="index.html" class="logo">brim<em>.</em></a>
     <div class="nav-links">
       <a href="browse.html">browse</a>
-      <a href="sell.html">sell</a>
-      <a href="#howitworks">how it works</a>
+      <a href="sell.html" style="color:#1a1a1a;font-weight:500;">sell</a>
+      <a href="#">how it works</a>
     </div>
     <div class="nav-right">
-      <div class="search">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="#aaa" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <input placeholder="search anything..." type="text" id="navSearchInput">
-      </div>
       <a href="login.html" id="signInLink"><button class="sign-btn">sign in</button></a>
-      <a href="profile.html" id="userMenuBtn" style="display:none;">
-        <div class="user-btn" id="userBtnInner">
-          <div class="user-avatar-sm" id="navAvatar">?</div>
-          <span id="navUsername">you</span>
-        </div>
-      </a>
+      <a href="profile.html" id="profileLink" style="display:none;font-size:13px;color:#888;">my profile →</a>
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-eyebrow">local marketplace</div>
-    <h1>Buy and sell<br>things you <em>love.</em></h1>
-    <p>Message sellers directly, make offers, and find great deals from real people in your community.</p>
-    <div class="hero-btns">
-      <a href="browse.html"><button class="btn-dark">start shopping</button></a>
-      <a href="sell.html"><button class="btn-outline">list something free</button></a>
-    </div>
-    <div class="trust-row">
-      <div class="trust-item"><div class="trust-dot"></div>Free to list</div>
-      <div class="trust-item"><div class="trust-dot"></div>Secure checkout via Ko-fi</div>
-      <div class="trust-item"><div class="trust-dot"></div>Message sellers directly</div>
-      <div class="trust-item"><div class="trust-dot"></div>Verified community ratings</div>
-    </div>
-  </section>
+  <div class="main">
+    <h1 class="page-title">list something <em>free.</em></h1>
+    <p class="page-sub">Physical items, game accounts, Roblox items — sell anything to your community.</p>
 
-  <div class="cats">
-    <button class="pill on" data-cat="all">all</button>
-    <button class="pill" data-cat="electronics">electronics</button>
-    <button class="pill" data-cat="clothing">clothing</button>
-    <button class="pill" data-cat="home & garden">home & garden</button>
-    <button class="pill" data-cat="collectibles">collectibles</button>
-    <button class="pill" data-cat="sports">sports</button>
-    <button class="pill" data-cat="books">books</button>
-    <button class="pill" data-cat="art">art</button>
-  </div>
+    <div class="auth-gate" id="authGate" style="display:none;">
+      <h3>Sign in to list</h3>
+      <p>You need a free account to publish listings on brim.</p>
+      <a href="login.html?redirect=sell.html"><button class="btn-primary">sign in or create account →</button></a>
+    </div>
 
-  <section class="section">
-    <div class="sh">
-      <h2>featured listings</h2>
-      <a href="browse.html">see all →</a>
-    </div>
-    <div class="grid" id="featuredGrid">
-      <!-- Skeleton loaders -->
-      <div class="card card-skeleton"><div class="card-img"></div><div class="card-body"><div class="skeleton sk-name"></div><div class="skeleton sk-seller"></div><div class="skeleton sk-price"></div></div></div>
-      <div class="card card-skeleton"><div class="card-img"></div><div class="card-body"><div class="skeleton sk-name"></div><div class="skeleton sk-seller"></div><div class="skeleton sk-price"></div></div></div>
-      <div class="card card-skeleton"><div class="card-img"></div><div class="card-body"><div class="skeleton sk-name"></div><div class="skeleton sk-seller"></div><div class="skeleton sk-price"></div></div></div>
-      <div class="card card-skeleton"><div class="card-img"></div><div class="card-body"><div class="skeleton sk-name"></div><div class="skeleton sk-seller"></div><div class="skeleton sk-price"></div></div></div>
-    </div>
-  </section>
+    <div id="formBody">
+      <!-- Listing type selector -->
+      <div class="type-toggle">
+        <button class="type-btn physical on" id="typeBtnPhysical" onclick="selectType('physical')">
+          <div class="type-btn-icon">📦</div>
+          <div class="type-btn-label">Physical item</div>
+          <div class="type-btn-sub">Clothes, electronics, furniture…</div>
+        </button>
+        <button class="type-btn digital" id="typeBtnDigital" onclick="selectType('digital')">
+          <div class="type-btn-icon">🎮</div>
+          <div class="type-btn-label">Digital / Game item</div>
+          <div class="type-btn-sub">Roblox, accounts, in-game items…</div>
+        </button>
+      </div>
 
-  <div class="banner">
-    <div>
-      <h3>Got something to sell?</h3>
-      <p>List for free in under 2 minutes. Buyers come to you —<br>no bidding, no hassle. Ko-fi handles payment securely.</p>
+      <!-- Digital subtype (shown when digital selected) -->
+      <div id="digitalSubtypeRow" style="display:none;margin-bottom:20px;">
+        <p style="font-size:13px;font-weight:500;margin-bottom:10px;color:#444;">What are you selling?</p>
+        <div class="digital-subtype">
+          <button class="subtype-btn on" id="subtypeItem" onclick="selectSubtype('item')">🪙 Game item / currency</button>
+          <button class="subtype-btn" id="subtypeAccount" onclick="selectSubtype('account')">👤 Full account</button>
+        </div>
+      </div>
+
+      <div class="form-layout">
+        <div class="form-col">
+          <!-- PHOTOS (hidden for account type) -->
+          <div class="form-section" id="photoSection">
+            <div class="form-section-title">Photos</div>
+            <div class="photo-grid">
+              <div class="photo-slot has-photo" id="slot0"><img id="preview0" src="" alt="" style="display:none"><span class="plus" id="plus0">+</span><span class="slot-label" id="label0">main photo</span><input type="file" accept="image/*" onchange="previewPhoto(this,0)"></div>
+              <div class="photo-slot" id="slot1"><img id="preview1" src="" alt="" style="display:none"><span class="plus" id="plus1">+</span><span class="slot-label" id="label1">photo 2</span><input type="file" accept="image/*" onchange="previewPhoto(this,1)"></div>
+              <div class="photo-slot" id="slot2"><img id="preview2" src="" alt="" style="display:none"><span class="plus" id="plus2">+</span><span class="slot-label" id="label2">photo 3</span><input type="file" accept="image/*" onchange="previewPhoto(this,2)"></div>
+              <div class="photo-slot" id="slot3"><img id="preview3" src="" alt="" style="display:none"><span class="plus" id="plus3">+</span><span class="slot-label" id="label3">photo 4</span><input type="file" accept="image/*" onchange="previewPhoto(this,3)"></div>
+              <div class="photo-slot" id="slot4"><img id="preview4" src="" alt="" style="display:none"><span class="plus" id="plus4">+</span><span class="slot-label" id="label4">photo 5</span><input type="file" accept="image/*" onchange="previewPhoto(this,4)"></div>
+              <div class="photo-slot" id="slot5"><img id="preview5" src="" alt="" style="display:none"><span class="plus" id="plus5">+</span><span class="slot-label" id="label5">photo 6</span><input type="file" accept="image/*" onchange="previewPhoto(this,5)"></div>
+            </div>
+            <p class="photo-hint">Add up to 6 photos. First photo is your main listing image.</p>
+            <div id="uploadStatus" style="margin-top:10px;"></div>
+          </div>
+
+          <!-- ITEM DETAILS -->
+          <div class="form-section">
+            <div class="form-section-title">Item details</div>
+            <div class="field"><label>Title</label><input type="text" id="titleInput" placeholder="e.g. Roblox 1000 Robux" oninput="updatePreview()"></div>
+            <div class="field"><label>Description <span>(optional)</span></label><textarea id="descInput" placeholder="Describe the item, any details a buyer needs to know."></textarea></div>
+
+            <!-- Physical category -->
+            <div id="physicalFields">
+              <div class="field"><label>Category</label>
+                <select id="catInput">
+                  <option value="" disabled selected>select a category...</option>
+                  <option>electronics</option><option>clothing</option><option>home & garden</option>
+                  <option>collectibles</option><option>sports</option><option>books</option><option>art</option><option>other</option>
+                </select>
+              </div>
+              <div class="field"><label>Condition</label>
+                <div class="condition-pills">
+                  <button class="cond-pill" onclick="selectCond(this,'new','sel-new')">New</button>
+                  <button class="cond-pill" onclick="selectCond(this,'like new','sel-like')">Like new</button>
+                  <button class="cond-pill" onclick="selectCond(this,'good','sel-good')">Good</button>
+                  <button class="cond-pill" onclick="selectCond(this,'fair','sel-fair')">Fair</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Digital-specific fields -->
+            <div id="digitalFields" style="display:none;">
+              <div class="field"><label>Game / Platform</label>
+                <select id="gameInput">
+                  <option value="" disabled selected>select a game...</option>
+                  <option>Roblox</option><option>Minecraft</option><option>Fortnite</option>
+                  <option>Among Us</option><option>Adopt Me!</option><option>Blox Fruits</option>
+                  <option>Pet Simulator X</option><option>Counter-Strike 2</option><option>Valorant</option>
+                  <option>League of Legends</option><option>Clash of Clans</option><option>Clash Royale</option>
+                  <option>Brawl Stars</option><option>Pokémon GO</option><option>Discord</option><option>Other</option>
+                </select>
+              </div>
+              <div class="field" id="itemTypeField"><label>Item type <span>(e.g. "robux", "limited item", "gamepass")</span></label>
+                <input type="text" id="itemTypeInput" placeholder="e.g. Robux, Blox Fruits Devil Fruit, skin…">
+              </div>
+              <div class="field"><label>Delivery method</label>
+                <select id="deliveryInput">
+                  <option value="message">Seller sends via message (in-game trade / gift)</option>
+                  <option value="code">Code / link provided in messages</option>
+                  <option value="instant">Instant — no delivery needed (account)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACCOUNT CREDENTIALS (shown for account subtype) -->
+          <div class="form-section" id="credentialsSection" style="display:none;">
+            <div class="form-section-title">Account credentials <span class="section-badge">🔒 shown to buyer on purchase</span></div>
+            <div class="note-box note-amber" style="margin-bottom:16px;">Enter the username, password, and any extras (email recovery, backup codes). These are <strong>encrypted</strong> and only shown to the verified buyer after payment.</div>
+            <div id="credFields">
+              <div class="cred-input-row">
+                <input type="text" placeholder="Field name (e.g. Username)" class="cred-key" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+                <input type="text" placeholder="Value" class="cred-val-input" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+              </div>
+              <div class="cred-input-row">
+                <input type="text" placeholder="Field name (e.g. Password)" class="cred-key" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+                <input type="password" placeholder="Password" class="cred-val-input" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+              </div>
+            </div>
+            <button class="add-cred-btn" onclick="addCredRow()">+ add another field</button>
+          </div>
+
+          <!-- PRICING -->
+          <div class="form-section">
+            <div class="form-section-title">Pricing</div>
+            <div class="field"><label>Price</label>
+              <div class="price-wrap"><span class="price-prefix">$</span><input type="number" id="priceInput" placeholder="0.00" min="0" step="0.01" oninput="updatePreview()"></div>
+            </div>
+          </div>
+
+          <!-- PAYMENT / KO-FI (physical only) -->
+          <div class="form-section" id="kofiSection">
+            <div class="form-section-title">Payment</div>
+            <div class="field"><label>Your Ko-fi shop URL <span>(where buyers will pay)</span></label>
+              <input type="url" placeholder="https://ko-fi.com/yourusername" id="kofiInput">
+            </div>
+            <div class="note-box" style="background:#FFF5F5;border:0.5px solid #FFD4D4;color:#884444;"><strong style="color:#FF5E5B;">Ko-fi</strong> handles all payments — free to set up, you keep more of your sale. <a href="https://ko-fi.com" target="_blank" style="color:#FF5E5B;text-decoration:underline;">Set up your Ko-fi →</a></div>
+          </div>
+
+          <!-- Digital payment note -->
+          <div class="form-section note-purple" id="digitalPayNote" style="display:none;">
+            <div class="form-section-title" style="color:var(--purple-dark);">💳 Brim handles payment</div>
+            <p style="font-size:13px;line-height:1.6;">For digital items, buyers pay securely through brim checkout. For <strong>game items</strong>: you'll have 24 hrs to deliver once sold or the buyer gets a refund. For <strong>accounts</strong>: the buyer sees credentials immediately — make sure they're correct before listing.</p>
+          </div>
+
+          <div class="submit-row">
+            <button class="btn-primary" id="submitBtn" onclick="submitListing()">publish listing →</button>
+            <p class="submit-note" id="submitNote">Free to list. Goes live instantly.</p>
+          </div>
+        </div>
+
+        <!-- LIVE PREVIEW -->
+        <div class="preview-col">
+          <div class="preview-sticky">
+            <div class="preview-label">preview</div>
+            <div class="preview-card">
+              <div class="preview-img" id="previewImgWrap">
+                <div class="preview-img-placeholder" id="previewImgPlaceholder">📷</div>
+                <img id="previewMainImg" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div class="preview-body">
+                <div id="previewDigitalBadge" style="display:none;" class="preview-digital-badge">🎮 digital</div>
+                <div class="preview-name" id="previewName">your item title</div>
+                <div class="preview-seller">you &nbsp;·&nbsp; <span id="previewCond" style="font-size:10px;">—</span></div>
+                <div class="preview-price" id="previewPrice">$—</div>
+              </div>
+            </div>
+            <p style="font-size:11px;color:#bbb;margin-top:10px;line-height:1.5;">This is how your listing will appear in search results.</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <a href="sell.html"><button class="btn-dark">list an item →</button></a>
   </div>
 
   <footer class="footer">
@@ -166,7 +311,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore, collection, query, where, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, doc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     const app = initializeApp({
       apiKey: "AIzaSyCZmGDUuv7P4XcEJ0Sj6SFjQVKqLeeSOKQ",
@@ -179,78 +324,207 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Auth state
-    onAuthStateChanged(auth, user => {
+    const CLOUD_NAME = 'dgfmld877';
+    const UPLOAD_PRESET = 'brim_uploads';
+
+    let currentUser = null;
+    let selectedCond = 'new';
+    let listingType = 'physical'; // 'physical' | 'digital'
+    let digitalSubtype = 'item'; // 'item' | 'account'
+    const uploadedUrls = [null,null,null,null,null,null];
+    const uploading = [false,false,false,false,false,false];
+
+    onAuthStateChanged(auth, async user => {
       if (user) {
+        currentUser = user;
         document.getElementById('signInLink').style.display = 'none';
-        const btn = document.getElementById('userMenuBtn');
-        btn.style.display = 'flex';
-        document.getElementById('userBtnInner').style.display = 'flex';
-        document.getElementById('navAvatar').textContent = (user.displayName || user.email || '?')[0].toUpperCase();
-        document.getElementById('navUsername').textContent = user.displayName || user.email.split('@')[0];
-        btn.href = `profile.html?uid=${user.uid}`;
+        document.getElementById('profileLink').style.display = 'block';
+        document.getElementById('profileLink').href = `profile.html?uid=${user.uid}`;
+        document.getElementById('authGate').style.display = 'none';
+        document.getElementById('formBody').style.display = 'block';
+      } else {
+        document.getElementById('authGate').style.display = 'block';
+        document.getElementById('formBody').style.display = 'none';
       }
     });
 
-    // Nav search
-    document.getElementById('navSearchInput').addEventListener('keydown', e => {
-      if (e.key === 'Enter') window.location.href = `browse.html?q=${encodeURIComponent(e.target.value)}`;
-    });
+    window.selectType = function(type) {
+      listingType = type;
+      document.getElementById('typeBtnPhysical').className = 'type-btn physical' + (type==='physical'?' on':'');
+      document.getElementById('typeBtnDigital').className = 'type-btn digital' + (type==='digital'?' on':'');
+      const isDigital = type === 'digital';
+      document.getElementById('digitalSubtypeRow').style.display = isDigital ? 'block' : 'none';
+      document.getElementById('physicalFields').style.display = isDigital ? 'none' : 'block';
+      document.getElementById('digitalFields').style.display = isDigital ? 'block' : 'none';
+      document.getElementById('kofiSection').style.display = isDigital ? 'none' : 'block';
+      document.getElementById('digitalPayNote').style.display = isDigital ? 'block' : 'none';
+      document.getElementById('previewDigitalBadge').style.display = isDigital ? 'inline-flex' : 'none';
+      if (isDigital) {
+        document.getElementById('previewImgPlaceholder').textContent = '🎮';
+        selectSubtype(digitalSubtype);
+      } else {
+        document.getElementById('previewImgPlaceholder').textContent = '📷';
+        document.getElementById('credentialsSection').style.display = 'none';
+        document.getElementById('photoSection').style.display = 'block';
+        document.getElementById('previewCond').textContent = selectedCond || '—';
+      }
+    };
 
-    // Category pills
-    let activeCat = 'all';
-    document.querySelectorAll('.pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
-        pill.classList.add('on');
-        activeCat = pill.dataset.cat;
-        loadListings(activeCat);
-      });
-    });
+    window.selectSubtype = function(sub) {
+      digitalSubtype = sub;
+      document.getElementById('subtypeItem').className = 'subtype-btn' + (sub==='item'?' on':'');
+      document.getElementById('subtypeAccount').className = 'subtype-btn' + (sub==='account'?' on':'');
+      const isAccount = sub === 'account';
+      document.getElementById('credentialsSection').style.display = isAccount ? 'block' : 'none';
+      document.getElementById('photoSection').style.display = isAccount ? 'none' : 'block';
+      document.getElementById('itemTypeField').style.display = isAccount ? 'none' : 'block';
+      if (isAccount) {
+        document.getElementById('deliveryInput').value = 'instant';
+        document.getElementById('previewImgPlaceholder').textContent = '👤';
+        document.getElementById('previewCond').textContent = 'account';
+      } else {
+        document.getElementById('previewImgPlaceholder').textContent = '🎮';
+        document.getElementById('previewCond').textContent = 'digital item';
+      }
+    };
 
-    function condClass(c) {
-      return c === 'new' ? 'cond-new' : c === 'like new' ? 'cond-like' : c === 'good' ? 'cond-good' : 'cond-fair';
-    }
+    window.addCredRow = function() {
+      const div = document.createElement('div');
+      div.className = 'cred-input-row';
+      div.innerHTML = `<input type="text" placeholder="Field name" class="cred-key" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+        <input type="text" placeholder="Value" class="cred-val-input" style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">`;
+      document.getElementById('credFields').appendChild(div);
+    };
 
-    function renderCard(id, data) {
-      const img = data.mainPhoto || (data.photos && data.photos[0]) || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop';
-      return `
-        <a href="product.html?id=${id}" class="card">
-          <div class="card-img"><img src="${img}" alt="${data.title}" loading="lazy"></div>
-          <div class="card-body">
-            <div class="card-name">${data.title}</div>
-            <div class="card-seller">${data.sellerName || 'seller'} &nbsp;·&nbsp; <span class="condition ${condClass(data.condition)}">${data.condition}</span></div>
-            <div class="card-foot">
-              <div class="card-price">$${Number(data.price).toFixed(2)}</div>
-              <div class="msg-btn" onclick="event.preventDefault();window.location.href='messages.html?listing=${id}&seller=${data.sellerId}'">message</div>
-            </div>
-          </div>
-        </a>`;
-    }
+    window.previewPhoto = function(input, idx) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.getElementById('preview' + idx);
+        img.src = e.target.result; img.style.display = 'block';
+        document.getElementById('plus' + idx).style.display = 'none';
+        document.getElementById('label' + idx).style.display = 'none';
+        if (idx === 0) {
+          document.getElementById('previewMainImg').src = e.target.result;
+          document.getElementById('previewMainImg').style.display = 'block';
+          document.getElementById('previewImgPlaceholder').style.display = 'none';
+        }
+      };
+      reader.readAsDataURL(file);
+      uploadToCloudinary(file, idx);
+    };
 
-    async function loadListings(cat = 'all') {
-      const grid = document.getElementById('featuredGrid');
-      grid.innerHTML = '<div class="card card-skeleton"><div class="card-img"></div><div class="card-body"><div class="skeleton sk-name"></div><div class="skeleton sk-seller"></div><div class="skeleton sk-price"></div></div></div>'.repeat(4);
+    async function uploadToCloudinary(file, idx) {
+      uploading[idx] = true; uploadedUrls[idx] = null; showUploadStatus();
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', UPLOAD_PRESET);
+      formData.append('folder', 'brim-listings');
       try {
-        let q;
-        if (cat === 'all') {
-          q = query(collection(db, 'listings'), where('sold', '==', false), orderBy('createdAt', 'desc'), limit(8));
-        } else {
-          q = query(collection(db, 'listings'), where('sold', '==', false), where('category', '==', cat), orderBy('createdAt', 'desc'), limit(8));
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
+        if (!res.ok) throw new Error('Upload failed');
+        const data = await res.json();
+        uploadedUrls[idx] = data.secure_url.replace('/upload/', '/upload/f_auto,q_auto/');
+      } catch (err) {
+        uploadedUrls[idx] = 'ERROR';
+      } finally {
+        uploading[idx] = false; showUploadStatus();
+      }
+    }
+
+    function showUploadStatus() {
+      const el = document.getElementById('uploadStatus');
+      const active = uploadedUrls.map((u, i) => ({ idx: i, url: u, busy: uploading[i] })).filter(s => s.busy || s.url !== null);
+      if (!active.length) { el.innerHTML = ''; return; }
+      el.innerHTML = active.map(s => {
+        if (s.busy) return `<div class="upload-status-item"><div class="spinner"></div> uploading photo ${s.idx+1}…</div>`;
+        if (s.url === 'ERROR') return `<div class="upload-status-item"><div class="err-dot"></div> photo ${s.idx+1} failed — try again</div>`;
+        return `<div class="upload-status-item"><div class="done-dot"></div> photo ${s.idx+1} uploaded</div>`;
+      }).join('');
+    }
+
+    window.updatePreview = function() {
+      const title = document.getElementById('titleInput').value;
+      const price = document.getElementById('priceInput').value;
+      const nameEl = document.getElementById('previewName');
+      const priceEl = document.getElementById('previewPrice');
+      nameEl.textContent = title || 'your item title';
+      nameEl.className = 'preview-name' + (title ? ' has-val' : '');
+      priceEl.textContent = price ? '$' + parseFloat(price).toFixed(2) : '$—';
+      priceEl.className = 'preview-price' + (price ? ' has-val' : '');
+    };
+
+    window.selectCond = function(btn, val, cls) {
+      document.querySelectorAll('.cond-pill').forEach(p => p.className = 'cond-pill');
+      btn.classList.add(cls); selectedCond = val;
+      document.getElementById('previewCond').textContent = val;
+    };
+
+    window.submitListing = async function() {
+      if (!currentUser) { window.location.href = 'login.html?redirect=sell.html'; return; }
+      const title = document.getElementById('titleInput').value.trim();
+      const price = document.getElementById('priceInput').value;
+      const description = document.getElementById('descInput').value.trim();
+      const isDigital = listingType === 'digital';
+      const isAccount = isDigital && digitalSubtype === 'account';
+
+      if (!title || !price) { alert('Please fill in title and price.'); return; }
+
+      let extraData = {};
+
+      if (isDigital) {
+        extraData.listingType = 'digital';
+        extraData.digitalSubtype = digitalSubtype;
+        extraData.game = document.getElementById('gameInput').value;
+        extraData.deliveryMethod = document.getElementById('deliveryInput').value;
+        if (!isAccount) extraData.itemType = document.getElementById('itemTypeInput').value;
+        extraData.condition = 'digital';
+        if (isAccount) {
+          // Collect credentials
+          const keys = [...document.querySelectorAll('.cred-key')].map(i => i.value.trim());
+          const vals = [...document.querySelectorAll('.cred-val-input')].map(i => i.value);
+          const creds = {};
+          keys.forEach((k, i) => { if (k && vals[i]) creds[k] = vals[i]; });
+          if (Object.keys(creds).length === 0) { alert('Please add at least username and password for the account.'); return; }
+          extraData.accountCredentials = creds;
         }
-        const snap = await getDocs(q);
-        if (snap.empty) {
-          grid.innerHTML = '<div class="empty-state">No listings yet — <a href="sell.html" style="color:var(--blue-dark);">be the first to sell something!</a></div>';
-          return;
-        }
-        grid.innerHTML = snap.docs.map(d => renderCard(d.id, d.data())).join('');
+      } else {
+        const kofi = document.getElementById('kofiInput').value.trim();
+        if (!kofi) { alert('Please add your Ko-fi URL so buyers can pay you.'); return; }
+        if (!selectedCond) { alert('Please select a condition.'); return; }
+        if (uploading.some(Boolean)) { alert('Please wait — photos are still uploading.'); return; }
+        extraData.condition = selectedCond;
+        extraData.category = document.getElementById('catInput').value || 'other';
+        extraData.kofiUrl = kofi;
+        extraData.listingType = 'physical';
+      }
+
+      const photoUrls = uploadedUrls.filter(u => u && u !== 'ERROR');
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.textContent = 'publishing…';
+
+      try {
+        const userSnap = await getDoc(doc(db, 'users', currentUser.uid));
+        const username = userSnap.exists() ? userSnap.data().username : (currentUser.displayName || currentUser.email.split('@')[0]);
+
+        const listingRef = await addDoc(collection(db, 'listings'), {
+          title, price: parseFloat(price), description,
+          photos: photoUrls, mainPhoto: photoUrls[0] || null,
+          sellerId: currentUser.uid, sellerName: username,
+          sellerEmail: currentUser.email,
+          sold: false, createdAt: serverTimestamp(),
+          ...extraData
+        });
+
+        window.location.href = `product.html?id=${listingRef.id}`;
       } catch (err) {
         console.error(err);
-        grid.innerHTML = '<div class="empty-state">Couldn\'t load listings. Check your Firestore rules.</div>';
+        alert('Something went wrong: ' + err.message);
+        btn.disabled = false; btn.textContent = 'publish listing →';
       }
-    }
-
-    loadListings();
+    };
   </script>
 </body>
 </html>
