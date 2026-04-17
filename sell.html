@@ -111,6 +111,15 @@
     .footer-logo em { font-style: italic; color: var(--blue); }
     .footer-r { font-size: 12px; color: #aaa; }
 
+    /* UPLOAD STATUS */
+    .upload-status-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666; margin-bottom: 5px; }
+    .upload-status-item .spinner { width: 12px; height: 12px; border: 1.5px solid #ddd; border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    .upload-status-item .done-dot { width: 12px; height: 12px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .upload-status-item .done-dot::after { content: '✓'; color: #fff; font-size: 8px; }
+    .upload-status-item .err-dot { width: 12px; height: 12px; border-radius: 50%; background: #e55; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .upload-status-item .err-dot::after { content: '✕'; color: #fff; font-size: 8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     @media (max-width: 800px) {
       .form-layout { flex-direction: column; }
       .preview-col { width: 100%; }
@@ -187,6 +196,7 @@
             </div>
           </div>
           <p class="photo-hint">Add up to 6 photos. First photo is your main listing image. Buyers trust listings with multiple clear photos.</p>
+          <div id="uploadStatus" style="display:none;margin-top:10px;"></div>
         </div>
 
         <!-- DETAILS -->
@@ -283,10 +293,23 @@
   </footer>
 
   <script>
-    let selectedCond = '';
+    // ── Cloudinary config ──────────────────────────────────────────────
+    const CLOUD_NAME   = 'dgfmld877';
+    const UPLOAD_PRESET = 'brim_uploads';
+    const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
+    let selectedCond = '';
+    // Stores the final Cloudinary URLs once uploaded (null = not uploaded yet)
+    const uploadedUrls = [null, null, null, null, null, null];
+    // Tracks if a slot is currently uploading
+    const uploading = [false, false, false, false, false, false];
+
+    // ── Photo preview + Cloudinary upload ─────────────────────────────
     function previewPhoto(input, idx) {
       if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+
+      // Show local preview immediately
       const reader = new FileReader();
       reader.onload = e => {
         const img = document.getElementById('preview' + idx);
@@ -294,16 +317,62 @@
         img.style.display = 'block';
         document.getElementById('plus' + idx).style.display = 'none';
         document.getElementById('label' + idx).style.display = 'none';
-        // Update preview card with first photo
         if (idx === 0) {
           document.getElementById('previewMainImg').src = e.target.result;
           document.getElementById('previewMainImg').style.display = 'block';
           document.getElementById('previewImgPlaceholder').style.display = 'none';
         }
       };
-      reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(file);
+
+      // Upload to Cloudinary in the background
+      uploadToCloudinary(file, idx);
     }
 
+    async function uploadToCloudinary(file, idx) {
+      uploading[idx] = true;
+      uploadedUrls[idx] = null;
+      showUploadStatus();
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', UPLOAD_PRESET);
+      formData.append('folder', 'brim-listings');
+
+      try {
+        const res = await fetch(CLOUDINARY_URL, { method: 'POST', body: formData });
+        if (!res.ok) throw new Error('Upload failed');
+        const data = await res.json();
+        // Use f_auto,q_auto for automatic format + quality optimisation
+        uploadedUrls[idx] = data.secure_url.replace('/upload/', '/upload/f_auto,q_auto/');
+      } catch (err) {
+        console.error('Cloudinary upload error:', err);
+        uploadedUrls[idx] = 'ERROR';
+      } finally {
+        uploading[idx] = false;
+        showUploadStatus();
+      }
+    }
+
+    function showUploadStatus() {
+      const statusEl = document.getElementById('uploadStatus');
+      const activeSlots = uploadedUrls.map((u, i) => ({ idx: i, url: u, busy: uploading[i] }))
+                                      .filter(s => s.busy || s.url !== null);
+      if (activeSlots.length === 0) { statusEl.style.display = 'none'; return; }
+
+      statusEl.style.display = 'block';
+      statusEl.innerHTML = activeSlots.map(s => {
+        if (s.busy) {
+          return `<div class="upload-status-item"><div class="spinner"></div> uploading photo ${s.idx + 1}…</div>`;
+        } else if (s.url === 'ERROR') {
+          return `<div class="upload-status-item"><div class="err-dot"></div> photo ${s.idx + 1} failed — try again</div>`;
+        } else {
+          return `<div class="upload-status-item"><div class="done-dot"></div> photo ${s.idx + 1} uploaded</div>`;
+        }
+      }).join('');
+    }
+
+    // ── Live preview ───────────────────────────────────────────────────
     function updatePreview() {
       const title = document.getElementById('titleInput').value;
       const price = document.getElementById('priceInput').value;
@@ -322,30 +391,60 @@
       document.getElementById('previewCond').textContent = val;
     }
 
-    function submitListing() {
-      const title = document.getElementById('titleInput').value;
+    // ── Submit ─────────────────────────────────────────────────────────
+    async function submitListing() {
+      const title = document.getElementById('titleInput').value.trim();
       const price = document.getElementById('priceInput').value;
-      const kofi = document.getElementById('kofiInput').value;
+      const kofi  = document.getElementById('kofiInput').value.trim();
+
       if (!title || !price || !selectedCond) {
-        alert('Please fill in the title, price, and condition.');
-        return;
+        alert('Please fill in the title, price, and condition.'); return;
       }
       if (!kofi) {
-        alert('Please add your Ko-fi shop URL so buyers can pay you.');
-        return;
+        alert('Please add your Ko-fi shop URL so buyers can pay you.'); return;
       }
-      // TODO: Firebase Firestore save
-      // addDoc(collection(db, 'listings'), {
-      //   title, price: parseFloat(price), condition: selectedCond,
-      //   description: document.getElementById('descInput').value,
-      //   category: document.getElementById('catInput').value,
-      //   kofiUrl: kofi,
-      //   sellerId: auth.currentUser.uid,
-      //   sellerName: ...,
-      //   sold: false,
-      //   createdAt: serverTimestamp()
-      // })
-      alert('Firebase not connected yet — add your config and this will save to Firestore and go live!');
+
+      // Check if any uploads are still in progress
+      if (uploading.some(Boolean)) {
+        alert('Please wait — your photos are still uploading.'); return;
+      }
+
+      // Check for any failed uploads
+      if (uploadedUrls.some(u => u === 'ERROR')) {
+        alert('One or more photos failed to upload. Please re-select them.'); return;
+      }
+
+      // Gather successfully uploaded photo URLs
+      const photoUrls = uploadedUrls.filter(u => u && u !== 'ERROR');
+
+      if (photoUrls.length === 0) {
+        const proceed = confirm('No photos uploaded — listings with photos sell much faster. Continue anyway?');
+        if (!proceed) return;
+      }
+
+      // ── Ready to save to Firestore ──
+      const listingData = {
+        title,
+        price: parseFloat(price),
+        condition: selectedCond,
+        description: document.getElementById('descInput').value.trim(),
+        category: document.getElementById('catInput').value,
+        kofiUrl: kofi,
+        photos: photoUrls,          // Cloudinary URLs, ready to use
+        mainPhoto: photoUrls[0] || null,
+        sold: false,
+        // sellerId: auth.currentUser.uid,   // uncomment once Firebase auth is wired
+        // sellerName: ...,
+        // createdAt: serverTimestamp()
+      };
+
+      console.log('Listing ready to save:', listingData);
+
+      // TODO: uncomment once Firebase is connected:
+      // await addDoc(collection(db, 'listings'), listingData);
+      // window.location.href = 'profile.html';
+
+      alert(`✅ Photos uploaded to Cloudinary!\n\nPhoto URLs:\n${photoUrls.join('\n') || '(none)'}\n\nAdd your Firebase config to save the listing to Firestore and go live.`);
     }
   </script>
 </body>
