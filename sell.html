@@ -16,44 +16,27 @@
     }
     body { font-family: 'DM Sans', sans-serif; background: #f5f5f3; color: #1a1a1a; }
     a { text-decoration: none; color: inherit; }
-
-    /* NAV */
     .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; background: #fff; border-bottom: 0.5px solid rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
     .logo { font-family: 'Instrument Serif', serif; font-size: 26px; letter-spacing: -0.5px; }
     .logo em { font-style: italic; color: var(--blue); }
     .nav-links { display: flex; gap: 28px; font-size: 13px; color: #666; }
     .nav-links a:hover { color: #1a1a1a; }
     .nav-right { display: flex; align-items: center; gap: 10px; }
-    .search { display: flex; align-items: center; gap: 8px; background: #f5f5f3; border: 0.5px solid rgba(0,0,0,0.12); border-radius: var(--radius-full); padding: 8px 16px; width: 220px; }
-    .search input { border: none; background: transparent; outline: none; font-size: 13px; color: #1a1a1a; width: 100%; font-family: 'DM Sans', sans-serif; }
-    .search input::placeholder { color: #aaa; }
     .sign-btn { font-size: 13px; font-weight: 500; color: var(--blue-dark); border: 0.5px solid var(--blue-border); border-radius: var(--radius-full); padding: 7px 16px; background: var(--blue-light); cursor: pointer; font-family: 'DM Sans', sans-serif; }
-
-    /* MAIN */
     .main { padding: 40px 28px 60px; max-width: 760px; margin: 0 auto; }
     .page-title { font-family: 'Instrument Serif', serif; font-size: 32px; font-weight: 400; letter-spacing: -0.5px; margin-bottom: 6px; }
     .page-title em { font-style: italic; color: var(--blue); }
     .page-sub { font-size: 14px; color: #888; margin-bottom: 36px; }
-
-    /* FORM LAYOUT */
     .form-layout { display: flex; gap: 28px; align-items: flex-start; }
     .form-col { flex: 1; min-width: 0; }
     .preview-col { width: 240px; flex-shrink: 0; }
-
-    /* SECTION */
     .form-section { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; }
     .form-section-title { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 20px; }
-
-    /* FIELDS */
     .field { margin-bottom: 18px; }
     .field:last-child { margin-bottom: 0; }
     .field label { display: block; font-size: 13px; font-weight: 500; color: #444; margin-bottom: 7px; }
     .field label span { color: #bbb; font-weight: 400; }
-    .field input, .field textarea, .field select {
-      width: 100%; border: 0.5px solid rgba(0,0,0,0.15); border-radius: var(--radius-md);
-      padding: 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif;
-      outline: none; color: #1a1a1a; background: #fff; transition: border-color 0.15s;
-    }
+    .field input, .field textarea, .field select { width: 100%; border: 0.5px solid rgba(0,0,0,0.15); border-radius: var(--radius-md); padding: 11px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none; color: #1a1a1a; background: #fff; transition: border-color 0.15s; }
     .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--blue); }
     .field input::placeholder, .field textarea::placeholder { color: #ccc; }
     .field textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
@@ -61,16 +44,12 @@
     .price-wrap { display: flex; align-items: center; gap: 0; }
     .price-prefix { border: 0.5px solid rgba(0,0,0,0.15); border-right: none; border-radius: var(--radius-md) 0 0 var(--radius-md); padding: 11px 12px; font-size: 14px; color: #888; background: #f9f9f9; }
     .price-wrap input { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
-
-    /* CONDITION PILLS */
     .condition-pills { display: flex; gap: 8px; flex-wrap: wrap; }
     .cond-pill { padding: 8px 16px; border-radius: var(--radius-full); border: 0.5px solid rgba(0,0,0,0.15); font-size: 13px; color: #666; cursor: pointer; background: transparent; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
     .cond-pill.sel-new { background: var(--blue-light); color: var(--blue-dark); border-color: var(--blue-border); }
     .cond-pill.sel-like { background: var(--green-light); color: var(--green-dark); border-color: #b8dda0; }
     .cond-pill.sel-good { background: var(--amber-light); color: var(--amber-dark); border-color: #f0d4a0; }
     .cond-pill.sel-fair { background: #f0f0ee; color: #555; border-color: #ddd; }
-
-    /* PHOTO UPLOAD */
     .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .photo-slot { aspect-ratio: 1; border: 0.5px dashed rgba(0,0,0,0.2); border-radius: var(--radius-md); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s; background: #fafafa; position: relative; overflow: hidden; }
     .photo-slot:hover { background: #f0f0ee; }
@@ -80,8 +59,13 @@
     .photo-slot .slot-label { font-size: 10px; color: #ccc; margin-top: 4px; }
     .photo-slot input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     .photo-hint { font-size: 11px; color: #bbb; margin-top: 8px; line-height: 1.5; }
-
-    /* PREVIEW CARD */
+    .upload-status-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666; margin-bottom: 5px; }
+    .spinner { width: 12px; height: 12px; border: 1.5px solid #ddd; border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    .done-dot { width: 12px; height: 12px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .done-dot::after { content: '✓'; color: #fff; font-size: 8px; }
+    .err-dot { width: 12px; height: 12px; border-radius: 50%; background: #e55; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .err-dot::after { content: '✕'; color: #fff; font-size: 8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .preview-sticky { position: sticky; top: 90px; }
     .preview-label { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: #aaa; margin-bottom: 12px; }
     .preview-card { background: #fff; border: 0.5px solid rgba(0,0,0,0.1); border-radius: var(--radius-lg); overflow: hidden; }
@@ -94,43 +78,24 @@
     .preview-seller { font-size: 12px; color: #aaa; margin-bottom: 8px; }
     .preview-price { font-size: 16px; font-weight: 500; color: #aaa; }
     .preview-price.has-val { color: #1a1a1a; }
-
-    /* SUBMIT */
     .submit-row { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
     .btn-primary { background: #1a1a1a; color: #fff; border: none; border-radius: var(--radius-full); padding: 14px 32px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
     .btn-primary:hover { background: #333; }
+    .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
     .submit-note { font-size: 12px; color: #aaa; line-height: 1.5; }
-
-    /* KOFI NOTE */
     .kofi-note { background: #FFF5F5; border: 0.5px solid #FFD4D4; border-radius: var(--radius-md); padding: 14px 16px; font-size: 13px; color: #884444; line-height: 1.6; }
     .kofi-note strong { color: #FF5E5B; }
-
-    /* FOOTER */
+    .auth-gate { background: var(--blue-light); border: 0.5px solid var(--blue-border); border-radius: var(--radius-lg); padding: 32px; text-align: center; margin-bottom: 24px; }
+    .auth-gate h3 { font-family: 'Instrument Serif', serif; font-size: 22px; margin-bottom: 8px; }
+    .auth-gate p { font-size: 14px; color: #555; margin-bottom: 20px; }
     .footer { padding: 20px 28px; border-top: 0.5px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; background: #fff; }
     .footer-logo { font-family: 'Instrument Serif', serif; font-size: 20px; }
     .footer-logo em { font-style: italic; color: var(--blue); }
     .footer-r { font-size: 12px; color: #aaa; }
-
-    /* UPLOAD STATUS */
-    .upload-status-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #666; margin-bottom: 5px; }
-    .upload-status-item .spinner { width: 12px; height: 12px; border: 1.5px solid #ddd; border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
-    .upload-status-item .done-dot { width: 12px; height: 12px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-    .upload-status-item .done-dot::after { content: '✓'; color: #fff; font-size: 8px; }
-    .upload-status-item .err-dot { width: 12px; height: 12px; border-radius: 50%; background: #e55; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-    .upload-status-item .err-dot::after { content: '✕'; color: #fff; font-size: 8px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    @media (max-width: 800px) {
-      .form-layout { flex-direction: column; }
-      .preview-col { width: 100%; }
-      .preview-sticky { position: static; }
-      .main { padding: 24px 16px 48px; }
-      .nav-links { display: none; }
-    }
+    @media (max-width: 800px) { .form-layout { flex-direction: column; } .preview-col { width: 100%; } .preview-sticky { position: static; } .main { padding: 24px 16px 48px; } .nav-links { display: none; } }
   </style>
 </head>
 <body>
-
   <nav class="nav">
     <a href="index.html" class="logo">brim<em>.</em></a>
     <div class="nav-links">
@@ -139,11 +104,8 @@
       <a href="#">how it works</a>
     </div>
     <div class="nav-right">
-      <div class="search">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="#aaa" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <input placeholder="search anything..." type="text">
-      </div>
-      <a href="login.html"><button class="sign-btn">sign in</button></a>
+      <a href="login.html" id="signInLink"><button class="sign-btn">sign in</button></a>
+      <a href="profile.html" id="profileLink" style="display:none;font-size:13px;color:#888;" id="navUserLink">my profile →</a>
     </div>
   </nav>
 
@@ -151,81 +113,42 @@
     <h1 class="page-title">list something <em>free.</em></h1>
     <p class="page-sub">Your listing goes live instantly. Buyers message you directly — no middlemen.</p>
 
-    <div class="form-layout">
-      <div class="form-col">
+    <!-- Auth gate shown if not logged in -->
+    <div class="auth-gate" id="authGate" style="display:none;">
+      <h3>Sign in to list</h3>
+      <p>You need a free account to publish listings on brim.</p>
+      <a href="login.html?redirect=sell.html"><button class="btn-primary">sign in or create account →</button></a>
+    </div>
 
+    <div class="form-layout" id="formBody">
+      <div class="form-col">
         <!-- PHOTOS -->
         <div class="form-section">
           <div class="form-section-title">Photos</div>
           <div class="photo-grid">
-            <div class="photo-slot has-photo" id="slot0">
-              <img id="preview0" src="" alt="" style="display:none">
-              <span class="plus" id="plus0">+</span>
-              <span class="slot-label" id="label0">main photo</span>
-              <input type="file" accept="image/*" onchange="previewPhoto(this,0)">
-            </div>
-            <div class="photo-slot" id="slot1">
-              <img id="preview1" src="" alt="" style="display:none">
-              <span class="plus" id="plus1">+</span>
-              <span class="slot-label" id="label1">photo 2</span>
-              <input type="file" accept="image/*" onchange="previewPhoto(this,1)">
-            </div>
-            <div class="photo-slot" id="slot2">
-              <img id="preview2" src="" alt="" style="display:none">
-              <span class="plus" id="plus2">+</span>
-              <span class="slot-label" id="label2">photo 3</span>
-              <input type="file" accept="image/*" onchange="previewPhoto(this,2)">
-            </div>
-            <div class="photo-slot" id="slot3">
-              <img id="preview3" src="" alt="" style="display:none">
-              <span class="plus" id="plus3">+</span>
-              <span class="slot-label" id="label3">photo 4</span>
-              <input type="file" accept="image/*" onchange="previewPhoto(this,3)">
-            </div>
-            <div class="photo-slot" id="slot4">
-              <img id="preview4" src="" alt="" style="display:none">
-              <span class="plus" id="plus4">+</span>
-              <span class="slot-label" id="label4">photo 5</span>
-              <input type="file" accept="image/*" onchange="previewPhoto(this,4)">
-            </div>
-            <div class="photo-slot" id="slot5">
-              <img id="preview5" src="" alt="" style="display:none">
-              <span class="plus" id="plus5">+</span>
-              <span class="slot-label" id="label5">photo 6</span>
-              <input type="file" accept="image/*" onchange="previewPhoto(this,5)">
-            </div>
+            <div class="photo-slot has-photo" id="slot0"><img id="preview0" src="" alt="" style="display:none"><span class="plus" id="plus0">+</span><span class="slot-label" id="label0">main photo</span><input type="file" accept="image/*" onchange="previewPhoto(this,0)"></div>
+            <div class="photo-slot" id="slot1"><img id="preview1" src="" alt="" style="display:none"><span class="plus" id="plus1">+</span><span class="slot-label" id="label1">photo 2</span><input type="file" accept="image/*" onchange="previewPhoto(this,1)"></div>
+            <div class="photo-slot" id="slot2"><img id="preview2" src="" alt="" style="display:none"><span class="plus" id="plus2">+</span><span class="slot-label" id="label2">photo 3</span><input type="file" accept="image/*" onchange="previewPhoto(this,2)"></div>
+            <div class="photo-slot" id="slot3"><img id="preview3" src="" alt="" style="display:none"><span class="plus" id="plus3">+</span><span class="slot-label" id="label3">photo 4</span><input type="file" accept="image/*" onchange="previewPhoto(this,3)"></div>
+            <div class="photo-slot" id="slot4"><img id="preview4" src="" alt="" style="display:none"><span class="plus" id="plus4">+</span><span class="slot-label" id="label4">photo 5</span><input type="file" accept="image/*" onchange="previewPhoto(this,4)"></div>
+            <div class="photo-slot" id="slot5"><img id="preview5" src="" alt="" style="display:none"><span class="plus" id="plus5">+</span><span class="slot-label" id="label5">photo 6</span><input type="file" accept="image/*" onchange="previewPhoto(this,5)"></div>
           </div>
-          <p class="photo-hint">Add up to 6 photos. First photo is your main listing image. Buyers trust listings with multiple clear photos.</p>
-          <div id="uploadStatus" style="display:none;margin-top:10px;"></div>
+          <p class="photo-hint">Add up to 6 photos. First photo is your main listing image.</p>
+          <div id="uploadStatus" style="margin-top:10px;"></div>
         </div>
-
         <!-- DETAILS -->
         <div class="form-section">
           <div class="form-section-title">Item details</div>
-          <div class="field">
-            <label>Title</label>
-            <input type="text" id="titleInput" placeholder="e.g. Sony WH-1000XM4 headphones" oninput="updatePreview()">
-          </div>
-          <div class="field">
-            <label>Description</label>
-            <textarea id="descInput" placeholder="Describe your item — condition, what's included, any flaws. Honest descriptions build trust."></textarea>
-          </div>
-          <div class="field">
-            <label>Category</label>
+          <div class="field"><label>Title</label><input type="text" id="titleInput" placeholder="e.g. Sony WH-1000XM4 headphones" oninput="updatePreview()"></div>
+          <div class="field"><label>Description</label><textarea id="descInput" placeholder="Describe your item — condition, what's included, any flaws."></textarea></div>
+          <div class="field"><label>Category</label>
             <select id="catInput">
               <option value="" disabled selected>select a category...</option>
-              <option>electronics</option>
-              <option>clothing</option>
-              <option>home & garden</option>
-              <option>collectibles</option>
-              <option>sports</option>
-              <option>books</option>
-              <option>art</option>
-              <option>other</option>
+              <option>electronics</option><option>clothing</option><option>home & garden</option>
+              <option>collectibles</option><option>sports</option><option>books</option><option>art</option><option>other</option>
             </select>
           </div>
-          <div class="field">
-            <label>Condition</label>
+          <div class="field"><label>Condition</label>
             <div class="condition-pills">
               <button class="cond-pill" onclick="selectCond(this,'new','sel-new')">New</button>
               <button class="cond-pill" onclick="selectCond(this,'like new','sel-like')">Like new</button>
@@ -234,35 +157,25 @@
             </div>
           </div>
         </div>
-
         <!-- PRICING -->
         <div class="form-section">
           <div class="form-section-title">Pricing</div>
-          <div class="field">
-            <label>Price</label>
-            <div class="price-wrap">
-              <span class="price-prefix">$</span>
-              <input type="number" id="priceInput" placeholder="0.00" min="0" step="0.01" oninput="updatePreview()">
-            </div>
+          <div class="field"><label>Price</label>
+            <div class="price-wrap"><span class="price-prefix">$</span><input type="number" id="priceInput" placeholder="0.00" min="0" step="0.01" oninput="updatePreview()"></div>
           </div>
         </div>
-
         <!-- KO-FI -->
         <div class="form-section">
           <div class="form-section-title">Payment</div>
-          <div class="field">
-            <label>Your Ko-fi shop URL <span>(where buyers will pay)</span></label>
+          <div class="field"><label>Your Ko-fi shop URL <span>(where buyers will pay)</span></label>
             <input type="url" placeholder="https://ko-fi.com/yourusername" id="kofiInput">
           </div>
-          <div class="kofi-note">
-            <strong>Ko-fi</strong> handles all payments — it's free to set up and you keep more of your sale. Buyers click "Buy via Ko-fi" and pay you directly. <a href="https://ko-fi.com" target="_blank" style="color:#FF5E5B;text-decoration:underline;">Set up your Ko-fi →</a>
-          </div>
+          <div class="kofi-note"><strong>Ko-fi</strong> handles all payments — free to set up, you keep more of your sale. <a href="https://ko-fi.com" target="_blank" style="color:#FF5E5B;text-decoration:underline;">Set up your Ko-fi →</a></div>
         </div>
-
         <!-- SUBMIT -->
         <div class="submit-row">
-          <button class="btn-primary" onclick="submitListing()">publish listing →</button>
-          <p class="submit-note">Free to list. Goes live<br>instantly once Firebase is set up.</p>
+          <button class="btn-primary" id="submitBtn" onclick="submitListing()">publish listing →</button>
+          <p class="submit-note" id="submitNote">Free to list. Goes live instantly.</p>
         </div>
       </div>
 
@@ -292,29 +205,51 @@
     <div class="footer-r">full to the brim.</div>
   </footer>
 
-  <script>
-    // ── Cloudinary config ──────────────────────────────────────────────
-    const CLOUD_NAME   = 'dgfmld877';
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, doc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyCZmGDUuv7P4XcEJ0Sj6SFjQVKqLeeSOKQ",
+      authDomain: "brim-dfdf3.firebaseapp.com",
+      projectId: "brim-dfdf3",
+      storageBucket: "brim-dfdf3.firebasestorage.app",
+      messagingSenderId: "414714365863",
+      appId: "1:414714365863:web:90c9e68982af5559831882"
+    });
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const CLOUD_NAME = 'dgfmld877';
     const UPLOAD_PRESET = 'brim_uploads';
-    const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
+    let currentUser = null;
     let selectedCond = '';
-    // Stores the final Cloudinary URLs once uploaded (null = not uploaded yet)
-    const uploadedUrls = [null, null, null, null, null, null];
-    // Tracks if a slot is currently uploading
-    const uploading = [false, false, false, false, false, false];
+    const uploadedUrls = [null,null,null,null,null,null];
+    const uploading = [false,false,false,false,false,false];
 
-    // ── Photo preview + Cloudinary upload ─────────────────────────────
-    function previewPhoto(input, idx) {
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        currentUser = user;
+        document.getElementById('signInLink').style.display = 'none';
+        document.getElementById('profileLink').style.display = 'block';
+        document.getElementById('profileLink').href = `profile.html?uid=${user.uid}`;
+        document.getElementById('authGate').style.display = 'none';
+        document.getElementById('formBody').style.display = 'flex';
+      } else {
+        document.getElementById('authGate').style.display = 'block';
+        document.getElementById('formBody').style.display = 'none';
+      }
+    });
+
+    window.previewPhoto = function(input, idx) {
       if (!input.files || !input.files[0]) return;
       const file = input.files[0];
-
-      // Show local preview immediately
       const reader = new FileReader();
       reader.onload = e => {
         const img = document.getElementById('preview' + idx);
-        img.src = e.target.result;
-        img.style.display = 'block';
+        img.src = e.target.result; img.style.display = 'block';
         document.getElementById('plus' + idx).style.display = 'none';
         document.getElementById('label' + idx).style.display = 'none';
         if (idx === 0) {
@@ -324,56 +259,39 @@
         }
       };
       reader.readAsDataURL(file);
-
-      // Upload to Cloudinary in the background
       uploadToCloudinary(file, idx);
-    }
+    };
 
     async function uploadToCloudinary(file, idx) {
-      uploading[idx] = true;
-      uploadedUrls[idx] = null;
-      showUploadStatus();
-
+      uploading[idx] = true; uploadedUrls[idx] = null; showUploadStatus();
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', UPLOAD_PRESET);
       formData.append('folder', 'brim-listings');
-
       try {
-        const res = await fetch(CLOUDINARY_URL, { method: 'POST', body: formData });
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
         if (!res.ok) throw new Error('Upload failed');
         const data = await res.json();
-        // Use f_auto,q_auto for automatic format + quality optimisation
         uploadedUrls[idx] = data.secure_url.replace('/upload/', '/upload/f_auto,q_auto/');
       } catch (err) {
-        console.error('Cloudinary upload error:', err);
         uploadedUrls[idx] = 'ERROR';
       } finally {
-        uploading[idx] = false;
-        showUploadStatus();
+        uploading[idx] = false; showUploadStatus();
       }
     }
 
     function showUploadStatus() {
-      const statusEl = document.getElementById('uploadStatus');
-      const activeSlots = uploadedUrls.map((u, i) => ({ idx: i, url: u, busy: uploading[i] }))
-                                      .filter(s => s.busy || s.url !== null);
-      if (activeSlots.length === 0) { statusEl.style.display = 'none'; return; }
-
-      statusEl.style.display = 'block';
-      statusEl.innerHTML = activeSlots.map(s => {
-        if (s.busy) {
-          return `<div class="upload-status-item"><div class="spinner"></div> uploading photo ${s.idx + 1}…</div>`;
-        } else if (s.url === 'ERROR') {
-          return `<div class="upload-status-item"><div class="err-dot"></div> photo ${s.idx + 1} failed — try again</div>`;
-        } else {
-          return `<div class="upload-status-item"><div class="done-dot"></div> photo ${s.idx + 1} uploaded</div>`;
-        }
+      const el = document.getElementById('uploadStatus');
+      const active = uploadedUrls.map((u, i) => ({ idx: i, url: u, busy: uploading[i] })).filter(s => s.busy || s.url !== null);
+      if (!active.length) { el.innerHTML = ''; return; }
+      el.innerHTML = active.map(s => {
+        if (s.busy) return `<div class="upload-status-item"><div class="spinner"></div> uploading photo ${s.idx+1}…</div>`;
+        if (s.url === 'ERROR') return `<div class="upload-status-item"><div class="err-dot"></div> photo ${s.idx+1} failed — try again</div>`;
+        return `<div class="upload-status-item"><div class="done-dot"></div> photo ${s.idx+1} uploaded</div>`;
       }).join('');
     }
 
-    // ── Live preview ───────────────────────────────────────────────────
-    function updatePreview() {
+    window.updatePreview = function() {
       const title = document.getElementById('titleInput').value;
       const price = document.getElementById('priceInput').value;
       const nameEl = document.getElementById('previewName');
@@ -382,70 +300,60 @@
       nameEl.className = 'preview-name' + (title ? ' has-val' : '');
       priceEl.textContent = price ? '$' + parseFloat(price).toFixed(2) : '$—';
       priceEl.className = 'preview-price' + (price ? ' has-val' : '');
-    }
+    };
 
-    function selectCond(btn, val, cls) {
+    window.selectCond = function(btn, val, cls) {
       document.querySelectorAll('.cond-pill').forEach(p => p.className = 'cond-pill');
-      btn.classList.add(cls);
-      selectedCond = val;
+      btn.classList.add(cls); selectedCond = val;
       document.getElementById('previewCond').textContent = val;
-    }
+    };
 
-    // ── Submit ─────────────────────────────────────────────────────────
-    async function submitListing() {
+    window.submitListing = async function() {
+      if (!currentUser) { window.location.href = 'login.html?redirect=sell.html'; return; }
       const title = document.getElementById('titleInput').value.trim();
       const price = document.getElementById('priceInput').value;
-      const kofi  = document.getElementById('kofiInput').value.trim();
+      const kofi = document.getElementById('kofiInput').value.trim();
+      const category = document.getElementById('catInput').value;
+      const description = document.getElementById('descInput').value.trim();
 
-      if (!title || !price || !selectedCond) {
-        alert('Please fill in the title, price, and condition.'); return;
-      }
-      if (!kofi) {
-        alert('Please add your Ko-fi shop URL so buyers can pay you.'); return;
-      }
+      if (!title || !price || !selectedCond) { alert('Please fill in title, price, and condition.'); return; }
+      if (!kofi) { alert('Please add your Ko-fi URL so buyers can pay you.'); return; }
+      if (uploading.some(Boolean)) { alert('Please wait — photos are still uploading.'); return; }
+      if (uploadedUrls.some(u => u === 'ERROR')) { alert('Some photos failed to upload. Please re-select them.'); return; }
 
-      // Check if any uploads are still in progress
-      if (uploading.some(Boolean)) {
-        alert('Please wait — your photos are still uploading.'); return;
-      }
-
-      // Check for any failed uploads
-      if (uploadedUrls.some(u => u === 'ERROR')) {
-        alert('One or more photos failed to upload. Please re-select them.'); return;
-      }
-
-      // Gather successfully uploaded photo URLs
       const photoUrls = uploadedUrls.filter(u => u && u !== 'ERROR');
 
-      if (photoUrls.length === 0) {
-        const proceed = confirm('No photos uploaded — listings with photos sell much faster. Continue anyway?');
-        if (!proceed) return;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.textContent = 'publishing…';
+
+      try {
+        // Get username from user doc
+        const userSnap = await getDoc(doc(db, 'users', currentUser.uid));
+        const username = userSnap.exists() ? userSnap.data().username : (currentUser.displayName || currentUser.email.split('@')[0]);
+
+        const listingRef = await addDoc(collection(db, 'listings'), {
+          title,
+          price: parseFloat(price),
+          condition: selectedCond,
+          description,
+          category: category || 'other',
+          kofiUrl: kofi,
+          photos: photoUrls,
+          mainPhoto: photoUrls[0] || null,
+          sellerId: currentUser.uid,
+          sellerName: username,
+          sellerEmail: currentUser.email,
+          sold: false,
+          createdAt: serverTimestamp()
+        });
+
+        window.location.href = `product.html?id=${listingRef.id}`;
+      } catch (err) {
+        console.error(err);
+        alert('Something went wrong: ' + err.message);
+        btn.disabled = false; btn.textContent = 'publish listing →';
       }
-
-      // ── Ready to save to Firestore ──
-      const listingData = {
-        title,
-        price: parseFloat(price),
-        condition: selectedCond,
-        description: document.getElementById('descInput').value.trim(),
-        category: document.getElementById('catInput').value,
-        kofiUrl: kofi,
-        photos: photoUrls,          // Cloudinary URLs, ready to use
-        mainPhoto: photoUrls[0] || null,
-        sold: false,
-        // sellerId: auth.currentUser.uid,   // uncomment once Firebase auth is wired
-        // sellerName: ...,
-        // createdAt: serverTimestamp()
-      };
-
-      console.log('Listing ready to save:', listingData);
-
-      // TODO: uncomment once Firebase is connected:
-      // await addDoc(collection(db, 'listings'), listingData);
-      // window.location.href = 'profile.html';
-
-      alert(`✅ Photos uploaded to Cloudinary!\n\nPhoto URLs:\n${photoUrls.join('\n') || '(none)'}\n\nAdd your Firebase config to save the listing to Firestore and go live.`);
-    }
+    };
   </script>
 </body>
 </html>
